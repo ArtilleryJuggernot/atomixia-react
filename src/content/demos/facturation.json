@@ -1,0 +1,18 @@
+{
+  "order": 4,
+  "layout": "ledger",
+  "kicker": "Facturation",
+  "title": "Une facture préparée, puis soumise",
+  "href": "/agents/facturation",
+  "sourceLabel": "Les éléments",
+  "source": "Étape terminée. Devis accepté, avenant signé, dépenses saisies. La facture n’est pas émise.",
+  "outputLabel": "Projet soumis",
+  "output": [
+    "Les pièces sont rassemblées.",
+    "Le projet de facture est préparé.",
+    "Un écart de montant, s’il existe, est signalé.",
+    "Le projet est soumis à validation.",
+    "Personne ne l’émet tant qu’il n’est pas validé."
+  ],
+  "hold": "Ce projet n’est pas un document légal définitif. L’expert-comptable et l’outil de facturation restent responsables de l’émission, dans le cadre fiscal français et de la facturation électronique."
+}

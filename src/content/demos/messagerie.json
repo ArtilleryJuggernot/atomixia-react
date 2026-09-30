@@ -1,0 +1,18 @@
+{
+  "order": 2,
+  "layout": "letter",
+  "kicker": "Messagerie",
+  "title": "Un mail long, devenu décisions",
+  "href": "/agents/messagerie",
+  "sourceLabel": "Le fil",
+  "source": "Bonjour, suite à la visite de mardi je reviens vers vous. Il manque le plan de réservation de l’échafaudage, et je ne suis pas d’accord avec la ligne 4 du devis : la reprise d’enduit n’était pas prévue. Pouvez-vous me rappeler jeudi matin ? Merci de confirmer aussi si l’acompte part ce mois-ci.",
+  "outputLabel": "Décisions extraites",
+  "output": [
+    "Envoyer le plan de réservation de l’échafaudage.",
+    "Traiter le désaccord sur la ligne 4 : reprise d’enduit.",
+    "Rappeler jeudi matin.",
+    "Confirmer, ou non, l’acompte de ce mois.",
+    "Réponse préparée. Elle n’est pas envoyée."
+  ],
+  "hold": "L’envoi reste validé par une personne."
+}

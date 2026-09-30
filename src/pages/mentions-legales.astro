@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { site } from '../lib/site';
+
+const description = 'Mentions légales du site Atomixia : éditeur, contact, directeur de la publication.';
+---
+
+<Base title="Mentions légales — Atomixia" description={description} path="/mentions-legales">
+  <Header />
+  <main id="contenu" class="px-5 pt-28 pb-24 sm:px-8">
+    <article class="prose-legal mx-auto max-w-3xl">
+      <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Mentions légales', href: '/mentions-legales' }]} />
+      <h1 class="display mt-10 text-5xl text-parchment">Mentions légales</h1>
+      <hr class="gold-rule" />
+      <p class="mt-6 text-sm text-parchment-dim">Dernière mise à jour : 30 septembre 2026.</p>
+
+      <h2>Éditeur</h2>
+      <p>
+        Le site {site.url.replace('https://', '')} est édité par Atomixia, entreprise fondée par {site.founder}, à {site.city} ({site.region}).
+      </p>
+      <p>
+        Contact : <a href={`mailto:${site.email}`}>{site.email}</a> — <a href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>.
+      </p>
+      <p>
+        La forme juridique, le capital, le numéro SIRET, le RCS, le numéro de TVA et l’adresse du siège ne sont pas reproduits ici : ces pièces n’ont pas été fournies pour cette version du site. Elles seront ajoutées dès qu’elles seront transmises.
+      </p>
+
+      <h2>Directeur de la publication</h2>
+      <p>{site.founder}, fondateur d’Atomixia.</p>
+
+      <h2>Hébergement</h2>
+      <p>
+        L’identité de l’hébergeur et le lieu d’hébergement seront indiqués ici lors de la mise en production. Ils ne sont pas inventés.
+      </p>
+
+      <h2>Propriété</h2>
+      <p>
+        Les textes, la marque Atomixia et les éléments graphiques de ce site sont réservés. Toute reproduction demande une autorisation écrite, sauf les courts extraits accompagnés du lien vers la page d’origine.
+      </p>
+
+      <h2>Portfolio</h2>
+      <p>
+        Le parcours de {site.founder} est publié séparément : <a href={site.portfolio} rel="noopener noreferrer">{site.portfolio.replace('https://', '')}</a>.
+      </p>
+    </article>
+  </main>
+  <Footer />
+</Base>

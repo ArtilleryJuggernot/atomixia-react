@@ -1,0 +1,39 @@
+---
+interface Crumb {
+  name: string;
+  href: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+const origin = Astro.site ?? 'https://atomixia.fr';
+const data = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.name,
+    item: new URL(item.href, origin).toString(),
+  })),
+};
+---
+
+<nav aria-label="Fil d'Ariane" class="meta">
+  <ol class="flex flex-wrap gap-x-3 gap-y-1">
+    {
+      items.map((item, index) => (
+        <li class="flex items-center gap-3">
+          {index < items.length - 1 ? (
+            <a href={item.href} class="hover:text-parchment">{item.name}</a>
+          ) : (
+            <span aria-current="page" class="text-parchment">{item.name}</span>
+          )}
+          {index < items.length - 1 && <span aria-hidden="true">/</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

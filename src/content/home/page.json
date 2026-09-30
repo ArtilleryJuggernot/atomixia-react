@@ -1,0 +1,74 @@
+{
+  "hero": {
+    "kicker": "Lyon · Auvergne-Rhône-Alpes",
+    "title": "Des agents IA pour le travail qui se répète",
+    "subtitle": "Connaissance documentaire, vente, facturation et messagerie. L’agent exécute le répétitif. Une personne garde la décision.",
+    "editorial": "Vos processus tournent. Vous gardez la main.",
+    "primary": "Décrire mon processus",
+    "secondary": "Voir les agents"
+  },
+  "context": [
+    {
+      "label": "Entreprise",
+      "value": "Atomixia",
+      "detail": "Fondée par Hugo Jacquel"
+    },
+    {
+      "label": "Zone",
+      "value": "Lyon et la région",
+      "detail": "Auvergne-Rhône-Alpes"
+    },
+    {
+      "label": "Réponse",
+      "value": "Sous 24 à 48 h",
+      "detail": "Après description du processus"
+    }
+  ],
+  "problem": {
+    "kicker": "Le quotidien",
+    "title": "Ce qui se perd dans la semaine",
+    "editorial": "L’oubli n’est pas un détail. C’est du temps.",
+    "items": [
+      "Un devis parti, jamais relancé",
+      "Une pièce technique introuvable au moment de répondre",
+      "Un mail long dont la décision reste dans la boîte",
+      "Un suivi commercial dispersé entre tableur et mémoire",
+      "Une facture à préparer, puis un impayé à relancer"
+    ]
+  },
+  "constellation": {
+    "kicker": "L’offre",
+    "title": "Les agents, et les liens entre eux",
+    "editorial": "Chaque étoile est un agent. Le lien est une donnée qui circule.",
+    "hint": "Tabulez ou survolez une étoile pour lire son rôle."
+  },
+  "demos": {
+    "kicker": "Fonctionnement",
+    "title": "Quatre scènes de travail",
+    "editorial": "L’agent prépare. Vous décidez."
+  },
+  "method": {
+    "kicker": "Méthode",
+    "title": "Cinq temps, puis le travail tourne",
+    "editorial": "Rien ne part sans un responsable."
+  },
+  "security": {
+    "kicker": "Sécurité",
+    "title": "Ce que l’on peut suivre",
+    "editorial": "Un agent utile laisse une trace."
+  },
+  "diagnostic": {
+    "kicker": "Diagnostic",
+    "title": "Trois processus, pas un catalogue",
+    "editorial": "On commence par votre semaine.",
+    "text": "Un échange suffit pour regarder le travail réel et nommer trois tâches répétitives qu’un agent peut préparer. Vous repartez avec une liste : ce qui peut tourner, ce qui doit rester une décision humaine, et les outils déjà en place.",
+    "price": null,
+    "cta": "Décrire mon processus"
+  },
+  "contact": {
+    "kicker": "Contact",
+    "title": "Décrire le processus",
+    "editorial": "Une réponse sous 24 à 48 h.",
+    "text": "Dites quel geste se répète, avec quels outils. Atomixia répond depuis Lyon."
+  }
+}

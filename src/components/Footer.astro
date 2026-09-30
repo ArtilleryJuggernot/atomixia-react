@@ -1,0 +1,53 @@
+---
+import Mark from './Mark.astro';
+import { nav, site } from '../lib/site';
+---
+
+<footer class="border-t border-gold-500/20 px-5 py-16 sm:px-8">
+  <div class="mx-auto grid max-w-6xl gap-12 md:grid-cols-12">
+    <div class="md:col-span-4">
+      <a href="/" class="flex items-center gap-3" aria-label="Atomixia, accueil">
+        <Mark />
+        <span class="font-display tracking-[0.18em]">ATOMIXIA</span>
+      </a>
+      <p class="mt-5 max-w-xs text-sm text-parchment-dim">{site.promise}</p>
+    </div>
+    <div class="md:col-span-2">
+      <p class="meta">Navigation</p>
+      <ul class="mt-4 space-y-2 text-sm">
+        {nav.map((item) => (
+          <li><a class="text-parchment-dim hover:text-parchment" href={item.href}>{item.label}</a></li>
+        ))}
+        <li><a class="text-parchment-dim hover:text-parchment" href="/a-propos">À propos</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-3">
+      <p class="meta">Agents</p>
+      <ul class="mt-4 space-y-2 text-sm">
+        <li><a class="text-parchment-dim hover:text-parchment" href="/agents/connaissance">Connaissance</a></li>
+        <li><a class="text-parchment-dim hover:text-parchment" href="/agents/quotidien">Quotidien</a></li>
+        <li><a class="text-parchment-dim hover:text-parchment" href="/agents/messagerie">Messagerie</a></li>
+        <li><a class="text-parchment-dim hover:text-parchment" href="/agents/commercial">Commercial</a></li>
+        <li><a class="text-parchment-dim hover:text-parchment" href="/agents/facturation">Facturation</a></li>
+        <li><a class="text-parchment-dim hover:text-parchment" href="/agents/sur-mesure">Sur mesure</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-3">
+      <p class="meta">Contact</p>
+      <ul class="mt-4 space-y-2 text-sm text-parchment-dim">
+        <li><a class="hover:text-parchment" href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a class="hover:text-parchment" href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a></li>
+        <li>{site.city} · {site.region}</li>
+        <li>Réponse sous {site.response}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="mx-auto mt-14 flex max-w-6xl flex-col gap-3 border-t border-parchment/10 pt-6 text-sm text-parchment-dim sm:flex-row sm:items-center sm:justify-between">
+    <p>© {new Date().getFullYear()} Atomixia</p>
+    <ul class="flex flex-wrap gap-x-5 gap-y-2">
+      <li><a class="hover:text-parchment" href="/mentions-legales">Mentions légales</a></li>
+      <li><a class="hover:text-parchment" href="/confidentialite">Confidentialité</a></li>
+      <li><a class="hover:text-parchment" href={site.portfolio} rel="noopener noreferrer">Portfolio</a></li>
+    </ul>
+  </div>
+</footer>

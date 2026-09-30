@@ -1,0 +1,50 @@
+{
+  "title": "Agent quotidien",
+  "navTitle": "Quotidien",
+  "order": 2,
+  "transversal": false,
+  "role": "Organisation, priorités et relances",
+  "short": "Prépare la journée de travail : échéances, demandes, relances. Rien qui sorte du cadre professionnel.",
+  "x": 74,
+  "y": 18,
+  "editorial": "La journée commence par ce qui attend une décision.",
+  "situation": "La journée s’ouvre sur une boîte pleine, des échéances notées à plusieurs endroits et des relances que l’on se promet de faire. Le suivi tient tant que la mémoire tient.",
+  "does": [
+    "Prépare la journée : échéances, relances, demandes en attente.",
+    "Classe les demandes selon le dossier et l’urgence réelle.",
+    "Rappelle ce qui arrive à terme.",
+    "Tient la liste des relances ouvertes.",
+    "Sert d’assistant de travail : préparer, rappeler, rassembler."
+  ],
+  "neverAlone": [
+    "N’envoie pas de message à votre place.",
+    "Ne tranche pas une priorité qui engage un client ou un chantier.",
+    "Ne s’occupe pas de la vie privée : le périmètre est professionnel."
+  ],
+  "tools": [
+    "Agenda professionnel",
+    "Messagerie",
+    "Listes de tâches",
+    "Tableurs de suivi"
+  ],
+  "result": "Une journée lisible, avec les oublis visibles avant qu’ils ne coûtent.",
+  "safeguards": [
+    "Les priorités proposées restent modifiables.",
+    "Aucune action sortante sans validation.",
+    "Le périmètre reste le travail de l’entreprise."
+  ],
+  "faqs": [
+    {
+      "question": "Est-ce un assistant personnel, au sens de la vie privée ?",
+      "answer": "Non. L’agent prépare le travail : échéances, demandes, relances. Il ne gère pas la vie personnelle."
+    },
+    {
+      "question": "Peut-il envoyer les relances seul ?",
+      "answer": "Non. Il les prépare et les rappelle. Une personne valide l’envoi."
+    },
+    {
+      "question": "Que se passe-t-il si l’agenda est incomplet ?",
+      "answer": "L’agent travaille avec ce qui est réellement saisi. Il ne complète pas les trous par une supposition."
+    }
+  ]
+}

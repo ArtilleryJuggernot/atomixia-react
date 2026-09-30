@@ -1,0 +1,67 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const security = await getEntry('security', 'garanties');
+if (!security) throw new Error('Sécurité manquante');
+const description =
+  'Accès par rôle, sources citées, journal des actions, validation humaine, hébergement maîtrisé et RGPD. La sécurité comme condition de l’agent.';
+---
+
+<Base title="Sécurité — Atomixia" description={description} path="/securite">
+  <Header />
+  <main id="contenu" class="px-5 pt-28 pb-24 sm:px-8">
+    <article class="mx-auto max-w-6xl">
+      <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Sécurité', href: '/securite' }]} />
+      <div class="mt-10 grid gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+          <p class="meta">Cadre</p>
+          <h1 class="display mt-4 text-5xl sm:text-6xl">Sécurité</h1>
+          <hr class="gold-rule" />
+          <p class="editorial mt-8">{security.data.editorial}</p>
+        </div>
+      </div>
+
+      <dl class="mt-16">
+        {
+          security.data.points.map((point) => (
+            <div class="grid gap-3 border-t border-parchment/10 py-6 md:grid-cols-12">
+              <dt class="font-display text-2xl tracking-tight md:col-span-4">{point.label}</dt>
+              <dd class="text-parchment-dim md:col-span-7">{point.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <section class="mt-16 grid gap-10 lg:grid-cols-12" aria-labelledby="journal">
+        <div class="lg:col-span-5">
+          <h2 id="journal" class="font-display text-3xl tracking-tight">Exemple de journal</h2>
+          <p class="mt-4 text-parchment-dim">
+            Une scène de fonctionnement, pas un extrait client. Le journal réel reprend la question, les pièces et la validation.
+          </p>
+        </div>
+        <ol class="glass lg:col-span-7">
+          {
+            security.data.journal.map((line) => (
+              <li class="border-b border-parchment/10 px-5 py-4 font-mono text-sm last:border-b-0">{line}</li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="mt-16 max-w-3xl" aria-labelledby="pratique">
+        <h2 id="pratique" class="font-display text-3xl tracking-tight">Cybersécurité</h2>
+        <p class="mt-4 text-parchment-dim">{security.data.practice}</p>
+        <p class="mt-4 text-parchment-dim">
+          Les droits sur les données personnelles sont décrits dans la <a class="text-gold-300 underline underline-offset-4" href="/confidentialite">politique de confidentialité</a>.
+        </p>
+      </section>
+
+      <a class="btn btn-gold mt-12" href="/contact">Décrire mon processus</a>
+    </article>
+  </main>
+  <Footer />
+</Base>

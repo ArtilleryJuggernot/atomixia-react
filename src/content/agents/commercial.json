@@ -1,0 +1,49 @@
+{
+  "title": "Agent commercial",
+  "navTitle": "Commercial",
+  "order": 4,
+  "transversal": false,
+  "role": "Devis, relances et pipeline",
+  "short": "Suit les devis ouverts, prépare les relances et les comptes-rendus. Pas de prospection massive.",
+  "x": 52,
+  "y": 44,
+  "editorial": "Relancer un devis n’est pas prospecter au hasard.",
+  "situation": "Le devis est parti. Dix jours plus tard, personne ne sait s’il a été lu, oublié ou perdu. Le suivi vit dans un tableur, une boîte mail et la tête du dirigeant.",
+  "does": [
+    "Suit les opportunités ouvertes.",
+    "Rappelle les devis sans réponse et prépare la relance.",
+    "Prépare le compte-rendu d’un échange.",
+    "Signale les dossiers devenus froids.",
+    "Range le pipeline : étape, prochaine action, date."
+  ],
+  "neverAlone": [
+    "Ne lance pas de prospection automatique massive.",
+    "N’engage pas un prix ou un délai sans validation.",
+    "N’écrit pas au client tant que la relance n’est pas relue."
+  ],
+  "tools": [
+    "Messagerie",
+    "Tableur ou outil de suivi",
+    "Documents de devis"
+  ],
+  "result": "Un pipeline tenu, des relances faites à temps, des comptes-rendus disponibles.",
+  "safeguards": [
+    "Pas de campagne vers des contacts qui n’ont rien demandé.",
+    "Chaque relance est validée.",
+    "Un dossier froid est signalé, pas relancé en boucle."
+  ],
+  "faqs": [
+    {
+      "question": "L’agent trouve-t-il de nouveaux clients ?",
+      "answer": "Non. Il suit les échanges déjà ouverts : devis, relances, comptes-rendus. La prospection massive n’est pas l’offre."
+    },
+    {
+      "question": "Peut-il accorder une remise ?",
+      "answer": "Non. Il peut rappeler le périmètre du devis. Le prix et le délai restent une décision humaine."
+    },
+    {
+      "question": "Faut-il un logiciel de CRM ?",
+      "answer": "Pas forcément. On part du suivi que vous avez déjà, même si c’est un tableur et une boîte mail."
+    }
+  ]
+}

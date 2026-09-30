@@ -1,0 +1,42 @@
+---
+import Mark from './Mark.astro';
+import { nav } from '../lib/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+function active(href: string) {
+  return path === href || path.startsWith(`${href}/`);
+}
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-40 border-b border-gold-500/25 bg-ink-900/95">
+  <input id="nav-toggle" class="peer" type="checkbox" />
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
+    <a href="/" class="flex items-center gap-3 text-parchment" aria-label="Atomixia, accueil">
+      <Mark />
+      <span class="font-display text-sm tracking-[0.18em] sm:text-base">ATOMIXIA</span>
+    </a>
+    <label for="nav-toggle" class="meta cursor-pointer px-3 py-2 lg:hidden">
+      <span class="menu-closed">Menu</span>
+      <span class="menu-open">Fermer</span>
+    </label>
+  </div>
+  <nav id="menu-principal" class="nav-panel" aria-label="Navigation principale">
+    <div class="flex w-full flex-col gap-1 lg:w-auto lg:flex-row lg:items-center lg:gap-1">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={active(item.href) ? 'page' : undefined}
+            class:list={[
+              'px-3 py-3 text-sm lg:py-2',
+              active(item.href) ? 'text-gold-300' : 'text-parchment-dim hover:text-parchment',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a class="btn btn-gold mt-3 lg:mt-0 lg:ml-3" href="/contact">Décrire mon processus</a>
+    </div>
+  </nav>
+</header>

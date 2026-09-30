@@ -1,0 +1,47 @@
+{
+  "title": "Agents sur mesure",
+  "navTitle": "Sur mesure",
+  "order": 6,
+  "transversal": true,
+  "role": "Support, onboarding, reporting, veille, opérations",
+  "short": "Un agent pour un geste précis qui n’entre pas dans le catalogue : support, onboarding, reporting, veille, opérations.",
+  "x": 40,
+  "y": 76,
+  "editorial": "Le métier dicte l’agent, pas l’inverse.",
+  "situation": "Le répétitif n’a pas toujours un nom du catalogue. Une demande de support qui revient, un onboarding où il manque toujours la même pièce, un reporting recopié, une veille documentaire, une opération interne.",
+  "does": [
+    "On part d’un processus observé, pas d’une liste d’idées.",
+    "On écrit ce que l’agent prépare et ce qu’une personne valide.",
+    "On le relie aux outils déjà utilisés.",
+    "Le périmètre reste un geste : classer, rappeler, rassembler, signaler."
+  ],
+  "neverAlone": [
+    "Pas de catalogue infini vendu d’avance.",
+    "Pas d’agent lancé sans processus observé.",
+    "Pas de décision qui engage l’entreprise sans validation."
+  ],
+  "tools": [
+    "Les outils déjà en place pour ce processus"
+  ],
+  "result": "Un agent limité à un geste précis, branché sur votre façon de travailler.",
+  "safeguards": [
+    "Le périmètre est écrit avant le branchement.",
+    "Les accès suivent les rôles.",
+    "Chaque action sortante est validée.",
+    "Si le processus change, l’agent s’arrête le temps de le revoir."
+  ],
+  "faqs": [
+    {
+      "question": "Quels sujets peuvent être traités ?",
+      "answer": "Support, onboarding, reporting, veille documentaire, opérations internes. Le principe est le même : un geste répétitif, une préparation, une décision humaine."
+    },
+    {
+      "question": "Proposez-vous une liste fermée de produits ?",
+      "answer": "Non. Les cinq agents du catalogue couvrent les demandes les plus fréquentes. Le sur-mesure part de votre processus, pas d’un menu."
+    },
+    {
+      "question": "Combien d’agents peut-on empiler ?",
+      "answer": "On commence par trois processus au plus, repérés pendant le diagnostic. Ajouter vient après, quand les premiers tournent."
+    }
+  ]
+}

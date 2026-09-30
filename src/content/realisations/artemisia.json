@@ -1,0 +1,13 @@
+{
+  "title": "Artemisia",
+  "kicker": "SaaS · BTP",
+  "order": 1,
+  "summary": "Logiciel de gestion commercialisé par Atomixia pour le bâtiment et les travaux publics.",
+  "body": [
+    "Artemisia couvre les chantiers, les agences et des dépenses personnalisables. C’est un outil collaboratif, avec des permissions fines.",
+    "Ce n’est pas un agent IA. C’est la preuve qu’Atomixia livre un produit réel, tenu par un métier, et le met entre les mains d’utilisateurs.",
+    "Le développement web, le SaaS, l’audit et la sensibilisation restent le socle qui rend un agent intégrable et sûr. Ils ne sont pas présentés ici comme des références clients : seuls les projets publics sont montrés."
+  ],
+  "stack": ["Laravel", "Livewire", "Alpine.js", "Tailwind", "MariaDB"],
+  "note": "Les noms de clients, logos et chiffres d’usage ne sont pas publiés."
+}

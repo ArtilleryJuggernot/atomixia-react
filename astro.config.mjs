@@ -32,6 +32,9 @@ export default defineConfig({
         "font-src 'self'",
         "connect-src 'self'",
       ],
+      styleDirective: {
+        resources: ["'self'", "'unsafe-inline'"],
+      },
     },
   },
   vite: {

@@ -11,12 +11,14 @@ export const site = {
   portfolio: 'https://hugo-jacquel.atomixia.fr',
   response: '24 à 48 h',
   promise: 'Vos processus tournent. Vous gardez la main.',
+  signature: 'Intelligence · Automatiser · Impact',
   description:
-    'Atomixia conçoit et déploie des agents IA qui exécutent le travail répétitif d’une TPE ou PME, avec un humain qui garde la décision. Lyon et Auvergne-Rhône-Alpes.',
+    'Atomixia conçoit des agents IA, des sites métier et des logiciels SaaS pour les TPE et PME, avec un humain qui garde la décision. Lyon et Auvergne-Rhône-Alpes.',
 } as const;
 
 export const nav = [
   { href: '/agents', label: 'Agents' },
+  { href: '/sites', label: 'Sites' },
   { href: '/methode', label: 'Méthode' },
   { href: '/securite', label: 'Sécurité' },
   { href: '/realisations', label: 'Réalisations' },

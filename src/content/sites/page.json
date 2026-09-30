@@ -1,0 +1,69 @@
+{
+  "title": "Sites métier et logiciels",
+  "editorial": "Une présence nette, ou un outil que l’équipe ouvre vraiment.",
+  "intro": "Atomixia conçoit des sites pour des activités concrètes et des logiciels quand le tableur ou la boîte mail ne suffisent plus. Le même soin que pour les agents : le geste d’abord, l’interface ensuite, une personne responsable à la fin.",
+  "tracks": [
+    {
+      "id": "metier",
+      "kicker": "Site métier",
+      "title": "Expliquer l’activité, puis permettre d’écrire",
+      "text": "Artisans, cabinets, entreprises du bâtiment, associations. Le site dit ce que vous faites, pour qui, et comment vous joindre. Pas de page générique interchangeable.",
+      "points": [
+        "Pages peu nombreuses, chacune avec un rôle",
+        "Preuves réelles : une réalisation, une zone, un téléphone",
+        "Formulaire qui qualifie le besoin, sans chatbot flottant",
+        "Lecture correcte sur téléphone, contraste et clavier"
+      ]
+    },
+    {
+      "id": "saas",
+      "kicker": "SaaS et outil interne",
+      "title": "Quand le site ne suffit plus à faire le travail",
+      "text": "Suivi de dossiers, comptes, documents, droits. On dessine le parcours de la personne qui s’en sert chaque semaine, puis l’écran. Artemisia, logiciel BTP commercialisé par Atomixia, est la preuve qu’un produit peut sortir de l’atelier et être utilisé. Ce n’est pas un agent IA.",
+      "points": [
+        "Comptes et permissions avant les tableaux de bord",
+        "Données utiles au métier, pas un faux cockpit",
+        "Une première version limitée, utilisable",
+        "Évolution ensuite, sur ce qui coince vraiment"
+      ]
+    },
+    {
+      "id": "relier",
+      "kicker": "Relier",
+      "title": "Le site, l’outil et l’agent dans le même flux",
+      "text": "Un formulaire peut nourrir un suivi. Un agent peut préparer une réponse à partir des pages et des pièces déjà là. On ne multiplie pas les logiciels pour le plaisir de les relier.",
+      "points": [
+        "Un flux nommé : de la demande jusqu’à la réponse",
+        "Les outils déjà en place sont regardés d’abord",
+        "Ce qui part vers un client reste validé par une personne"
+      ]
+    }
+  ],
+  "included": [
+    "Échange sur l’activité, les pages utiles et ce qui ne doit pas y figurer",
+    "Maquettes sobres, puis pages ou écrans construits",
+    "Textes travaillés avec vous, sans formule publicitaire vide",
+    "Formulaire ou parcours de connexion selon le cas",
+    "Mise en ligne discutée : nom de domaine, hébergement, sauvegardes"
+  ],
+  "limits": [
+    "Pas de promesse de trafic, de classement ou de chiffre d’affaires",
+    "Pas de catalogue de fonctionnalités infini dans la première version",
+    "Pas de remplacement de votre expert-comptable, de votre juriste ou de votre métier",
+    "Pas de tableau de bord décoratif qui ne sert aucune décision"
+  ],
+  "faqs": [
+    {
+      "question": "Un site vitrine et un logiciel, est-ce le même projet ?",
+      "answer": "Non. Le site explique et reçoit une demande. Le logiciel sert à faire le travail au quotidien. On peut commencer par l’un, et ne passer à l’autre que si le geste le justifie."
+    },
+    {
+      "question": "Artemisia est-il un modèle que vous dupliquez ?",
+      "answer": "Non. C’est un logiciel BTP réel, commercialisé par Atomixia. Il montre une capacité à livrer un produit. Votre outil, s’il y en a un, part de votre activité."
+    },
+    {
+      "question": "Pouvez-vous reprendre un site déjà en ligne ?",
+      "answer": "Oui, si le site actuel gêne la lecture ou la prise de contact. On regarde ce qui doit rester, ce qui doit être réécrit, et ce qui peut attendre."
+    }
+  ]
+}

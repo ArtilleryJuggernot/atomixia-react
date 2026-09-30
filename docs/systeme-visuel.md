@@ -14,7 +14,9 @@ Univers : atelier nocturne, précis, chaud, métallique. Peu d’effets. Beaucou
 | `gold-300` | `#ffe49a` | Or clair, survol |
 | `gold-400` | `#f5c542` | Bouton principal, focus |
 | `gold-500` | `#d9a521` | Filets, repères |
-| `cyan-flux` | `#4be1ec` | Signal actif seulement |
+| `cyan-flux` | `#4be1ec` | Signal électrique, filets, actions |
+| `cyan-deep` | `#2f9bff` | Dégradé du bouton et halo |
+| `silver` | `#d5dde6` | Chrome du mot-marque |
 
 Le violet n’apparaît que dans un halo radial très dilué (`rgba(139, 92, 246, 0.04)`), jamais en aplat.
 
@@ -34,7 +36,9 @@ Graisses réellement chargées, `font-display: optional`, fichiers latin et lati
 - Cartes verre : fond parchemin à 4 %, filet fin, sans ombre portée lourde.
 - Coins de visée : quatre segments or, réservés aux blocs qui portent une décision (diagnostic, Artemisia, cadre).
 - Filet or sous les titres, aligné à gauche, qui s’efface.
-- Bouton pilule or (texte encre) et bouton fantôme (filet or, texte parchemin).
+- Bouton pilule électrique (dégradé cyan, texte encre) et bouton fantôme (filet cyan).
+- Marque : le A argent et l’orbite cyan du logo, plus le mot-marque chromé. Signature : Intelligence · Automatiser · Impact.
+- Le hero porte le logo complet, avec une entrée GSAP et un halo. Le défilement révèle les cartes d’offres. `prefers-reduced-motion` laisse tout visible, sans boucle.
 - Grain fixe très léger (`/noise.png`, opacité 4 %) derrière le texte.
 - Focus visible : contour or 2 px, décalage 3 px. Curseur système natif.
 

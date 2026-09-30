@@ -104,6 +104,34 @@ const home = defineCollection({
       primary: z.string(),
       secondary: z.string(),
     }),
+    offers: z.object({
+      kicker: z.string(),
+      title: z.string(),
+      editorial: z.string(),
+      cards: z.array(
+        z.object({
+          index: z.string(),
+          kicker: z.string(),
+          title: z.string(),
+          text: z.string(),
+          points: z.array(z.string()),
+          href: z.string(),
+          cta: z.string(),
+          wide: z.boolean().default(false),
+        }),
+      ),
+    }),
+    craft: z.object({
+      kicker: z.string(),
+      title: z.string(),
+      editorial: z.string(),
+      items: z.array(
+        z.object({
+          label: z.string(),
+          text: z.string(),
+        }),
+      ),
+    }),
     context: z.array(
       z.object({
         label: z.string(),
@@ -168,6 +196,27 @@ const constellation = defineCollection({
   }),
 });
 
+const sites = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/sites' }),
+  schema: z.object({
+    title: z.string(),
+    editorial: z.string(),
+    intro: z.string(),
+    tracks: z.array(
+      z.object({
+        id: z.string(),
+        kicker: z.string(),
+        title: z.string(),
+        text: z.string(),
+        points: z.array(z.string()),
+      }),
+    ),
+    included: z.array(z.string()),
+    limits: z.array(z.string()),
+    faqs: z.array(faq),
+  }),
+});
+
 const about = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/about' }),
   schema: z.object({
@@ -186,4 +235,5 @@ export const collections = {
   home,
   constellation,
   about,
+  sites,
 };

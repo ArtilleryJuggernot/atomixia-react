@@ -1,0 +1,51 @@
+{
+  "title": "Agent connaissance",
+  "navTitle": "Connaissance",
+  "order": 1,
+  "transversal": false,
+  "role": "Base documentaire et recherche",
+  "short": "Interroge les documents déjà là et cite la pièce. Sans document, pas de réponse inventée.",
+  "x": 24,
+  "y": 28,
+  "editorial": "Une réponse sans pièce n’est pas une réponse.",
+  "situation": "Les devis, les CCTP, les comptes-rendus et les procédures existent. Au moment de répondre, le fichier est ailleurs. On répond de mémoire, ou l’on cherche trop longtemps.",
+  "does": [
+    "Dépose et classe les fichiers déjà présents : PDF, documents, échanges exportés.",
+    "Répond à une question en s’appuyant sur ces pièces.",
+    "Affiche la source : document, passage, date.",
+    "Dit clairement quand aucune pièce ne contient la réponse.",
+    "Aide à tenir le référentiel quand un document est remplacé."
+  ],
+  "neverAlone": [
+    "N’invente pas une clause, un délai ou un prix absent des documents.",
+    "Ne supprime pas un document sans validation.",
+    "Ne diffuse pas une pièce hors des accès prévus."
+  ],
+  "tools": [
+    "Dossiers partagés",
+    "PDF et documents bureautiques",
+    "Exports de messagerie",
+    "Stockage déjà utilisé par l’équipe"
+  ],
+  "result": "Une réponse traçable, ou l’aveu net qu’il manque une pièce.",
+  "safeguards": [
+    "Chaque réponse cite sa source.",
+    "Les accès suivent les rôles de l’entreprise.",
+    "Une recherche sans résultat reste vide.",
+    "Le journal conserve la question, les pièces consultées et la personne qui valide."
+  ],
+  "faqs": [
+    {
+      "question": "L’agent peut-il répondre si le document n’existe pas ?",
+      "answer": "Non. Il indique que la base ne contient pas l’information. C’est le comportement attendu, pas un échec à masquer."
+    },
+    {
+      "question": "Faut-il tout ressaisir ?",
+      "answer": "Non. On part des fichiers que vous avez déjà. Le travail consiste à les rendre interrogeables, pas à les réécrire."
+    },
+    {
+      "question": "Qui voit les documents ?",
+      "answer": "Les personnes autorisées pour ce dossier. L’agent n’élargit pas les accès."
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "editorial": "Rien ne part sans un responsable.",
+  "steps": [
+    {
+      "index": "01",
+      "title": "Observer",
+      "summary": "On regarde le travail tel qu’il se fait : qui agit, où sont les fichiers, où l’on oublie.",
+      "detail": "Pas de questionnaire abstrait. On suit une semaine réelle : un devis, un mail, une facture, une pièce introuvable. On note les gestes, les outils et les points où ça s’arrête."
+    },
+    {
+      "index": "02",
+      "title": "Cartographier",
+      "summary": "On nomme les étapes, les outils et les décisions. On choisit ce qu’un agent peut préparer.",
+      "detail": "Chaque étape a un responsable. Ce qui se répète est séparé de ce qui engage. On retient peu de processus, ceux qui font perdre du temps chaque semaine."
+    },
+    {
+      "index": "03",
+      "title": "Relier les outils",
+      "summary": "L’agent s’appuie sur la messagerie, les dossiers, le suivi et la facturation déjà en place.",
+      "detail": "On ne remplace pas l’outil métier s’il tient. On le relie. S’il manque un logiciel pour porter le processus, le développement web et le SaaS servent à ça — comme Artemisia pour le BTP."
+    },
+    {
+      "index": "04",
+      "title": "Poser les garde-fous",
+      "summary": "Rôles, sources, validation humaine, journal. Ce qui est interdit est écrit.",
+      "detail": "Avant le premier branchement : qui voit quoi, quelles pièces font foi, quelles actions exigent une validation, ce que l’agent n’a pas le droit de faire seul."
+    },
+    {
+      "index": "05",
+      "title": "Superviser",
+      "summary": "On suit les actions, on corrige, on arrête si le processus change.",
+      "detail": "Le journal sert à voir ce qui a été préparé et ce qui a été validé. Si le métier change, l’agent s’arrête le temps de revoir le périmètre."
+    }
+  ],
+  "support": [
+    {
+      "title": "Développement web et SaaS",
+      "text": "Quand le processus n’a pas d’outil, Atomixia peut concevoir le logiciel qui le porte. Artemisia, logiciel de gestion pour le BTP, est le produit déjà commercialisé. Le site et le logiciel ne sont pas l’affiche de l’accueil : ils rendent les agents utiles."
+    },
+    {
+      "title": "Audit et sensibilisation",
+      "text": "Les accès, les pièces et les habitudes sont regardés avant de brancher un agent. La sensibilisation sert à ce que l’équipe sache ce que l’agent voit, et ce qu’elle doit encore décider."
+    }
+  ]
+}

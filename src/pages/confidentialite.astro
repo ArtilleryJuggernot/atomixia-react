@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { site } from '../lib/site';
+
+const description = 'Politique de confidentialité d’Atomixia : données du formulaire, finalité, durée, droits.';
+---
+
+<Base title="Confidentialité — Atomixia" description={description} path="/confidentialite">
+  <Header />
+  <main id="contenu" class="px-5 pt-28 pb-24 sm:px-8">
+    <article class="prose-legal mx-auto max-w-3xl">
+      <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Confidentialité', href: '/confidentialite' }]} />
+      <h1 class="display mt-10 text-5xl text-parchment">Confidentialité</h1>
+      <hr class="gold-rule" />
+      <p class="mt-6 text-sm text-parchment-dim">Dernière mise à jour : 30 septembre 2026.</p>
+
+      <h2>Responsable</h2>
+      <p>
+        Atomixia, {site.founder}, {site.city}. Contact : <a href={`mailto:${site.email}`}>{site.email}</a>.
+        Aucun délégué à la protection des données n’est désigné sur cette page, faute d’information transmise.
+      </p>
+
+      <h2>Données du formulaire</h2>
+      <p>Le formulaire de contact demande :</p>
+      <ul class="list-disc space-y-2 pl-5">
+        <li>nom ;</li>
+        <li>adresse e-mail ;</li>
+        <li>téléphone, si vous le donnez ;</li>
+        <li>entreprise ;</li>
+        <li>processus à automatiser ;</li>
+        <li>outils déjà utilisés, si vous les indiquez ;</li>
+        <li>message ;</li>
+        <li>case de consentement.</li>
+      </ul>
+      <p>
+        Un champ invisible sert à écarter les envois automatiques. S’il est rempli, le message est ignoré et n’est pas enregistré.
+      </p>
+
+      <h2>Finalité et base</h2>
+      <p>
+        Ces informations servent uniquement à répondre à votre demande. La base est votre consentement, coché dans le formulaire, et les échanges préalables à une éventuelle prestation.
+      </p>
+      <p>Atomixia n’envoie pas de lettre d’information et ne vend pas ces données.</p>
+
+      <h2>Durée</h2>
+      <p>
+        Le message est conservé le temps de traiter la demande, puis supprimé, et au plus tard 24 mois après le dernier échange. Ce délai est celui retenu pour cette version du site ; il peut être ajusté si une durée différente est décidée.
+      </p>
+
+      <h2>Destinataires</h2>
+      <p>
+        La demande est lue par Atomixia. L’adresse IP n’est pas jointe au message enregistré. Les journaux techniques du serveur peuvent la contenir le temps d’un diagnostic.
+      </p>
+      <p>
+        L’hébergeur n’est pas nommé ici, faute de pièce. S’il est ajouté, il agit comme sous-traitant technique. Un prestataire d’envoi d’e-mails n’est branché que lorsqu’une clé est configurée ; sinon le message reste enregistré sur le serveur.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>Ce site ne dépose pas de cookie de mesure d’audience ni de cookie publicitaire.</p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Vous pouvez demander l’accès, la rectification, l’effacement, la limitation ou vous opposer au traitement, en écrivant à <a href={`mailto:${site.email}`}>{site.email}</a>.
+        Vous pouvez aussi saisir la CNIL.
+      </p>
+
+      <h2>Documents d’entreprise</h2>
+      <p>
+        Lors d’une prestation, les pièces que vous confiez à un agent sont traitées pour le processus convenu, avec les accès et la validation décrits sur la page <a href="/securite">Sécurité</a>. Elles ne servent pas à entraîner un modèle public.
+      </p>
+    </article>
+  </main>
+  <Footer />
+</Base>

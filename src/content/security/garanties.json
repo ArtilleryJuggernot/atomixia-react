@@ -1,0 +1,36 @@
+{
+  "editorial": "Un agent utile laisse une trace.",
+  "points": [
+    {
+      "label": "Accès par rôle",
+      "text": "L’agent voit ce que la personne est autorisée à voir. Un dossier fermé le reste."
+    },
+    {
+      "label": "Sources citées",
+      "text": "Une réponse sur un document nomme la pièce. Sans pièce, l’agent le dit."
+    },
+    {
+      "label": "Journal des actions",
+      "text": "Question, pièces consultées, texte préparé, personne qui valide : on peut revenir dessus."
+    },
+    {
+      "label": "Validation humaine",
+      "text": "Envoi, émission, engagement de prix ou de délai : une personne décide."
+    },
+    {
+      "label": "Hébergement maîtrisé",
+      "text": "L’hébergement se choisit avec vous : accès limités, documents qui ne servent pas à entraîner un modèle public."
+    },
+    {
+      "label": "RGPD",
+      "text": "Les données du formulaire et les documents d’entreprise sont traités pour répondre et pour faire tourner le processus convenu. Le détail est dans la politique de confidentialité."
+    }
+  ],
+  "practice": "La cybersécurité n’est pas une quatrième offre posée à côté. C’est la condition pour qu’un agent lise des devis, des factures et des mails sans ouvrir la porte. Les audits et la sensibilisation servent ce cadre : vérifier les accès, et faire en sorte que l’équipe sache ce qui est automatisé.",
+  "journal": [
+    "08 h 14 — question posée au dossier chantier",
+    "08 h 14 — pièce consultée : devis signé, page 2",
+    "08 h 16 — réponse préparée, en attente de validation",
+    "08 h 21 — validée par la personne responsable du dossier"
+  ]
+}

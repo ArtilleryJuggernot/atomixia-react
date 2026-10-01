@@ -1,0 +1,50 @@
+{
+  "title": "Agent facturation",
+  "navTitle": "Facturation",
+  "order": 5,
+  "transversal": false,
+  "role": "Préparation, relance et rapprochement",
+  "short": "Rassemble les éléments, prépare la facture et signale l’impayé. Une personne valide avant tout envoi.",
+  "x": 80,
+  "y": 64,
+  "editorial": "La facture est préparée. Elle ne part pas seule.",
+  "situation": "L’échéance est là. Les éléments sont dispersés : devis, avenants, heures, dépenses. La facture attend, puis l’impayé aussi.",
+  "does": [
+    "Rassemble les éléments utiles à la facture.",
+    "Prépare le projet de facture.",
+    "Repère les factures échues et propose une relance.",
+    "Soumet le document à une personne avant tout envoi."
+  ],
+  "neverAlone": [
+    "Ne remplace pas l’expert-comptable.",
+    "Ne produit pas seule un document légal définitif.",
+    "N’envoie ni facture ni relance sans validation humaine.",
+    "Ne modifie pas un taux, une mention obligatoire ou un avoir sans contrôle."
+  ],
+  "tools": [
+    "Devis et avenants",
+    "Suivi de chantier ou de prestation",
+    "Outil de facturation déjà utilisé"
+  ],
+  "result": "Des factures préparées plus tôt, des impayés visibles, une validation avant émission.",
+  "safeguards": [
+    "Validation humaine obligatoire avant émission.",
+    "Le cadre fiscal français et la facturation électronique restent dans les outils et les responsabilités prévus pour cela.",
+    "Un écart de montant est signalé, pas corrigé en silence.",
+    "L’agent prépare. Il ne se substitue pas à l’expert-comptable ni à l’outil qui émet la pièce."
+  ],
+  "faqs": [
+    {
+      "question": "L’agent envoie-t-il la facture à l’administration ?",
+      "answer": "Non. La facturation électronique et les obligations fiscales restent dans les outils certifiés et les responsabilités prévues. L’agent prépare et alerte."
+    },
+    {
+      "question": "Peut-il remplacer l’expert-comptable ?",
+      "answer": "Non. Il rassemble, prépare et signale. La validation comptable et fiscale reste humaine."
+    },
+    {
+      "question": "Une facture préparée est-elle une facture ?",
+      "answer": "Non. Tant qu’une personne ne l’a pas validée et que l’outil prévu ne l’a pas émise, ce n’est qu’un projet."
+    }
+  ]
+}

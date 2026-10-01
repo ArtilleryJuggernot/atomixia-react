@@ -1,0 +1,14 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['relative', className]}>
+  <span class="pointer-events-none absolute top-0 left-0 h-3 w-3 border-t border-l border-cyan-flux/80" aria-hidden="true"></span>
+  <span class="pointer-events-none absolute top-0 right-0 h-3 w-3 border-t border-r border-cyan-flux/80" aria-hidden="true"></span>
+  <span class="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-b border-l border-cyan-flux/80" aria-hidden="true"></span>
+  <span class="pointer-events-none absolute right-0 bottom-0 h-3 w-3 border-r border-b border-cyan-flux/80" aria-hidden="true"></span>
+  <slot />
+</div>

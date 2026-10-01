@@ -1,6 +1,9 @@
 node_modules/
 dist/
+.astro/
 .env
 .env.local
 *.log
 .DS_Store
+data/leads/*
+!data/leads/.gitkeep

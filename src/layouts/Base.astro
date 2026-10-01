@@ -1,0 +1,107 @@
+---
+import '../styles/global.css';
+import { site } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { title, description, path, jsonLd = [] } = Astro.props;
+const canonical = new URL(path, Astro.site).toString();
+const image = new URL('/og.png', Astro.site).toString();
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'ProfessionalService'],
+  '@id': `${site.url}/#organization`,
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/favicon.svg`,
+  image,
+  email: site.email,
+  telephone: '+33-7-81-22-31-71',
+  founder: {
+    '@type': 'Person',
+    name: site.founder,
+    url: site.portfolio,
+  },
+  areaServed: {
+    '@type': 'AdministrativeArea',
+    name: site.region,
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.city,
+    addressRegion: site.region,
+    addressCountry: 'FR',
+  },
+  description: site.description,
+};
+const graphs = [organization, ...jsonLd];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <meta name="theme-color" content="#06040f" />
+    <meta name="author" content={site.name} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Atomixia — Des agents IA pour le travail qui se répète" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    {
+      graphs.map((data) => (
+        <script type="application/ld+json" set:html={JSON.stringify(data)} />
+      ))
+    }
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <slot />
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && 'IntersectionObserver' in window) {
+        const nodes = document.querySelectorAll<HTMLElement>('[data-reveal]');
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add('is-in');
+              observer.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.18 },
+        );
+        nodes.forEach((node) => {
+          const rect = node.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.92) {
+            node.classList.add('is-in');
+            return;
+          }
+          node.classList.add('reveal-wait');
+          observer.observe(node);
+        });
+      }
+    </script>
+  </body>
+</html>

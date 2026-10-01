@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const description = 'Cette page n’existe pas sur le site Atomixia.';
+---
+
+<Base title="Page introuvable — Atomixia" description={description} path="/404">
+  <Header />
+  <main id="contenu" class="px-5 pt-32 pb-28 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      <p class="meta">404</p>
+      <h1 class="display mt-4 max-w-3xl text-5xl sm:text-7xl">Cette adresse ne mène nulle part.</h1>
+      <hr class="gold-rule" />
+      <p class="editorial mt-8 max-w-xl">La constellation s’arrête ici.</p>
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <a class="btn btn-gold" href="/">Retour à l’accueil</a>
+        <a class="btn btn-ghost" href="/contact">Écrire</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>

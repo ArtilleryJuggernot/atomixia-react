@@ -1,0 +1,150 @@
+{
+  "hero": {
+    "kicker": "Lyon · Auvergne-Rhône-Alpes",
+    "title": "Des agents, des sites, des outils qui tiennent.",
+    "subtitle": "Agents IA pour le travail qui se répète. Sites métier et logiciels SaaS pour l’activité réelle. La cybersécurité garde l’ensemble lisible, relié et sûr.",
+    "editorial": "Vos processus tournent. Vous gardez la main.",
+    "primary": "Décrire mon besoin",
+    "secondary": "Voir les offres"
+  },
+  "offers": {
+    "kicker": "L’atelier",
+    "title": "Quatre façons d’avancer, un même niveau d’exigence",
+    "editorial": "On ne vend pas une technologie. On livre un geste qui se répète moins.",
+    "cards": [
+      {
+        "index": "01",
+        "kicker": "Agents IA",
+        "title": "Le répétitif préparé, la décision gardée",
+        "text": "Connaissance documentaire, messagerie, relances commerciales et facturation. L’agent rassemble, classe et propose. Une personne valide avant l’envoi.",
+        "points": [
+          "Réponses citées, jamais inventées sans pièce",
+          "Relances et priorités tenues au jour le jour",
+          "Aucun envoi définitif sans validation humaine"
+        ],
+        "href": "/agents",
+        "cta": "Voir les agents",
+        "wide": true
+      },
+      {
+        "index": "02",
+        "kicker": "Sites métier",
+        "title": "Un site qui parle du travail, pas d’un modèle",
+        "text": "Pour un artisan, un cabinet, une entreprise du bâtiment ou une association. Pages nettes, preuves réelles, prise de contact qui qualifie le besoin.",
+        "points": [
+          "Structure lisible sur mobile",
+          "Formulaire utile, pas une boîte noire",
+          "Textes concrets, sans formule creuse"
+        ],
+        "href": "/sites#metier",
+        "cta": "Sites métier",
+        "wide": false
+      },
+      {
+        "index": "03",
+        "kicker": "SaaS",
+        "title": "Un logiciel branché sur l’activité",
+        "text": "Comptes, suivi, documents, droits d’accès. Artemisia, le logiciel BTP commercialisé par Atomixia, montre qu’un produit peut être livré et utilisé.",
+        "points": [
+          "Parcours d’usage avant l’interface",
+          "Droits, données et journal pensés tôt",
+          "Évolution possible après la première version"
+        ],
+        "href": "/sites#saas",
+        "cta": "Logiciels SaaS",
+        "wide": false
+      },
+      {
+        "index": "04",
+        "kicker": "Socle",
+        "title": "La sécurité comme condition du livrable",
+        "text": "Accès par rôle, hébergement discuté, traces des actions, conformité RGPD. L’audit et la sensibilisation restent disponibles quand le système existe déjà.",
+        "points": [
+          "Permissions explicites",
+          "Sources et actions journalisées",
+          "Hébergement maîtrisé si le contexte l’exige"
+        ],
+        "href": "/securite",
+        "cta": "Le cadre de sécurité",
+        "wide": true
+      }
+    ]
+  },
+  "craft": {
+    "kicker": "Dans la mission",
+    "title": "Ce qui est regardé avant d’écrire une ligne",
+    "editorial": "Le détail est le travail.",
+    "items": [
+      { "label": "Le geste", "text": "Qui le fait, combien de fois par semaine, où il se perd." },
+      { "label": "Les pièces", "text": "Devis, mails, factures, plans, tableaux. Ce qui existe déjà." },
+      { "label": "Les outils", "text": "Boîte mail, tableur, logiciel métier, site. On relie avant d’ajouter." },
+      { "label": "La décision", "text": "Ce que l’agent ou le site prépare, et ce qu’une personne doit encore signer." },
+      { "label": "Le cadre", "text": "Qui voit quoi, où vivent les données, ce qui reste dans le journal." },
+      { "label": "La suite", "text": "Une version utilisable, puis ce qui mérite d’être ajusté." }
+    ]
+  },
+  "context": [
+    {
+      "label": "Entreprise",
+      "value": "Atomixia",
+      "detail": "Fondée par Hugo Jacquel"
+    },
+    {
+      "label": "Zone",
+      "value": "Lyon et la région",
+      "detail": "Auvergne-Rhône-Alpes"
+    },
+    {
+      "label": "Réponse",
+      "value": "Sous 24 à 48 h",
+      "detail": "Après description du processus"
+    }
+  ],
+  "problem": {
+    "kicker": "Le quotidien",
+    "title": "Ce qui se perd dans la semaine",
+    "editorial": "L’oubli n’est pas un détail. C’est du temps.",
+    "items": [
+      "Un devis parti, jamais relancé",
+      "Une pièce technique introuvable au moment de répondre",
+      "Un mail long dont la décision reste dans la boîte",
+      "Un suivi commercial dispersé entre tableur et mémoire",
+      "Une facture à préparer, puis un impayé à relancer"
+    ]
+  },
+  "constellation": {
+    "kicker": "L’offre",
+    "title": "Les agents, et les liens entre eux",
+    "editorial": "Chaque étoile est un agent. Le lien est une donnée qui circule.",
+    "hint": "Tabulez ou survolez une étoile pour lire son rôle."
+  },
+  "demos": {
+    "kicker": "Fonctionnement",
+    "title": "Quatre scènes de travail",
+    "editorial": "L’agent prépare. Vous décidez."
+  },
+  "method": {
+    "kicker": "Méthode",
+    "title": "Cinq temps, puis le travail tourne",
+    "editorial": "Rien ne part sans un responsable."
+  },
+  "security": {
+    "kicker": "Sécurité",
+    "title": "Ce que l’on peut suivre",
+    "editorial": "Un agent utile laisse une trace."
+  },
+  "diagnostic": {
+    "kicker": "Diagnostic",
+    "title": "Trois processus, pas un catalogue",
+    "editorial": "On commence par votre semaine.",
+    "text": "Un échange suffit pour regarder le travail réel et nommer trois tâches répétitives qu’un agent peut préparer. Vous repartez avec une liste : ce qui peut tourner, ce qui doit rester une décision humaine, et les outils déjà en place.",
+    "price": null,
+    "cta": "Décrire mon processus"
+  },
+  "contact": {
+    "kicker": "Contact",
+    "title": "Décrire le processus",
+    "editorial": "Une réponse sous 24 à 48 h.",
+    "text": "Dites quel geste se répète, avec quels outils. Atomixia répond depuis Lyon."
+  }
+}

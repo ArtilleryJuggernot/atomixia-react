@@ -1,0 +1,18 @@
+{
+  "order": 3,
+  "layout": "timeline",
+  "kicker": "Commercial",
+  "title": "Un devis resté sans réponse",
+  "href": "/agents/commercial",
+  "sourceLabel": "Le dossier",
+  "source": "Devis envoyé il y a douze jours. Aucune réponse. Le suivi est une ligne de tableur et un souvenir.",
+  "outputLabel": "Relance préparée",
+  "output": [
+    "Le dossier est signalé comme tiède.",
+    "La relance rappelle le périmètre, sans remise inventée.",
+    "Elle propose un échange de quinze minutes.",
+    "La prochaine action est datée.",
+    "Rien n’est envoyé tant que la relance n’est pas relue."
+  ],
+  "hold": "Aucune prospection vers des contacts qui n’ont rien demandé."
+}

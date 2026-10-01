@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Frame from '../../components/Frame.astro';
+
+const agents = (await getCollection('agents')).sort((a, b) => a.data.order - b.data.order);
+const catalog = agents.filter((agent) => !agent.data.transversal);
+const custom = agents.find((agent) => agent.data.transversal);
+const description =
+  'Cinq agents pour le travail qui se répète : connaissance, quotidien, messagerie, commercial, facturation. Et un principe pour le sur-mesure.';
+---
+
+<Base title="Agents IA — Atomixia" description={description} path="/agents">
+  <Header />
+  <main id="contenu" class="px-5 pt-28 pb-20 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Agents', href: '/agents' }]} />
+      <div class="mt-10 grid gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+          <p class="meta">Catalogue</p>
+          <h1 class="display mt-4 text-5xl sm:text-6xl">Les agents</h1>
+          <hr class="gold-rule" />
+          <p class="editorial mt-8">Chaque agent prépare. Une personne décide.</p>
+        </div>
+        <p class="text-parchment-dim lg:col-span-4 lg:col-start-9 lg:pt-16">
+          Connaissance documentaire, organisation, messagerie, vente et facturation. Le sur-mesure couvre un geste qui n’entre pas dans cette liste.
+        </p>
+      </div>
+
+      <ol class="mt-16">
+        {
+          catalog.map((agent) => (
+            <li class="border-t border-parchment/10">
+              <a href={`/agents/${agent.id}`} class="grid gap-4 py-8 lg:grid-cols-12 lg:items-baseline">
+                <span class="meta text-gold-400 lg:col-span-2">{String(agent.data.order).padStart(2, '0')}</span>
+                <span class="font-display text-3xl tracking-tight lg:col-span-4">{agent.data.navTitle}</span>
+                <span class="text-parchment-dim lg:col-span-6">{agent.data.short}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+
+      {
+        custom && (
+          <div class="mt-16">
+            <Frame>
+              <div class="grid gap-8 px-6 py-10 sm:px-10 lg:grid-cols-12">
+                <div class="lg:col-span-5">
+                  <p class="meta">Transversal</p>
+                  <h2 class="display mt-4 text-4xl">{custom.data.title}</h2>
+                  <p class="editorial mt-6">{custom.data.editorial}</p>
+                </div>
+                <div class="lg:col-span-6 lg:col-start-7">
+                  <p class="text-parchment-dim">{custom.data.situation}</p>
+                  <ul class="mt-6 space-y-3 text-parchment-dim">
+                    {custom.data.does.map((item) => (
+                      <li class="border-t border-parchment/10 pt-3">{item}</li>
+                    ))}
+                  </ul>
+                  <a class="btn btn-ghost mt-8" href={`/agents/${custom.id}`}>Le principe</a>
+                </div>
+              </div>
+            </Frame>
+          </div>
+        )
+      }
+
+      <p class="mt-16">
+        <a class="btn btn-gold" href="/contact">Décrire mon processus</a>
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Base>

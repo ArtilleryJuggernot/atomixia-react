@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Frame from '../components/Frame.astro';
+
+const projects = (await getCollection('realisations')).sort((a, b) => a.data.order - b.data.order);
+const description = 'Artemisia, logiciel de gestion BTP commercialisé par Atomixia. Les références non publiques ne sont pas inventées.';
+---
+
+<Base title="Réalisations — Atomixia" description={description} path="/realisations">
+  <Header />
+  <main id="contenu" class="px-5 pt-28 pb-24 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Réalisations', href: '/realisations' }]} />
+      <p class="meta mt-10">Projets publics</p>
+      <h1 class="display mt-4 text-5xl sm:text-6xl">Réalisations</h1>
+      <hr class="gold-rule" />
+      <p class="editorial mt-8 max-w-2xl">Montrer ce qui existe.</p>
+
+      {
+        projects.map((project) => (
+          <article class="mt-16 grid gap-10 lg:grid-cols-12" aria-labelledby={`projet-${project.id}`}>
+            <div class="lg:col-span-7">
+              <p class="meta">{project.data.kicker}</p>
+              <h2 id={`projet-${project.id}`} class="display mt-4 text-6xl sm:text-7xl">{project.data.title}</h2>
+              <hr class="gold-rule" />
+              <div class="mt-8 space-y-4 text-parchment-dim">
+                {project.data.body.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+              <p class="meta mt-8">{project.data.stack.join(' · ')}</p>
+            </div>
+            <div class="lg:col-span-5">
+              <Frame>
+                <div class="glass px-6 py-8">
+                  <p class="meta">Produit métier</p>
+                  <p class="mt-4 text-lg">{project.data.summary}</p>
+                  <p class="mt-6 text-sm text-parchment-dim">{project.data.note}</p>
+                </div>
+              </Frame>
+            </div>
+          </article>
+        ))
+      }
+
+      <a class="btn btn-gold mt-16" href="/contact">Parler d’un processus</a>
+    </div>
+  </main>
+  <Footer />
+</Base>

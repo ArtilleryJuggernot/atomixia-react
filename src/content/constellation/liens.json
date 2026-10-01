@@ -1,0 +1,11 @@
+{
+  "links": [
+    { "from": "connaissance", "to": "commercial", "label": "Pièces citées" },
+    { "from": "connaissance", "to": "facturation", "label": "Éléments de facture" },
+    { "from": "messagerie", "to": "quotidien", "label": "Demandes extraites" },
+    { "from": "messagerie", "to": "commercial", "label": "Opportunités" },
+    { "from": "commercial", "to": "facturation", "label": "Devis acceptés" },
+    { "from": "quotidien", "to": "commercial", "label": "Relances du jour" },
+    { "from": "sur-mesure", "to": "connaissance", "label": "Selon le métier" }
+  ]
+}

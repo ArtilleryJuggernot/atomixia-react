@@ -1,0 +1,17 @@
+{
+  "order": 1,
+  "layout": "citation",
+  "kicker": "Connaissance",
+  "title": "Une question posée aux documents",
+  "href": "/agents/connaissance",
+  "sourceLabel": "La question",
+  "source": "Quel délai de paiement est prévu pour l’agence sur ce chantier ?",
+  "outputLabel": "Ce que l’agent prépare",
+  "output": [
+    "Il cherche dans les pièces déposées, pas dans une réponse générale.",
+    "Il ouvre le devis signé et le cahier des charges du dossier.",
+    "Réponse citée : « 30 jours fin de mois, devis signé du 12 mars, page 2. »",
+    "Si la clause est absente : « Aucune pièce de la base ne contient ce délai. »"
+  ],
+  "hold": "Une personne vérifie la page citée avant de répondre au client."
+}

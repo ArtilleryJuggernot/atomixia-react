@@ -1,0 +1,46 @@
+{
+  "title": "Agent messagerie",
+  "navTitle": "Messagerie",
+  "order": 3,
+  "transversal": false,
+  "role": "Tri, résumé et réponses préparées",
+  "short": "Trie les fils, en extrait la demande et prépare la réponse. L’envoi reste validé par une personne.",
+  "x": 16,
+  "y": 58,
+  "editorial": "Le mail est trié. L’envoi reste le vôtre.",
+  "situation": "Un fil de vingt messages contient une demande, une date et une pièce jointe que personne n’a extraite. La réponse part tard, ou pas.",
+  "does": [
+    "Trie les fils selon le dossier et l’urgence.",
+    "Résume ce qui a été dit, demandé, promis.",
+    "Extrait les demandes et les pièces manquantes.",
+    "Prépare une réponse factuelle, prête à relire."
+  ],
+  "neverAlone": [
+    "N’envoie aucun message sans validation humaine.",
+    "N’efface pas un fil.",
+    "Ne promet rien à un expéditeur sans relecture."
+  ],
+  "tools": [
+    "Messagerie professionnelle"
+  ],
+  "result": "Moins de fils en retard. Des réponses préparées, assumées par une personne.",
+  "safeguards": [
+    "L’envoi est un geste humain.",
+    "Le résumé reste lié au fil d’origine.",
+    "Les pièces jointes ne sortent pas du cadre d’accès."
+  ],
+  "faqs": [
+    {
+      "question": "L’agent envoie-t-il les e-mails ?",
+      "answer": "Non. Il prépare le texte. Une personne relit et décide d’envoyer."
+    },
+    {
+      "question": "Peut-il répondre à un inconnu ?",
+      "answer": "Il peut préparer une réponse prudente. Il n’engage pas l’entreprise et n’envoie rien seul."
+    },
+    {
+      "question": "Le résumé remplace-t-il le fil ?",
+      "answer": "Non. Le fil reste la source. Le résumé sert à décider plus vite, pas à effacer l’échange."
+    }
+  ]
+}

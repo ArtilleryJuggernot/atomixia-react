@@ -1021,8 +1021,193 @@ footer .grid > * {
   .hero-system-net,
   .bento-card,
   .btn-flux,
-  .btn-gold {
+  .btn-gold,
+  .phrase-swap,
+  .robot-eye,
+  .robot-antenna,
+  .geo-ring {
     animation: none;
     transition: none;
   }
+}
+
+.phrase-line {
+  min-height: 1.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  letter-spacing: -0.03em;
+  color: #8cf4ff;
+}
+
+.phrase-swap {
+  display: inline-block;
+}
+
+.quote-band {
+  position: relative;
+  margin: 0;
+  padding: 0.25rem 0 0.25rem 1.4rem;
+  border-left: 1px solid rgba(75, 225, 236, 0.45);
+}
+
+.quote-band p {
+  max-width: 40rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  line-height: 1.3;
+}
+
+.quote-band figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin-top: 0.85rem;
+}
+
+.geo-diamond,
+.geo-diamond-lg {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.7rem;
+  background: #4be1ec;
+  transform: rotate(45deg);
+  vertical-align: middle;
+}
+
+.geo-diamond-lg {
+  position: absolute;
+  top: 14%;
+  right: 12%;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: 0;
+}
+
+.geo-ring {
+  position: absolute;
+  inset: 10% 12%;
+  border: 1px solid rgba(75, 225, 236, 0.3);
+  border-radius: 999px;
+}
+
+.site-stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.8rem;
+  min-height: 17rem;
+  color: #4be1ec;
+}
+
+.site-stage .robot,
+.hero-robot .robot {
+  width: min(8.5rem, 42vw);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-robot {
+  position: absolute;
+  right: 1%;
+  bottom: 0;
+  z-index: 2;
+  width: 4.8rem;
+  color: #4be1ec;
+}
+
+.hero-robot .robot {
+  width: 100%;
+}
+
+.kit {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.kit-item summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 1rem 1.05rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.kit-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.kit-mark {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 1rem;
+  line-height: 1;
+  vertical-align: 0.05em;
+}
+
+.kit-item p {
+  padding: 0 1.05rem 1rem 4.5rem;
+  color: #b8b3a6;
+}
+
+.kit-item[open] summary svg {
+  color: #4be1ec;
+}
+
+@media (min-width: 768px) {
+  .kit {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero-robot {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    justify-self: end;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .phrase-swap {
+    animation: phrase-in 0.45s var(--ease-out);
+  }
+
+  .robot-eye {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: robot-blink 4.8s ease-in-out infinite;
+  }
+
+  .robot-antenna {
+    transform-origin: 80px 36px;
+    animation: antenna 3.4s ease-in-out infinite;
+  }
+
+  .geo-ring {
+    animation: ring-turn 32s linear infinite;
+  }
+}
+
+@keyframes phrase-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes robot-blink {
+  0%, 42%, 48%, 100% { transform: scaleY(1); }
+  45% { transform: scaleY(0.12); }
+}
+
+@keyframes antenna {
+  50% { transform: rotate(7deg); }
+}
+
+@keyframes ring-turn {
+  to { transform: rotate(360deg); }
 }

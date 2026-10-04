@@ -1,0 +1,20 @@
+---
+interface Props {
+  text: string;
+  author: string;
+  work: string;
+}
+
+const { text, author, work } = Astro.props;
+---
+
+<figure class="quote-band">
+  <span class="geo-diamond" aria-hidden="true"></span>
+  <blockquote>
+    <p>« {text} »</p>
+  </blockquote>
+  <figcaption>
+    <span class="meta text-cyan-flux">{author}</span>
+    <span class="meta">{work}</span>
+  </figcaption>
+</figure>

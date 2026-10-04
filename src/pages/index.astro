@@ -5,7 +5,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import HeroSystem from '../components/HeroSystem.astro';
+import Quote from '../components/Quote.astro';
 import AgentTheater from '../components/islands/AgentTheater';
+import PhraseCycle from '../components/islands/PhraseCycle';
 import TaskMatcher from '../components/islands/TaskMatcher';
 import { site } from '../lib/site';
 
@@ -101,6 +103,13 @@ const steps = [
           <p class="mt-6 max-w-md text-lg text-parchment-dim">
             Nous concevons, automatisons et sécurisons vos logiciels. Vous gardez la décision.
           </p>
+          <p class="phrase-line mt-4">
+            <PhraseCycle
+              client:visible
+              phrases={['Un site qui explique.', 'Un agent qui prépare.', 'Une charte qui tient.', 'Un message qui arrive.']}
+            />
+            <span class="sr-only">Un site, un agent, une charte, un message qui arrive.</span>
+          </p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
             <a class="btn btn-flux" href="/contact">Parlons de votre projet</a>
             <a class="btn btn-ghost" href="#expertises">Découvrir les expertises</a>
@@ -130,6 +139,16 @@ const steps = [
           <p class="mt-1 text-sm text-parchment-dim">Logiciel BTP, pas un agent</p>
         </li>
       </ul>
+    </section>
+
+    <section class="px-5 py-14 sm:px-8" aria-label="Repère stoïcien">
+      <div class="mx-auto max-w-6xl">
+        <Quote
+          text="Ce n’est pas que nous ayons peu de temps : c’est que nous en perdons beaucoup."
+          author="Sénèque"
+          work="De la brièveté de la vie"
+        />
+      </div>
     </section>
 
     <section id="probleme" class="px-5 py-20 sm:px-8" aria-labelledby="probleme-title" data-reveal>

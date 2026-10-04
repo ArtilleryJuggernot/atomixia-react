@@ -21,14 +21,14 @@ function active(href: string) {
     </label>
   </div>
   <nav id="menu-principal" class="nav-panel" aria-label="Navigation principale">
-    <div class="flex w-full flex-col gap-1 lg:w-auto lg:flex-row lg:items-center lg:gap-1">
+    <div class="flex w-full flex-col gap-1 min-[80rem]:w-auto min-[80rem]:flex-row min-[80rem]:items-center min-[80rem]:gap-1">
       {
         nav.map((item) => (
           <a
             href={item.href}
             aria-current={active(item.href) ? 'page' : undefined}
             class:list={[
-              'px-3 py-3 text-sm lg:py-2',
+              'nav-link px-3 py-3 text-sm min-[80rem]:py-2',
               active(item.href) ? 'text-cyan-flux' : 'text-parchment-dim hover:text-parchment',
             ]}
           >
@@ -36,7 +36,7 @@ function active(href: string) {
           </a>
         ))
       }
-      <a class="btn btn-flux mt-3 lg:mt-0 lg:ml-3" href="/contact">Décrire mon besoin</a>
+      <a class="btn btn-flux mt-3 min-[80rem]:mt-0 min-[80rem]:ml-3" href="/contact">Parlons de votre projet</a>
     </div>
   </nav>
 </header>

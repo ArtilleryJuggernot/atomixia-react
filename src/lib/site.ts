@@ -10,18 +10,16 @@ export const site = {
   region: 'Auvergne-Rhône-Alpes',
   portfolio: 'https://hugo-jacquel.atomixia.fr',
   response: '24 à 48 h',
-  promise: 'Vos processus tournent. Vous gardez la main.',
+  promise: 'Nous concevons, automatisons et sécurisons vos systèmes numériques.',
   signature: 'Intelligence · Automatiser · Impact',
   description:
-    'Atomixia conçoit des agents IA, des sites métier et des logiciels SaaS pour les TPE et PME, avec un humain qui garde la décision. Lyon et Auvergne-Rhône-Alpes.',
+    'Atomixia conçoit, automatise et sécurise des systèmes numériques : sites, SaaS, agents IA, audit et pentest. Lyon et Auvergne-Rhône-Alpes.',
 } as const;
 
 export const nav = [
+  { href: '/#expertises', label: 'Expertises' },
   { href: '/usages', label: 'Usages' },
-  { href: '/agents', label: 'Agents' },
-  { href: '/sites', label: 'Sites' },
   { href: '/methode', label: 'Méthode' },
   { href: '/securite', label: 'Sécurité' },
   { href: '/realisations', label: 'Réalisations' },
-  { href: '/contact', label: 'Contact' },
 ] as const;

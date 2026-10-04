@@ -1,0 +1,139 @@
+{
+  "label": "Commerce et artisan",
+  "order": 2,
+  "intro": "Le quotidien d’un commerce, d’un artisan ou d’une petite équipe : demandes, devis, relances, avis, papiers.",
+  "cases": [
+    {
+      "id": "disponibilites",
+      "order": 1,
+      "featured": true,
+      "family": "Demandes",
+      "title": "Demandes de disponibilité",
+      "pain": "Les clients demandent un créneau, et la réponse attend.",
+      "kind": "question",
+      "question": "Est-ce que vous avez encore des disponibilités jeudi prochain ?",
+      "intake": ["Message client", "Calendrier", "Durée habituelle"],
+      "logs": ["Lecture de la demande", "Créneaux jeudi comparés", "Réponse rédigée"],
+      "lines": [
+        "Jeudi 14 h est libre",
+        "Jeudi 16 h est déjà pris",
+        "Réponse proposée, au ton de la maison"
+      ],
+      "sources": ["Agenda de la semaine"],
+      "result": "Une réponse personnalisée est prête. Le créneau n’est pas bloqué tout seul.",
+      "hold": "Vous envoyez, ou vous corrigez l’horaire."
+    },
+    {
+      "id": "devis-artisan",
+      "order": 2,
+      "featured": true,
+      "family": "Commercial",
+      "title": "Préparation d’un devis",
+      "pain": "Chaque demande doit être relue pour en sortir les quantités.",
+      "kind": "pipeline",
+      "intake": ["Message client", "Photos", "Ancien devis"],
+      "logs": ["Prestation reconnue", "Quantités et contraintes extraites", "Pré-estimation préparée"],
+      "lines": [
+        "Prestation : reprise de façade",
+        "Surface indiquée : 80 m²",
+        "Adresse et accès notés",
+        "Contrainte : échafaudage à prévoir"
+      ],
+      "result": "Les éléments du devis sont rassemblés. Le prix reste votre décision.",
+      "hold": "Pas de devis définitif sans votre validation, ni sans le cadre fiscal qui vous concerne."
+    },
+    {
+      "id": "relance-devis",
+      "order": 3,
+      "featured": true,
+      "family": "Commercial",
+      "title": "Relance des devis",
+      "pain": "Je dois relancer mes prospects à la main.",
+      "kind": "timeline",
+      "intake": ["Devis envoyé"],
+      "logs": ["Échéance surveillée", "Absence de réponse constatée", "Message préparé"],
+      "beats": [
+        { "at": "Jour J", "text": "Le devis part. L’agent note la date." },
+        { "at": "J+3", "text": "Pas de réponse. Une relance courte est prête." },
+        { "at": "J+7", "text": "Toujours rien. Une seconde relance attend votre accord." }
+      ],
+      "result": "Les devis silencieux ne restent plus au fond du tableau.",
+      "hold": "La relance ne part pas seule."
+    },
+    {
+      "id": "avis",
+      "order": 4,
+      "featured": false,
+      "family": "Communication",
+      "title": "Avis clients",
+      "pain": "Un avis arrive, et la réponse est remise au soir.",
+      "kind": "inbox",
+      "intake": ["Avis reçu — délai tenu, équipe soigneuse", "Avis reçu — attente trop longue"],
+      "logs": ["Ton lu", "Point concret isolé", "Réponse proposée"],
+      "buckets": [
+        { "label": "Positif", "count": "1", "tone": "ok" },
+        { "label": "À répondre", "count": "1", "tone": "warn" }
+      ],
+      "highlights": ["Attente trop longue — remercier, expliquer le créneau, proposer un rappel"],
+      "result": "Le ton est qualifié. La réponse est écrite, pas publiée.",
+      "hold": "Vous publiez la réponse vous-même."
+    },
+    {
+      "id": "canaux",
+      "order": 5,
+      "featured": true,
+      "family": "Demandes",
+      "title": "Toutes les demandes au même endroit",
+      "pain": "E-mail, formulaire, message, appel : chacun vit dans son coin.",
+      "kind": "pipeline",
+      "intake": ["E-mail", "Formulaire", "Message", "Appel retranscrit"],
+      "logs": ["Demandes rassemblées", "Doublons rapprochés", "File unique préparée"],
+      "lines": [
+        "4 demandes ouvertes",
+        "1 doublon : même client, deux canaux",
+        "1 urgence : fuite signalée",
+        "Le reste peut attendre demain"
+      ],
+      "result": "Une file, pas quatre boîtes à ouvrir.",
+      "hold": "Les canaux ne sont branchés qu’avec votre accord."
+    },
+    {
+      "id": "papiers",
+      "order": 6,
+      "featured": false,
+      "family": "Documents",
+      "title": "Papiers et factures",
+      "pain": "Factures, bons et documents fournisseurs s’empilent.",
+      "kind": "pipeline",
+      "intake": ["Facture PDF", "Bon de commande", "Document fournisseur"],
+      "logs": ["Lecture du document", "Nom proposé", "Dossier de classement", "Transmission préparée"],
+      "lines": [
+        "Fournisseur, date, montant extraits",
+        "Nom de fichier proposé",
+        "Dossier : achats / mars",
+        "À transmettre à la comptabilité"
+      ],
+      "result": "Le document est nommé, classé, prêt à suivre.",
+      "hold": "L’agent ne remplace pas l’expert-comptable et ne signe rien."
+    },
+    {
+      "id": "relances-jour",
+      "order": 7,
+      "featured": true,
+      "family": "Commercial",
+      "title": "Liste du matin",
+      "pain": "Je ne sais plus qui relancer aujourd’hui.",
+      "kind": "status",
+      "intake": ["Devis ouverts", "Clients sans nouvelle", "Demandes en attente"],
+      "logs": ["Dossiers froids repérés", "Priorité calculée selon vos règles"],
+      "meters": [
+        { "label": "À relancer aujourd’hui", "value": "5" },
+        { "label": "Devis sans réponse", "value": "3" },
+        { "label": "Clients inactifs", "value": "2" }
+      ],
+      "highlights": ["Martin — devis façade, J+6", "Bernard — deuxième rappel"],
+      "result": "Cinq noms, dans cet exemple, au lieu d’un tableau à relire.",
+      "hold": "La liste propose. L’appel reste le vôtre."
+    }
+  ]
+}

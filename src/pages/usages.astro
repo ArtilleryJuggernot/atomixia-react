@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AgentTheater from '../components/islands/AgentTheater';
+import TaskMatcher from '../components/islands/TaskMatcher';
+import { site } from '../lib/site';
+
+const groups = (await getCollection('usages'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => ({
+    id: entry.id,
+    label: entry.data.label,
+    intro: entry.data.intro,
+    cases: [...entry.data.cases].sort((a, b) => a.order - b.order),
+  }));
+
+const description =
+  'Exemples concrets de tâches qu’un agent Atomixia peut préparer : e-mails, documents, veille, devis, relances, briefing.';
+---
+
+<Base title="Usages — Atomixia" description={description} path="/usages">
+  <Header />
+  <main id="contenu" class="px-5 pt-28 pb-24 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Usages', href: '/usages' }]} />
+      <p class="meta mt-10 text-cyan-flux">{site.city}</p>
+      <h1 class="display mt-4 max-w-4xl text-5xl text-pretty sm:text-6xl">Vous avez une tâche répétitive ?</h1>
+      <hr class="gold-rule" />
+      <p class="editorial mt-8 max-w-2xl">Donnez-la à un agent.</p>
+      <p class="mt-4 max-w-2xl text-parchment-dim">
+        Voici une tâche pénible, l’agent qui s’en occupe, et le résultat. Les nombres sont ceux de la scène, pas un bilan d’Atomixia.
+      </p>
+      <div class="mt-12">
+        <AgentTheater client:visible groups={groups} />
+      </div>
+      <section class="mt-20" aria-labelledby="decrire">
+        <h2 id="decrire" class="display text-4xl sm:text-5xl">Décrivez une tâche à automatiser.</h2>
+        <hr class="gold-rule" />
+        <div class="mt-10">
+          <TaskMatcher client:visible />
+        </div>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Base>

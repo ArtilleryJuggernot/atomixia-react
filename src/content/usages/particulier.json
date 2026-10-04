@@ -1,0 +1,102 @@
+{
+  "label": "Particulier",
+  "order": 3,
+  "intro": "L’administratif personnel aussi se répète : papiers, échéances, voyages, agenda familial.",
+  "cases": [
+    {
+      "id": "assistant-perso",
+      "order": 1,
+      "featured": true,
+      "family": "Quotidien",
+      "title": "Assistant personnel",
+      "pain": "E-mails, papiers, rendez-vous : tout est éparpillé.",
+      "kind": "pipeline",
+      "intake": ["E-mails", "Documents", "Rendez-vous", "Factures", "Voyage"],
+      "logs": ["Regroupement des pièces", "Échéances repérées", "Ce qui attend une réponse"],
+      "lines": [
+        "Deux rendez-vous cette semaine",
+        "Une facture à classer",
+        "Un document à renouveler",
+        "Un message qui attend"
+      ],
+      "result": "Le quotidien est regroupé sur un seul écran.",
+      "hold": "Rien n’est envoyé ni payé sans vous."
+    },
+    {
+      "id": "docs-perso",
+      "order": 2,
+      "featured": true,
+      "family": "Documents",
+      "title": "Papiers de la maison",
+      "pain": "Assurance, garantie, facture : je ne retrouve plus le document.",
+      "kind": "question",
+      "question": "Quand se termine ma garantie ?",
+      "intake": ["Assurance", "Contrat", "Facture", "Notice", "Garantie"],
+      "logs": ["Documents classés", "Dates extraites", "Réponse citée"],
+      "lines": [
+        "Garantie : jusqu’au 12 mars 2027",
+        "Facture d’achat citée",
+        "Renouvellement assurance : dans 40 jours"
+      ],
+      "sources": ["Facture électroménager", "Conditions de garantie"],
+      "result": "La date est dans le document, pas dans une réponse inventée.",
+      "hold": "Vos papiers restent dans le périmètre que vous choisissez."
+    },
+    {
+      "id": "voyage",
+      "order": 3,
+      "featured": true,
+      "family": "Organisation",
+      "title": "Préparation d’un voyage",
+      "pain": "Comparer transports, horaires et budget prend la soirée.",
+      "kind": "pipeline",
+      "intake": ["Destination", "Dates", "Budget indiqué", "Contraintes"],
+      "logs": ["Trajets comparés", "Hébergements listés", "Journées esquissées"],
+      "lines": [
+        "Deux options de transport, avec durées",
+        "Hébergement dans le budget indiqué",
+        "Une journée type, sans surcharger",
+        "Ce qui reste à réserver vous-même"
+      ],
+      "result": "Un itinéraire à relire, pas une réservation passée en silence.",
+      "hold": "Rien n’est payé ni réservé sans vous."
+    },
+    {
+      "id": "abonnements",
+      "order": 4,
+      "featured": true,
+      "family": "Administratif",
+      "title": "Abonnements",
+      "pain": "Je ne vois plus ce qui se renouvelle, ni ce qui a augmenté.",
+      "kind": "watch",
+      "intake": ["Factures", "Relevés", "Échéances"],
+      "logs": ["Lignes récurrentes repérées", "Écart de montant comparé", "Dates de renouvellement notées"],
+      "lines": [
+        "Un abonnement sans usage récent",
+        "Une hausse de prix sur une ligne",
+        "Un renouvellement dans 20 jours"
+      ],
+      "result": "Trois points à regarder, au lieu de relire les relevés.",
+      "hold": "L’agent ne résilie rien tout seul."
+    },
+    {
+      "id": "famille",
+      "order": 5,
+      "featured": true,
+      "family": "Organisation",
+      "title": "Agenda familial",
+      "pain": "Activités, rendez-vous et tâches sont dans trois calendriers.",
+      "kind": "status",
+      "intake": ["Calendriers", "Messages", "Listes"],
+      "logs": ["Événements de la semaine rassemblés", "Conflits d’horaire signalés"],
+      "meters": [
+        { "label": "Rendez-vous", "value": "4" },
+        { "label": "Activités", "value": "3" },
+        { "label": "Conflit d’horaire", "value": "1" }
+      ],
+      "highlights": ["Mardi 17 h : deux événements au même moment"],
+      "result": "La semaine tient sur une vue. Les calendriers sources ne sont pas écrasés.",
+      "hold": "Vous déplacez le rendez-vous. L’agent ne le fait pas à votre place."
+    }
+  ]
+}

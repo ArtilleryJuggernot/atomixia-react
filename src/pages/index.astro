@@ -8,6 +8,8 @@ import Constellation from '../components/islands/Constellation';
 import Demos from '../components/islands/Demos';
 import HeroStage from '../components/islands/HeroStage';
 import StageMotion from '../components/islands/StageMotion';
+import AgentTheater from '../components/islands/AgentTheater';
+import TaskMatcher from '../components/islands/TaskMatcher';
 import { site } from '../lib/site';
 
 const home = await getEntry('home', 'page');
@@ -32,6 +34,15 @@ const nodes = agents.map((agent) => ({
   href: `/agents/${agent.id}`,
 }));
 const scenes = demos.map((demo) => ({ id: demo.id, ...demo.data }));
+const usageGroups = (await getCollection('usages'))
+  .filter((entry) => entry.id !== 'bibliotheque')
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => ({
+    id: entry.id,
+    label: entry.data.label,
+    intro: entry.data.intro,
+    cases: entry.data.cases.filter((item) => item.featured).sort((a, b) => a.order - b.order),
+  }));
 ---
 
 <Base
@@ -128,6 +139,38 @@ const scenes = demos.map((demo) => ({ id: demo.id, ...demo.data }));
             ))
           }
         </dl>
+      </div>
+    </section>
+
+    <section id="en-action" class="px-5 py-20 sm:px-8" aria-labelledby="action-title">
+      <div class="mx-auto max-w-6xl">
+        <p class="meta text-cyan-flux">En action</p>
+        <h2 id="action-title" class="display mt-4 max-w-3xl text-4xl sm:text-5xl">Une tâche pénible. Un agent. Un résultat.</h2>
+        <hr class="gold-rule" />
+        <p class="editorial mt-8 max-w-2xl">Vous n’avez pas besoin de connaître les modèles. Vous voyez le travail partir, puis revenir prêt.</p>
+        <p class="mt-4 max-w-2xl text-sm text-parchment-dim">Les nombres affichés sont ceux d’une scène. Ils ne décrivent pas l’activité d’Atomixia.</p>
+        <div class="mt-12">
+          <AgentTheater client:visible groups={usageGroups} />
+        </div>
+        <p class="mt-8">
+          <a class="btn btn-ghost" href="/usages">Toute la bibliothèque d’usages</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="tache" class="px-5 pb-16 sm:px-8" aria-labelledby="tache-title">
+      <div class="mx-auto max-w-6xl">
+        <Frame>
+          <div class="px-6 py-10 sm:px-10">
+            <p class="meta text-cyan-flux">Votre tâche</p>
+            <h2 id="tache-title" class="display mt-4 max-w-3xl text-4xl sm:text-5xl">Quelle tâche vous fait perdre du temps ?</h2>
+            <hr class="gold-rule" />
+            <p class="editorial mt-8 max-w-2xl">Donnez-la à un agent.</p>
+            <div class="mt-10">
+              <TaskMatcher client:visible />
+            </div>
+          </div>
+        </Frame>
       </div>
     </section>
 

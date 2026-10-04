@@ -10,4 +10,4 @@ Ces éléments n’ont pas été inventés.
 - Prestataire d’e-mail transactionnel. Le formulaire enregistre la demande côté serveur (`data/leads/contacts.jsonl`, ou `LEADS_PATH`). L’envoi par Resend ne part que si `RESEND_API_KEY` et `CONTACT_FROM` sont définis. `CONTACT_TO` vaut par défaut `hugo.jacquel@atomixia.fr`.
 - Nom d’un délégué à la protection des données, s’il en existe un.
 - Durée de conservation si elle doit différer des 24 mois retenus dans la politique.
-- Clients, logos, témoignages, chiffre d’affaires, pourcentages, nombre d’agents déployés.
+- Clients, logos, témoignages, chiffre d’affaires, pourcentages, nombre d’agents déployés. Les comptes affichés dans les scènes d’usage (e-mails, relances, sources) sont des exemples de fonctionnement, pas des mesures d’Atomixia.

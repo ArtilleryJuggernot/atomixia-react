@@ -17,6 +17,7 @@ export const site = {
 } as const;
 
 export const nav = [
+  { href: '/usages', label: 'Usages' },
   { href: '/agents', label: 'Agents' },
   { href: '/sites', label: 'Sites' },
   { href: '/methode', label: 'Méthode' },

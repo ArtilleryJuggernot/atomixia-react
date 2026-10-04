@@ -217,6 +217,39 @@ const sites = defineCollection({
   }),
 });
 
+const usageCase = z.object({
+  id: z.string(),
+  order: z.number(),
+  featured: z.boolean().default(false),
+  family: z.string(),
+  title: z.string(),
+  pain: z.string(),
+  kind: z.enum(['inbox', 'pipeline', 'watch', 'question', 'timeline', 'brief', 'status']),
+  intake: z.array(z.string()),
+  logs: z.array(z.string()),
+  buckets: z
+    .array(z.object({ label: z.string(), count: z.string(), tone: z.enum(['urgent', 'important', 'todo', 'info', 'noise', 'ok', 'warn']) }))
+    .optional(),
+  highlights: z.array(z.string()).optional(),
+  lines: z.array(z.string()).optional(),
+  sources: z.array(z.string()).optional(),
+  question: z.string().optional(),
+  beats: z.array(z.object({ at: z.string(), text: z.string() })).optional(),
+  meters: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
+  result: z.string(),
+  hold: z.string(),
+});
+
+const usages = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/usages' }),
+  schema: z.object({
+    label: z.string(),
+    order: z.number(),
+    intro: z.string(),
+    cases: z.array(usageCase),
+  }),
+});
+
 const about = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/about' }),
   schema: z.object({
@@ -236,4 +269,5 @@ export const collections = {
   constellation,
   about,
   sites,
+  usages,
 };

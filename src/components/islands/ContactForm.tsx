@@ -19,6 +19,12 @@ export default function ContactForm() {
   const baseId = useId();
 
   useEffect(() => {
+    const task = new URLSearchParams(window.location.search).get('tache');
+    if (!task) return;
+    setFields((current) => ({ ...current, process: task.slice(0, 500) }));
+  }, []);
+
+  useEffect(() => {
     if (status === 'success') successRef.current?.focus();
   }, [status]);
 
@@ -170,6 +176,7 @@ export default function ContactForm() {
         value={fields.process}
         error={errors.process}
         required
+        multiline
         onChange={(value) => update('process', value)}
       />
       <Field

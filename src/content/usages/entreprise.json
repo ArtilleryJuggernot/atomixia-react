@@ -1,0 +1,177 @@
+{
+  "label": "Entreprise",
+  "order": 1,
+  "intro": "PME, cabinets, agences, industries, équipes commerciales et directions. L’agent prépare le flux. Une personne tranche.",
+  "cases": [
+    {
+      "id": "tri-emails",
+      "order": 1,
+      "featured": true,
+      "family": "Communication",
+      "title": "Tri intelligent des e-mails",
+      "pain": "Je passe une heure par jour à trier la boîte.",
+      "kind": "inbox",
+      "intake": [
+        "Client — livraison bloquée",
+        "Fournisseur — avoir à valider",
+        "Newsletter secteur",
+        "Direction — point de 16 h",
+        "Publicité logiciel"
+      ],
+      "logs": [
+        "Lecture des objets et des fils",
+        "Repérage des demandes et des échéances",
+        "Classement selon vos règles"
+      ],
+      "buckets": [
+        { "label": "Urgent", "count": "4", "tone": "urgent" },
+        { "label": "Important", "count": "17", "tone": "important" },
+        { "label": "À traiter", "count": "31", "tone": "todo" },
+        { "label": "Information", "count": "42", "tone": "info" },
+        { "label": "Publicité", "count": "26", "tone": "noise" }
+      ],
+      "highlights": [
+        "Livraison bloquée — réponse attendue aujourd’hui",
+        "Point de 16 h — un document manque",
+        "Avoir fournisseur — montant à confirmer"
+      ],
+      "result": "Sur 120 messages d’exemple, les urgences remontent. Le reste est classé.",
+      "hold": "Aucun e-mail n’est envoyé sans votre validation."
+    },
+    {
+      "id": "assistant-admin",
+      "order": 2,
+      "featured": true,
+      "family": "Communication",
+      "title": "Assistant administratif",
+      "pain": "Les demandes arrivent, et l’action reste dans le message.",
+      "kind": "pipeline",
+      "intake": ["E-mail reçu", "Pièce jointe", "Demande écrite"],
+      "logs": ["Sujet identifié", "Informations extraites", "Action proposée", "Archivage préparé"],
+      "lines": [
+        "Sujet : modification de commande",
+        "Échéance : vendredi",
+        "Action proposée : confirmer le nouveau délai",
+        "Dossier : client Martin"
+      ],
+      "result": "Chaque message devient une action nommée, pas une ligne de plus dans la boîte.",
+      "hold": "Vous confirmez l’action avant qu’elle ne parte."
+    },
+    {
+      "id": "veille",
+      "order": 3,
+      "featured": true,
+      "family": "Recherche",
+      "title": "Veille intelligente",
+      "pain": "Je dois surveiller des sites et des textes chaque semaine.",
+      "kind": "watch",
+      "intake": ["Sites du secteur", "Publications", "Newsletters", "Documents officiels"],
+      "logs": ["Lecture des sources", "Comparaison avec la semaine précédente", "Écarts isolés"],
+      "lines": [
+        "Un délai de déclaration a bougé",
+        "Une obligation de mention est précisée",
+        "Une aide change de plafond"
+      ],
+      "result": "3 changements importants détectés cette semaine, dans cet exemple.",
+      "hold": "La veille signale. Elle ne décide pas à votre place ce qui s’applique à vous."
+    },
+    {
+      "id": "rapport",
+      "order": 4,
+      "featured": true,
+      "family": "Documents",
+      "title": "Rapport automatique",
+      "pain": "Je dois produire le même rapport chaque semaine.",
+      "kind": "pipeline",
+      "intake": ["PDF", "Excel", "E-mail", "Notes", "Page web"],
+      "logs": ["Lecture croisée", "Repérage des chiffres et des écarts", "Rédaction de la synthèse"],
+      "lines": [
+        "Résumé exécutif",
+        "Informations qui ont changé",
+        "Anomalies à regarder",
+        "Risques et recommandations",
+        "Sources citées"
+      ],
+      "result": "Un rapport de synthèse, prêt à être relu, au lieu d’une pile de fichiers.",
+      "hold": "Les chiffres viennent de vos fichiers. Vous validez avant envoi."
+    },
+    {
+      "id": "cerveau",
+      "order": 5,
+      "featured": true,
+      "family": "Documents",
+      "title": "Deuxième cerveau",
+      "pain": "Je dois chercher dans des centaines de documents.",
+      "kind": "question",
+      "question": "Que disait notre contrat avec ce fournisseur ?",
+      "intake": ["Contrats", "Procédures", "Comptes rendus", "E-mails", "Notes"],
+      "logs": ["Recherche dans les pièces déposées", "Pages citées", "Réponse assemblée"],
+      "lines": [
+        "Préavis : 60 jours, article 8",
+        "Reconduction tacite, sauf dénonciation",
+        "Pénalité de retard citée en annexe"
+      ],
+      "sources": ["Contrat cadre, p. 4", "Avenant 2, p. 1"],
+      "result": "La réponse arrive avec ses pages. Sans document, pas d’invention.",
+      "hold": "La base ne contient que ce que vous y avez déposé."
+    },
+    {
+      "id": "briefing",
+      "order": 6,
+      "featured": true,
+      "family": "Commercial",
+      "title": "Préparation de réunion",
+      "pain": "Je dois lire des dizaines de pages avant chaque rendez-vous.",
+      "kind": "brief",
+      "intake": ["Nom du client", "E-mails", "Documents", "Suivi commercial", "Projets passés"],
+      "logs": ["Historique rassemblé", "Derniers échanges lus", "Points ouverts listés"],
+      "lines": [
+        "Contexte : deuxième chantier, devis en attente",
+        "Dernier échange : question sur le délai",
+        "Risque : une pièce technique manque",
+        "Question à poser : qui valide le planning"
+      ],
+      "result": "Un briefing tient sur un écran avant d’entrer en réunion.",
+      "hold": "Le briefing prépare. Il ne mène pas la réunion."
+    },
+    {
+      "id": "apres-reunion",
+      "order": 7,
+      "featured": false,
+      "family": "Gestion",
+      "title": "Après la réunion",
+      "pain": "Le compte rendu attend, et les tâches se perdent.",
+      "kind": "pipeline",
+      "intake": ["Transcription", "Notes", "Ordre du jour"],
+      "logs": ["Décisions repérées", "Tâches extraites", "Responsables proposés"],
+      "lines": [
+        "Résumé en dix lignes",
+        "Décision : reporter la livraison au 12",
+        "Tâche : Camille envoie le plan, vendredi",
+        "E-mail de suivi prêt à relire"
+      ],
+      "result": "Décisions, tâches et échéances sont écrites avant que la salle se vide.",
+      "hold": "L’e-mail de suivi part seulement après votre lecture."
+    },
+    {
+      "id": "dirigeant",
+      "order": 8,
+      "featured": true,
+      "family": "Direction",
+      "title": "Briefing dirigeant",
+      "pain": "Que s’est-il passé cette semaine dans l’entreprise ?",
+      "kind": "brief",
+      "intake": ["Suivi commercial", "Projets", "Incidents", "Échéances"],
+      "logs": ["Signaux collectés", "Ce qui bloque est isolé", "Briefing condensé"],
+      "lines": [
+        "Activité : dossiers avancés, et ceux sans nouvelle",
+        "Chiffre d’affaires : lu dans votre outil, sans ressaisie",
+        "Projets bloqués qui demandent une décision",
+        "Incidents encore ouverts",
+        "Échéances des sept prochains jours"
+      ],
+      "result": "Un briefing de deux minutes, pas un tableau de plus à ouvrir.",
+      "hold": "Aucun montant n’est inventé. Il vient de l’outil que vous branchez."
+    }
+  ]
+}

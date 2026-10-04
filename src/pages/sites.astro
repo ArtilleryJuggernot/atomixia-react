@@ -7,8 +7,9 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Frame from '../components/Frame.astro';
 import Icon from '../components/Icon.astro';
 import Quote from '../components/Quote.astro';
-import Robot from '../components/Robot.astro';
+import IllustrationCarousel from '../components/islands/IllustrationCarousel';
 import PhraseCycle from '../components/islands/PhraseCycle';
+import { illustrations, siteSlides } from '../lib/illustrations';
 import { site } from '../lib/site';
 
 const entry = await getEntry('sites', 'page');
@@ -74,6 +75,12 @@ const trackIcon = {
   relier: 'nodes',
 } as const;
 
+const trackVisual = {
+  metier: illustrations.site,
+  saas: illustrations.systeme,
+  relier: illustrations.courrier,
+} as const;
+
 const service = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -101,7 +108,7 @@ const faq = {
     <article class="mx-auto max-w-6xl">
       <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Sites', href: '/sites' }]} />
       <header class="mt-10 grid items-center gap-10 lg:grid-cols-12">
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-5">
           <p class="meta text-cyan-flux">Sites · Build</p>
           <h1 class="display mt-4 text-5xl text-balance sm:text-6xl">{data.title}</h1>
           <p class="phrase-line mt-6">
@@ -113,11 +120,12 @@ const faq = {
           </p>
           <p class="mt-5 max-w-xl text-lg text-parchment-dim">{data.editorial}</p>
         </div>
-        <div class="site-stage lg:col-span-5">
-          <span class="geo-ring" aria-hidden="true"></span>
-          <span class="geo-diamond geo-diamond-lg" aria-hidden="true"></span>
-          <Robot label="Robot en traits, au centre de la composition du site." />
-          <p class="meta text-cyan-flux">Agent prêt</p>
+        <div class="lg:col-span-7">
+          <IllustrationCarousel
+            client:visible
+            slides={siteSlides}
+            label="Atelier des sites : page, charte, courrier et mobile"
+          />
         </div>
       </header>
       <p class="mt-10 max-w-3xl text-lg text-parchment-dim">{data.intro}</p>
@@ -149,7 +157,19 @@ const faq = {
       <div class="mt-16 space-y-8">
         {
           data.tracks.map((track) => (
-            <section id={track.id} class="offer-card glass-2 scroll-mt-28 px-6 py-8 sm:px-10" aria-labelledby={track.id + '-title'}>
+            <section id={track.id} class="offer-card glass-2 scroll-mt-28 overflow-hidden" aria-labelledby={track.id + '-title'}>
+              <img
+                class="track-visual"
+                src={trackVisual[track.id as keyof typeof trackVisual]?.src ?? illustrations.site.src}
+                srcset={trackVisual[track.id as keyof typeof trackVisual]?.srcSet}
+                sizes="(min-width: 1024px) 72rem, 100vw"
+                alt={trackVisual[track.id as keyof typeof trackVisual]?.alt ?? ''}
+                width="1400"
+                height="1050"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="px-6 py-8 sm:px-10">
               <div class="flex items-center justify-between gap-4">
                 <p class="meta text-cyan-flux">{track.kicker}</p>
                 <span class="icon-tile"><Icon name={trackIcon[track.id as keyof typeof trackIcon] ?? 'layers'} /></span>
@@ -161,6 +181,7 @@ const faq = {
                   <li class="border-t border-cyan-flux/20 pt-3 text-sm">{point}</li>
                 ))}
               </ul>
+              </div>
             </section>
           ))
         }

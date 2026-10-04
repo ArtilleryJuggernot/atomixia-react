@@ -4,11 +4,12 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import HeroSystem from '../components/HeroSystem.astro';
 import Quote from '../components/Quote.astro';
 import AgentTheater from '../components/islands/AgentTheater';
+import IllustrationCarousel from '../components/islands/IllustrationCarousel';
 import PhraseCycle from '../components/islands/PhraseCycle';
 import TaskMatcher from '../components/islands/TaskMatcher';
+import { homeSlides } from '../lib/illustrations';
 import { site } from '../lib/site';
 
 const artemisia = await getEntry('realisations', 'artemisia');
@@ -94,8 +95,8 @@ const steps = [
   <Header />
   <main id="contenu">
     <section class="hero-band px-5 pt-28 pb-8 sm:px-8" aria-labelledby="hero-title">
-      <div class="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-12">
-        <div class="lg:col-span-6">
+      <div class="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-5">
           <p class="meta text-cyan-flux">Atomixia · Ingénierie numérique</p>
           <h1 id="hero-title" class="display mt-5 text-[clamp(2.55rem,6.4vw,4.8rem)] text-balance">
             Des systèmes qui travaillent pour vous.
@@ -115,8 +116,12 @@ const steps = [
             <a class="btn btn-ghost" href="#expertises">Découvrir les expertises</a>
           </div>
         </div>
-        <div class="lg:col-span-6">
-          <HeroSystem />
+        <div class="lg:col-span-7">
+          <IllustrationCarousel
+            client:load
+            slides={homeSlides}
+            label="Atelier Atomixia : courrier, sites, système, charte, mobile et sécurité"
+          />
         </div>
       </div>
     </section>

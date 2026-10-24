@@ -1,0 +1,19 @@
+---
+import ServiceShell from '../../components/ServiceShell.astro';
+import SystemScene from '../../components/islands/SystemScene';
+import { services } from '../../lib/services';
+
+const service = services.automation;
+const description =
+  'Agents IA et automatisations reliés à vos outils : e-mails triés, documents lus, fiches rapprochées, brouillons préparés. Une personne valide avant tout envoi. Lyon et Auvergne-Rhône-Alpes.';
+---
+
+<ServiceShell
+  service={service}
+  parent={{ name: 'Solutions', href: '/#univers' }}
+  description={description}
+  demoTitle="Un flux simulé, de la demande au brouillon."
+  demoText="Sept états se succèdent : demande reçue, information analysée, fiche retrouvée, document préparé, validation affichée, sortie préparée, tâche prête. Aucun e-mail n’est envoyé, aucune facture n’est émise."
+>
+  <SystemScene slot="demo" client:load />
+</ServiceShell>

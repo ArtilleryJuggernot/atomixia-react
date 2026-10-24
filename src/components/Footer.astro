@@ -1,47 +1,41 @@
 ---
-import Mark from './Mark.astro';
-import { site } from '../lib/site';
+import { site, navGroups } from '../lib/site';
 
 const columns = [
+  ...navGroups.map((group) => ({
+    title: group.label,
+    links: group.items.map((item) => ({ href: item.href, label: item.label })),
+  })),
   {
-    title: 'Build',
+    title: 'Atomixia',
     links: [
-      { href: '/sites', label: 'Sites' },
-      { href: '/sites#saas', label: 'SaaS' },
-      { href: '/sites#metier', label: 'Applications' },
-    ],
-  },
-  {
-    title: 'Secure',
-    links: [
-      { href: '/securite', label: 'Audit et pentest' },
-      { href: '/securite', label: 'Cybersécurité' },
-    ],
-  },
-  {
-    title: 'Automate',
-    links: [
-      { href: '/usages', label: 'Usages' },
-      { href: '/agents', label: 'Agents' },
+      { href: '/realisations', label: 'Réalisations' },
+      { href: '/a-propos', label: 'À propos' },
       { href: '/methode', label: 'Méthode' },
+      { href: '/usages', label: 'Cas d’usage' },
+      { href: '/agents', label: 'Agents IA' },
+      { href: '/sites', label: 'Sites et logiciels' },
     ],
   },
 ];
 ---
 
-<footer class="border-t border-white/10 px-5 py-16 sm:px-8">
+<footer class="border-t border-gold-400/15 px-5 py-16 sm:px-8">
   <div class="mx-auto grid max-w-6xl gap-12 md:grid-cols-12">
     <div class="md:col-span-4">
-      <a href="/" class="flex items-center gap-3" aria-label="Atomixia, accueil">
-        <Mark />
+      <a href="/" class="inline-flex items-center gap-4" aria-label="Atomixia, accueil">
+        <span class="footer-orbit">
+          <img src="/brand/mark.webp" alt="" width="200" height="200" loading="lazy" decoding="async" />
+        </span>
         <span class="chrome font-display tracking-[0.22em]">ATOMIXIA</span>
       </a>
-      <p class="mt-4 max-w-xs text-sm text-parchment-dim">{site.promise}</p>
+      <p class="mt-5 max-w-xs font-display text-xl tracking-tight text-parchment">{site.promise}</p>
+      <p class="mt-2 max-w-xs text-sm text-parchment-dim">{site.signature}</p>
     </div>
     {
       columns.map((column) => (
         <div class="md:col-span-2">
-          <p class="meta">{column.title}</p>
+          <p class="meta text-gold-400">{column.title}</p>
           <ul class="mt-4 space-y-2 text-sm">
             {column.links.map((link) => (
               <li>
@@ -52,17 +46,18 @@ const columns = [
         </div>
       ))
     }
-    <div class="md:col-span-2">
-      <p class="meta">Contact</p>
+    <div class="min-w-0 md:col-span-2">
+      <p class="meta text-gold-400">Contact</p>
       <ul class="mt-4 space-y-2 text-sm">
-        <li><a class="text-link" href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li class="min-w-0"><a class="text-link [overflow-wrap:anywhere]" href={`mailto:${site.email}`}>{site.email}</a></li>
         <li><a class="text-link" href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a></li>
         <li class="text-parchment-dim">{site.city}, France</li>
+        <li class="text-parchment-dim">Réponse sous {site.response}</li>
       </ul>
     </div>
   </div>
   <div class="mx-auto mt-14 flex max-w-6xl flex-col gap-3 border-t border-white/10 pt-6 text-sm text-parchment-dim sm:flex-row sm:items-center sm:justify-between">
-    <p>© {new Date().getFullYear()} Atomixia</p>
+    <p>© {new Date().getFullYear()} Atomixia · {site.city}, {site.region}</p>
     <ul class="flex flex-wrap gap-x-5 gap-y-2">
       <li><a class="text-link" href="/mentions-legales">Mentions légales</a></li>
       <li><a class="text-link" href="/confidentialite">Confidentialité</a></li>

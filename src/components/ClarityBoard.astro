@@ -1,0 +1,79 @@
+---
+/** Before / after: dispersed tools versus a connected system. Pure SVG. */
+const tools = ['Messagerie', 'Devis', 'Tableur', 'Dossiers', 'Facturation', 'Suivi', 'Agenda'];
+---
+
+<div class="clarity" data-reveal>
+  <figure class="clarity-board panel">
+    <figcaption class="meta">Avant · outils dispersés</figcaption>
+    <svg viewBox="0 0 320 240" aria-hidden="true">
+      <g class="chaos-link" fill="none">
+        <path d="M60 70 C120 40 180 120 250 60" />
+        <path d="M60 70 L90 180" />
+        <path d="M250 60 L220 200 L90 180" />
+        <path d="M160 140 L250 60" />
+        <path d="M160 140 L60 70" />
+        <path d="M290 150 L220 200" />
+      </g>
+      {
+        [
+          [60, 70],
+          [250, 60],
+          [90, 180],
+          [220, 200],
+          [160, 140],
+          [290, 150],
+          [40, 130],
+        ].map(([x, y], index) => (
+          <g>
+            <rect class="chaos-node" x={x - 30} y={y - 12} width="60" height="24" rx="6" transform={`rotate(${(index % 3) * 4 - 4} ${x} ${y})`} />
+            <text class="board-label" x={x} y={y + 3} text-anchor="middle">
+              {tools[index]}
+            </text>
+          </g>
+        ))
+      }
+    </svg>
+  </figure>
+  <div class="clarity-arrow" aria-hidden="true">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+      <path d="M6 24h34" />
+      <path d="m30 14 10 10-10 10" />
+      <circle cx="24" cy="24" r="22" stroke-opacity="0.25" />
+    </svg>
+  </div>
+  <figure class="clarity-board panel">
+    <figcaption class="meta">Après · un système relié</figcaption>
+    <svg viewBox="0 0 320 240" aria-hidden="true">
+      <g class="order-link" fill="none">
+        <path d="M160 120 L60 60" />
+        <path d="M160 120 L260 60" />
+        <path d="M160 120 L60 180" />
+        <path d="M160 120 L260 180" />
+        <path d="M160 120 L160 34" />
+        <path d="M160 120 L160 206" />
+        <path d="M160 120 L46 120" />
+      </g>
+      <circle cx="160" cy="120" r="22" fill="rgba(217,193,138,0.12)" stroke="#d9c18a" />
+      <circle cx="160" cy="120" r="6" fill="#f2d9a0" />
+      {
+        [
+          [60, 60],
+          [260, 60],
+          [60, 180],
+          [260, 180],
+          [160, 34],
+          [160, 206],
+          [46, 120],
+        ].map(([x, y], index) => (
+          <g>
+            <rect class="order-node" x={x - 30} y={y - 12} width="60" height="24" rx="6" />
+            <text class="board-label" x={x} y={y + 3} text-anchor="middle">
+              {tools[index]}
+            </text>
+          </g>
+        ))
+      }
+    </svg>
+  </figure>
+</div>

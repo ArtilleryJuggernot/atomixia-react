@@ -3075,133 +3075,384 @@ html.has-cursor select {
 
 /* Perimeter (cyber) */
 
-.perimeter {
+.scope {
   display: grid;
   gap: 1rem;
 }
 
 @media (min-width: 1024px) {
-  .perimeter {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  .scope {
+    grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.8fr);
+    align-items: stretch;
   }
 }
 
-.perimeter-board {
+.scope-stage {
   position: relative;
-  aspect-ratio: 16 / 11;
-  padding: 1rem;
-  overflow: hidden;
+  padding: 1.1rem 1.15rem 1rem;
 }
 
-.perimeter-board svg {
+.scope-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.scope-status {
+  margin: 0;
+  color: #f4f5f8;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.scope-play {
+  margin-left: auto;
+  border: 1px solid rgba(232, 184, 109, 0.4);
+  background: transparent;
+  color: #f4f5f8;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.scope-play:focus-visible,
+.mode-btn:focus-visible {
+  outline: 2px solid #e8b86d;
+  outline-offset: 3px;
+}
+
+.scope-map {
+  position: relative;
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.9rem;
+}
+
+@media (min-width: 760px) {
+  .scope-map {
+    grid-template-columns: minmax(0, 1.7fr) minmax(10.5rem, 0.78fr);
+    column-gap: 2.6rem;
+    align-items: stretch;
+  }
+}
+
+.scope-wires {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.scope-rect {
-  fill: rgba(232, 184, 109, 0.04);
-  stroke: #e8b86d;
-  stroke-dasharray: 6 5;
-  stroke-width: 1.2;
+.scope-wire {
+  fill: none;
+  stroke: #d5dde6;
+  stroke-width: 1.5;
+  stroke-linecap: round;
 }
 
-.scope-label,
-.asset-label {
-  font-family: var(--font-mono);
-  font-size: 7px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  fill: #a7b0bf;
-}
-
-.scope-label {
-  fill: #e8b86d;
-}
-
-.asset {
-  fill: rgba(16, 23, 37, 0.98);
-  stroke: #3a4556;
-  stroke-width: 1;
-  transition: stroke 0.3s ease;
-}
-
-.asset-out {
-  fill: rgba(9, 12, 18, 0.9);
-  stroke: #283343;
-  stroke-dasharray: 2 3;
-}
-
-.asset-out-label {
-  fill: #737e90;
-}
-
-.finding {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.finding circle {
+.scope-stop {
   fill: #090c12;
-  stroke-width: 1.2;
+  stroke: #737e90;
+  stroke-width: 1.5;
 }
 
-.finding text {
+.scope[data-mode='audit'] .scope-wire.is-read { stroke: #d5dde6; }
+.scope[data-mode='vuln'] .scope-wire.is-read { stroke: #e8b86d; }
+.scope[data-mode='pentest'] .scope-wire.is-read { stroke: rgba(232, 184, 109, 0.4); }
+.scope[data-mode='pentest'] .scope-wire.is-read[data-link='portal-api'],
+.scope[data-mode='pentest'] .scope-wire.is-read[data-link='api-db'] { opacity: 0; }
+.scope[data-mode='pentest'] .scope-wire.is-hot { stroke: #f07885; stroke-width: 2.1; }
+.scope[data-mode='pentest'] .scope-stop,
+.scope[data-mode='pentest'] .scope-wire.is-stop { stroke: #f07885; }
+.scope-wire.is-stop { stroke: #737e90; }
+.scope-wire.is-hot { opacity: 0; }
+.scope[data-mode='pentest'] .scope-wire.is-hot { opacity: 1; }
+.scope[data-mode='pentest'] .scope-wire.is-read.is-hot { opacity: 0.28; }
+
+.scope-frame,
+.scope-out {
+  position: relative;
+  z-index: 1;
+}
+
+.scope-frame {
+  overflow: hidden;
+  border: 1px solid rgba(232, 184, 109, 0.72);
+  border-radius: 1.05rem;
+  padding: 0.85rem 0.85rem 0.95rem;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(232, 184, 109, 0.1), transparent 46%),
+    rgba(232, 184, 109, 0.035);
+}
+
+.scope-frame-label,
+.scope-out-label {
+  margin: 0;
   font-family: var(--font-mono);
-  font-size: 6.5px;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.scope-frame-label { color: #e8b86d; }
+.scope-out-label { color: #737e90; }
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.7rem 2.1rem;
+  margin-top: 0.85rem;
+}
+
+.scope-out {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 0.85rem;
+  border-radius: 1.05rem;
+  border: 1px dashed rgba(115, 126, 144, 0.65);
+  background: rgba(6, 8, 12, 0.45);
+}
+
+.scope-node {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: center;
+  min-height: 4.35rem;
+  padding: 0.7rem 0.7rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(213, 221, 230, 0.32);
+  background: rgba(9, 12, 18, 0.94);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.scope-out .scope-node {
+  border-style: dashed;
+  border-color: rgba(115, 126, 144, 0.7);
+  background: rgba(9, 12, 18, 0.72);
+}
+
+.scope[data-mode='audit'] .scope-frame .scope-node {
+  border-color: rgba(213, 221, 230, 0.5);
+}
+
+.scope[data-mode='vuln'] .scope-frame .scope-node {
+  border-color: rgba(232, 184, 109, 0.7);
+}
+
+.scope[data-mode='pentest'] .scope-node[data-node='portal'],
+.scope[data-mode='pentest'] .scope-node[data-node='api'],
+.scope[data-mode='pentest'] .scope-node[data-node='db'] {
+  border-color: rgba(240, 120, 133, 0.85);
+  box-shadow: 0 0 0 1px rgba(240, 120, 133, 0.18);
+}
+
+.scope[data-mode='pentest'] .scope-node[data-node='auth'] {
+  border-color: rgba(98, 214, 163, 0.8);
+}
+
+.scope-ico {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.55rem;
+  color: #e8b86d;
+  background: rgba(232, 184, 109, 0.1);
+  border: 1px solid rgba(232, 184, 109, 0.28);
+}
+
+.scope-out .scope-ico {
+  color: #8b95a6;
+  background: rgba(115, 126, 144, 0.1);
+  border-color: rgba(115, 126, 144, 0.35);
+}
+
+.scope-ico svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.scope-node > span {
+  min-width: 0;
+}
+
+.scope-node strong {
+  display: block;
+  color: #f4f5f8;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+@media (max-width: 700px) {
+  .scope-grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .scope-node {
+    min-height: 0;
+  }
+}
+
+.scope-node em {
+  display: block;
+  margin-top: 0.15rem;
+  color: #a7b0bf;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.64rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.finding.f-high circle { stroke: #f07885; }
-.finding.f-high text { fill: #f07885; }
-.finding.f-mid circle { stroke: #e8b86d; }
-.finding.f-mid text { fill: #e8b86d; }
-.finding.f-ok circle { stroke: #62d6a3; }
-.finding.f-ok text { fill: #62d6a3; }
+.scope-find {
+  display: none;
+  width: fit-content;
+  margin-top: 0.35rem;
+  padding: 0.08rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(9, 12, 18, 0.92);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
-.scan {
-  fill: url(#scan-gradient);
+.find-high { color: #f07885; border: 1px solid rgba(240, 120, 133, 0.85); }
+.find-mid { color: #e8b86d; border: 1px solid rgba(232, 184, 109, 0.85); }
+.find-ok { color: #62d6a3; border: 1px solid rgba(98, 214, 163, 0.85); }
+
+.scope[data-mode='vuln'] .scope-find[data-show~='vuln'],
+.scope[data-mode='pentest'] .scope-find[data-show~='pentest'] {
+  display: inline-flex;
+}
+
+.scope-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -45%;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, rgba(232, 184, 109, 0.18), transparent);
+  pointer-events: none;
   opacity: 0;
 }
 
-.perimeter-board[data-mode='vuln'] .finding.f-mid,
-.perimeter-board[data-mode='vuln'] .finding.f-high,
-.perimeter-board[data-mode='pentest'] .finding {
-  opacity: 1;
+.scope-caption {
+  margin: 0.85rem 0 0;
+  color: #a7b0bf;
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
-.perimeter-board[data-mode='audit'] .asset {
-  stroke: #d5dde6;
+.scope-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.9rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.perimeter-board[data-mode='pentest'] .asset.a-portal,
-.perimeter-board[data-mode='pentest'] .asset.a-auth {
-  stroke: #e8b86d;
+.scope-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #737e90;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.perimeter-board[data-mode='audit'] .flow {
-  stroke: #d5dde6;
-  stroke-opacity: 0.8;
+.scope-legend li::before {
+  content: "";
+  width: 0.7rem;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
 }
 
-.flow {
-  stroke: #283343;
-  stroke-width: 1;
-  transition: stroke 0.3s ease;
+.scope[data-mode='audit'] [data-legend='read'] { color: #d5dde6; }
+.scope[data-mode='vuln'] [data-legend='find'] { color: #e8b86d; }
+.scope[data-mode='pentest'] [data-legend='try'] { color: #f07885; }
+.scope [data-legend='stop'] { color: #8b95a6; }
+
+.scope-dwell-track {
+  height: 3px;
+  margin-top: 1.15rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(236, 231, 218, 0.12);
+}
+
+.scope-dwell {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #d5dde6, #e8b86d);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .perimeter-board[data-mode='vuln'] .scan,
-  .perimeter-board[data-mode='pentest'] .scan {
-    animation: scan-sweep 4s ease-in-out infinite;
+  .scope[data-mode='audit'] .scope-wire.is-read,
+  .scope[data-mode='vuln'] .scope-wire.is-read {
+    stroke-dasharray: 7 11;
+    animation: scope-flow 2.1s linear infinite;
+  }
+
+  .scope[data-mode='pentest'] .scope-wire.is-hot {
+    stroke-dasharray: 11 10;
+    animation: scope-flow 0.85s linear infinite;
+  }
+
+  .scope[data-mode='pentest'] .scope-wire.is-stop {
+    animation: scope-deny 1.5s ease-in-out infinite;
+  }
+
+  .scope[data-mode='vuln'] .scope-frame::after {
+    opacity: 1;
+    animation: scope-scan 2.6s ease-in-out infinite;
+  }
+
+  .scope.is-playing .scope-dwell.is-on {
+    animation: scope-fill 6.2s linear forwards;
+  }
+
+  .scope-find {
+    transition: opacity 0.35s ease;
   }
 }
 
-@keyframes scan-sweep {
-  0% { transform: translateX(-30%); opacity: 0; }
-  15% { opacity: 0.8; }
-  85% { opacity: 0.8; }
-  100% { transform: translateX(130%); opacity: 0; }
+@keyframes scope-flow {
+  to { stroke-dashoffset: -36; }
+}
+
+@keyframes scope-deny {
+  0%, 100% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 1; }
+}
+
+@keyframes scope-scan {
+  from { transform: translateX(0); }
+  to { transform: translateX(380%); }
+}
+
+@keyframes scope-fill {
+  to { transform: scaleX(1); }
 }
 
 .mode-switch {

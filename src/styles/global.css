@@ -1308,18 +1308,31 @@ footer .grid > * {
   gap: 0.75rem;
 }
 
-.brand-lockup::before {
+.brand-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.brand-mark::before {
   content: "";
   position: absolute;
   top: 50%;
-  left: -0.2rem;
-  width: 2.55rem;
-  height: 2.55rem;
-  margin-top: -1.28rem;
+  left: 50%;
+  width: calc(100% + 0.45rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
   border: 1px solid rgba(0, 221, 245, 0.45);
   border-right-color: transparent;
   border-radius: 50%;
   pointer-events: none;
+}
+
+/* The compact header is only as tall as the mark. Keep the ring inside the viewport. */
+@media (max-width: 79.99rem) {
+  .brand-mark::before {
+    width: calc(100% + 0.12rem);
+  }
 }
 
 .system-stage {
@@ -1816,14 +1829,15 @@ footer .grid > * {
     border-color: rgba(0, 221, 245, 0.55);
   }
 
-  .brand-lockup:hover::before {
+  .brand-mark:hover::before,
+  .brand-lockup:hover .brand-mark::before {
     border-color: #00ddf5;
     border-right-color: transparent;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .brand-lockup::before,
+  .brand-mark::before,
   .orbit {
     animation: orbit-spin 16s linear infinite;
   }
@@ -1883,7 +1897,7 @@ footer .grid > * {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .brand-lockup::before,
+  .brand-mark::before,
   .orbit,
   .system-links path,
   .system-node,

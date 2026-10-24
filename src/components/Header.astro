@@ -9,164 +9,31 @@ function active(href: string) {
   if (clean === '/') return path === '/';
   return path === clean || path.startsWith(`${clean}/`);
 }
-function groupActive(group: (typeof navGroups)[number]) {
-  return group.items.some((item) => active(item.href));
-}
-const slug = (label: string) =>
-  label
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-');
+
+const links = [
+  { href: navGroups[0].items[0].href, label: 'Automatisation' },
+  { href: navGroups[0].items[1].href, label: 'Logiciels' },
+  { href: navGroups[1].items[0].href, label: 'Conseil SI' },
+  { href: navGroups[1].items[1].href, label: 'Cybersécurité' },
+  ...nav,
+];
 ---
 
-<header id="site-header" class="fixed inset-x-0 top-0 z-40 border-b border-gold-400/20 bg-ink-950/90 backdrop-blur-md">
-  <input id="nav-toggle" class="peer" type="checkbox" />
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
+<header id="site-header" class="z-40 border-b border-gold-400/20 bg-ink-950/95 backdrop-blur-md">
+  <div class="header-row mx-auto max-w-6xl px-5 py-3 sm:px-8">
     <a href="/" class="brand-lockup text-parchment" aria-label="Atomixia, accueil">
       <Mark />
       <span class="chrome font-display text-sm tracking-[0.22em] sm:text-base">ATOMIXIA</span>
     </a>
-
-    <nav class="nav-desktop" aria-label="Navigation principale">
+    <nav class="nav-bar" aria-label="Navigation principale">
       {
-        navGroups.map((group) => (
-          <div class="nav-group" data-nav-group>
-            <button
-              type="button"
-              class="nav-link px-3 py-2"
-              aria-expanded="false"
-              aria-controls={`menu-${slug(group.label)}`}
-              aria-current={groupActive(group) ? 'page' : undefined}
-            >
-              {group.label}
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-                <path d="m2.5 4.5 3.5 3.5 3.5-3.5" />
-              </svg>
-            </button>
-            <div class="mega" id={`menu-${slug(group.label)}`}>
-              <div class="mega-grid">
-                {group.items.map((item, index) => (
-                  <a class="mega-item" href={item.href} aria-current={active(item.href) ? 'page' : undefined}>
-                    <span class="meta">0{index + 1 + (group.label === 'Expertises' ? 2 : 0)}</span>
-                    <strong>{item.label}</strong>
-                    <span>{item.text}</span>
-                  </a>
-                ))}
-              </div>
-              <div class="mega-foot">
-                <span>Quatre capacités. Un système relié.</span>
-                <a class="text-link" href="/contact">Parler de mon projet</a>
-              </div>
-            </div>
-          </div>
-        ))
-      }
-      {
-        nav.map((item) => (
-          <a href={item.href} aria-current={active(item.href) ? 'page' : undefined} class="nav-link px-3 py-2">
+        links.map((item) => (
+          <a href={item.href} aria-current={active(item.href) ? 'page' : undefined} class="nav-link">
             {item.label}
           </a>
         ))
       }
-      <a class="btn btn-gold ml-3" href="/contact">Parler de mon projet</a>
+      <a class="btn btn-gold nav-cta" href="/contact">Parler de mon projet</a>
     </nav>
-
-    <label for="nav-toggle" class="nav-toggle-label meta cursor-pointer px-3 py-2">
-      <span class="menu-closed">Menu</span>
-      <span class="menu-open">Fermer</span>
-    </label>
   </div>
-
-  <nav id="menu-principal" class="nav-panel" aria-label="Navigation mobile">
-    {
-      navGroups.map((group) => (
-        <div class="nav-panel-group">
-          <p class="meta text-gold-400">{group.label}</p>
-          {group.items.map((item) => (
-            <a class="nav-panel-link" href={item.href} aria-current={active(item.href) ? 'page' : undefined}>
-              {item.label}
-              <small>{item.text}</small>
-            </a>
-          ))}
-        </div>
-      ))
-    }
-    <div class="nav-panel-group">
-      {
-        nav.map((item) => (
-          <a class="nav-panel-link" href={item.href} aria-current={active(item.href) ? 'page' : undefined}>
-            {item.label}
-          </a>
-        ))
-      }
-    </div>
-    <a class="btn btn-gold mt-5 self-start" href="/contact">Parler de mon projet</a>
-  </nav>
 </header>
-
-<script>
-  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-group]'));
-  let closeTimer = 0;
-
-  function setOpen(group: HTMLElement, open: boolean) {
-    const trigger = group.querySelector<HTMLButtonElement>('button[aria-expanded]');
-    if (!trigger) return;
-    group.classList.toggle('is-open', open);
-    trigger.setAttribute('aria-expanded', String(open));
-  }
-
-  function closeAll(except?: HTMLElement) {
-    groups.forEach((group) => {
-      if (group !== except) setOpen(group, false);
-    });
-  }
-
-  groups.forEach((group) => {
-    const trigger = group.querySelector<HTMLButtonElement>('button[aria-expanded]');
-    if (!trigger) return;
-
-    trigger.addEventListener('click', () => {
-      const open = trigger.getAttribute('aria-expanded') === 'true';
-      closeAll(group);
-      setOpen(group, !open);
-    });
-
-    group.addEventListener('pointerenter', (event) => {
-      if ((event as PointerEvent).pointerType === 'touch') return;
-      window.clearTimeout(closeTimer);
-      closeAll(group);
-      setOpen(group, true);
-    });
-
-    group.addEventListener('pointerleave', (event) => {
-      if ((event as PointerEvent).pointerType === 'touch') return;
-      closeTimer = window.setTimeout(() => setOpen(group, false), 160);
-    });
-
-    group.addEventListener('focusout', (event) => {
-      const next = (event as FocusEvent).relatedTarget as Node | null;
-      if (next && group.contains(next)) return;
-      setOpen(group, false);
-    });
-
-    group.addEventListener('keydown', (event) => {
-      const key = (event as KeyboardEvent).key;
-      if (key === 'Escape') {
-        setOpen(group, false);
-        trigger.focus();
-      }
-      if (key === 'ArrowDown' && document.activeElement === trigger) {
-        event.preventDefault();
-        setOpen(group, true);
-        group.querySelector<HTMLAnchorElement>('.mega-item')?.focus();
-      }
-    });
-  });
-
-  document.addEventListener('pointerdown', (event) => {
-    const target = event.target as Node | null;
-    if (groups.some((group) => target && group.contains(target))) return;
-    closeAll();
-  });
-</script>

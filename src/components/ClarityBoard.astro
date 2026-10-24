@@ -1,79 +1,246 @@
 ---
-/** Before / after: dispersed tools versus a connected system. Pure SVG. */
-const tools = ['Messagerie', 'Devis', 'Tableur', 'Dossiers', 'Facturation', 'Suivi', 'Agenda'];
+/**
+ * The same seven tools, twice.
+ * Left: crossings and no shared center. Right: every tool meets one center.
+ * Lines are measured in the browser so they meet the real labels.
+ */
+const tools = [
+  { id: 'mail', label: 'Messagerie', note: 'La messagerie reste la porte d’entrée. Reliée, elle nourrit le dossier au lieu de garder les demandes pour elle.' },
+  { id: 'devis', label: 'Devis', note: 'Le devis quitte le fichier isolé. Il rejoint la fiche, puis la facturation, après qu’une personne a validé.' },
+  { id: 'sheet', label: 'Tableur', note: 'Le tableur ne disparaît pas le premier jour. Il cesse d’être la seule mémoire du travail.' },
+  { id: 'files', label: 'Dossiers', note: 'Les pièces ont un emplacement et une version qui fait foi, au lieu de circuler en copies.' },
+  { id: 'invoice', label: 'Facturation', note: 'La facturation reçoit les pièces déjà préparées. L’émission reste une décision humaine.' },
+  { id: 'follow', label: 'Suivi', note: 'Le suivi voit la même fiche que la messagerie et les dossiers.' },
+  { id: 'agenda', label: 'Agenda', note: 'L’agenda se cale sur le dossier, au lieu d’une liste tenue à part.' },
+];
+
+const idle =
+  'Les sept outils sont les mêmes des deux côtés. À gauche, les liaisons se croisent et aucun ne sert de centre. À droite, chacun rejoint le même. Sélectionnez un outil.';
 ---
 
-<div class="clarity" data-reveal>
-  <figure class="clarity-board panel">
-    <figcaption class="meta">Avant · outils dispersés</figcaption>
-    <svg viewBox="0 0 320 240" aria-hidden="true">
-      <g class="chaos-link" fill="none">
-        <path d="M60 70 C120 40 180 120 250 60" />
-        <path d="M60 70 L90 180" />
-        <path d="M250 60 L220 200 L90 180" />
-        <path d="M160 140 L250 60" />
-        <path d="M160 140 L60 70" />
-        <path d="M290 150 L220 200" />
-      </g>
+<div class="clarity" data-clarity data-reveal>
+  <figure class="clarity-board panel chaos">
+    <figcaption class="clarity-cap">
+      <span class="meta">Avant · outils dispersés</span>
+      <span class="clarity-count">Sans centre</span>
+    </figcaption>
+    <div class="clarity-stage" data-stage="chaos">
+      <svg class="clarity-wires" aria-hidden="true"></svg>
+      <p class="clarity-void"><span>Aucun centre</span></p>
       {
-        [
-          [60, 70],
-          [250, 60],
-          [90, 180],
-          [220, 200],
-          [160, 140],
-          [290, 150],
-          [40, 130],
-        ].map(([x, y], index) => (
-          <g>
-            <rect class="chaos-node" x={x - 30} y={y - 12} width="60" height="24" rx="6" transform={`rotate(${(index % 3) * 4 - 4} ${x} ${y})`} />
-            <text class="board-label" x={x} y={y + 3} text-anchor="middle">
-              {tools[index]}
-            </text>
-          </g>
+        tools.map((tool) => (
+          <button
+            type="button"
+            class={`clarity-pill pill-${tool.id}`}
+            data-tool={tool.id}
+            data-note={tool.note}
+            data-cursor={tool.label}
+            aria-pressed="false"
+          >
+            {tool.label}
+          </button>
         ))
       }
-    </svg>
+    </div>
+    <p class="clarity-aside">Les liaisons se croisent. Aucun outil ne sert de centre.</p>
   </figure>
-  <div class="clarity-arrow" aria-hidden="true">
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
-      <path d="M6 24h34" />
-      <path d="m30 14 10 10-10 10" />
-      <circle cx="24" cy="24" r="22" stroke-opacity="0.25" />
-    </svg>
+
+  <div class="clarity-bridge" aria-hidden="true">
+    <span class="clarity-bridge-mark"></span>
+    <span class="meta">Relier</span>
   </div>
-  <figure class="clarity-board panel">
-    <figcaption class="meta">Après · un système relié</figcaption>
-    <svg viewBox="0 0 320 240" aria-hidden="true">
-      <g class="order-link" fill="none">
-        <path d="M160 120 L60 60" />
-        <path d="M160 120 L260 60" />
-        <path d="M160 120 L60 180" />
-        <path d="M160 120 L260 180" />
-        <path d="M160 120 L160 34" />
-        <path d="M160 120 L160 206" />
-        <path d="M160 120 L46 120" />
-      </g>
-      <circle cx="160" cy="120" r="22" fill="rgba(217,193,138,0.12)" stroke="#d9c18a" />
-      <circle cx="160" cy="120" r="6" fill="#f2d9a0" />
+
+  <figure class="clarity-board panel order">
+    <figcaption class="clarity-cap">
+      <span class="meta">Après · un système relié</span>
+      <span class="clarity-count">Un centre</span>
+    </figcaption>
+    <div class="clarity-stage" data-stage="order">
+      <svg class="clarity-wires" aria-hidden="true"></svg>
+      <div class="clarity-core" data-core>
+        <span class="sr-only">Centre partagé</span>
+      </div>
       {
-        [
-          [60, 60],
-          [260, 60],
-          [60, 180],
-          [260, 180],
-          [160, 34],
-          [160, 206],
-          [46, 120],
-        ].map(([x, y], index) => (
-          <g>
-            <rect class="order-node" x={x - 30} y={y - 12} width="60" height="24" rx="6" />
-            <text class="board-label" x={x} y={y + 3} text-anchor="middle">
-              {tools[index]}
-            </text>
-          </g>
+        tools.map((tool) => (
+          <button
+            type="button"
+            class={`clarity-pill pill-${tool.id}`}
+            data-tool={tool.id}
+            data-note={tool.note}
+            data-cursor={tool.label}
+            aria-pressed="false"
+          >
+            {tool.label}
+          </button>
         ))
       }
-    </svg>
+    </div>
+    <p class="clarity-aside">Les mêmes outils. Chacun rejoint le même centre.</p>
   </figure>
+
+  <p class="clarity-readout" data-clarity-detail aria-live="polite">
+    {idle}
+  </p>
 </div>
+
+<script>
+  const idle =
+    'Les sept outils sont les mêmes des deux côtés. À gauche, les liaisons se croisent et aucun ne sert de centre. À droite, chacun rejoint le même. Sélectionnez un outil.';
+  const pairs = [
+    ['mail', 'files', 16],
+    ['devis', 'sheet', -14],
+    ['agenda', 'invoice', 18],
+    ['follow', 'sheet', -20],
+    ['mail', 'follow', 22],
+    ['devis', 'agenda', -18],
+    ['invoice', 'files', 12],
+  ];
+  const orderIds = ['mail', 'devis', 'sheet', 'files', 'invoice', 'follow', 'agenda'];
+
+  function centerOf(element, base) {
+    const rect = element.getBoundingClientRect();
+    return {
+      x: rect.left - base.left + rect.width / 2,
+      y: rect.top - base.top + rect.height / 2,
+    };
+  }
+
+  function rim(element, toward, base, gap) {
+    const rect = element.getBoundingClientRect();
+    const from = centerOf(element, base);
+    const dx = toward.x - from.x;
+    const dy = toward.y - from.y;
+    const hw = rect.width / 2 + gap;
+    const hh = rect.height / 2 + gap;
+    const tx = dx === 0 ? Infinity : hw / Math.abs(dx);
+    const ty = dy === 0 ? Infinity : hh / Math.abs(dy);
+    const t = Math.min(tx, ty, 0.46);
+    return { x: from.x + dx * t, y: from.y + dy * t };
+  }
+
+  document.querySelectorAll('[data-clarity]').forEach((root) => {
+    const detail = root.querySelector('[data-clarity-detail]');
+    const stages = Array.from(root.querySelectorAll('[data-stage]'));
+    let locked = null;
+
+    stages.forEach((stage) => {
+      const svg = stage.querySelector('svg');
+      if (!svg) return;
+      if (stage.dataset.stage === 'chaos') {
+        pairs.forEach(([from, to]) => {
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('class', 'chaos');
+          path.dataset.from = from;
+          path.dataset.to = to;
+          svg.appendChild(path);
+        });
+      } else {
+        orderIds.forEach((id) => {
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('class', 'order');
+          line.dataset.from = id;
+          line.dataset.to = 'core';
+          svg.appendChild(line);
+        });
+      }
+    });
+
+    function nodeIn(stage, id) {
+      if (id === 'core') return stage.querySelector('[data-core]');
+      return stage.querySelector(`[data-tool="${id}"]`);
+    }
+
+    function layout() {
+      stages.forEach((stage) => {
+        const svg = stage.querySelector('svg');
+        if (!svg || getComputedStyle(svg).display === 'none') return;
+        const base = stage.getBoundingClientRect();
+        if (base.width < 8 || base.height < 8) return;
+        svg.setAttribute('viewBox', `0 0 ${base.width} ${base.height}`);
+        const scale = base.width / 520;
+        if (stage.dataset.stage === 'chaos') {
+          svg.querySelectorAll('path').forEach((path, index) => {
+            const from = nodeIn(stage, path.dataset.from || '');
+            const to = nodeIn(stage, path.dataset.to || '');
+            if (!from || !to) return;
+            const fromCenter = centerOf(from, base);
+            const toCenter = centerOf(to, base);
+            const a = rim(from, toCenter, base, 8);
+            const b = rim(to, fromCenter, base, 8);
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const len = Math.hypot(dx, dy) || 1;
+            const bend = Number(pairs[index][2]) * scale;
+            const cx = (a.x + b.x) / 2 + (-dy / len) * bend;
+            const cy = (a.y + b.y) / 2 + (dx / len) * bend;
+            path.setAttribute('d', `M ${a.x.toFixed(1)} ${a.y.toFixed(1)} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
+          });
+          return;
+        }
+        const core = nodeIn(stage, 'core');
+        if (!core) return;
+        const corePoint = centerOf(core, base);
+        svg.querySelectorAll('line').forEach((line) => {
+          const from = nodeIn(stage, line.dataset.from || '');
+          if (!from) return;
+          const start = rim(from, corePoint, base, 8);
+          line.setAttribute('x1', start.x.toFixed(1));
+          line.setAttribute('y1', start.y.toFixed(1));
+          line.setAttribute('x2', corePoint.x.toFixed(1));
+          line.setAttribute('y2', corePoint.y.toFixed(1));
+        });
+      });
+    }
+
+    function paint(id, note) {
+      root.querySelectorAll('[data-tool]').forEach((node) => {
+        const on = Boolean(id) && node.dataset.tool === id;
+        node.classList.toggle('is-hot', on);
+        node.setAttribute('aria-pressed', locked && node.dataset.tool === locked.id ? 'true' : 'false');
+      });
+      root.querySelectorAll('path, line').forEach((wire) => {
+        const hot = Boolean(id) && (wire.dataset.from === id || wire.dataset.to === id);
+        wire.classList.toggle('is-hot', hot);
+      });
+      if (!detail) return;
+      detail.textContent = note || idle;
+      detail.classList.toggle('is-set', Boolean(id));
+    }
+
+    function shown() {
+      const active = document.activeElement;
+      if (active && root.contains(active) && active.hasAttribute('data-tool')) {
+        return { id: active.dataset.tool || '', note: active.dataset.note || idle };
+      }
+      return locked;
+    }
+
+    root.querySelectorAll('[data-tool]').forEach((button) => {
+      const id = button.dataset.tool || '';
+      const note = button.dataset.note || idle;
+      button.addEventListener('pointerenter', () => paint(id, note));
+      button.addEventListener('focus', () => paint(id, note));
+      button.addEventListener('click', () => {
+        locked = locked && locked.id === id ? null : { id, note };
+        paint(id, note);
+        if (!locked) paint(null);
+      });
+    });
+
+    root.addEventListener('pointerleave', () => {
+      const next = shown();
+      paint(next && next.id, next && next.note);
+    });
+
+    root.addEventListener('focusout', (event) => {
+      const next = event.relatedTarget;
+      if (next && root.contains(next)) return;
+      paint(locked && locked.id, locked && locked.note);
+    });
+
+    layout();
+    window.addEventListener('resize', layout);
+    if ('ResizeObserver' in window) new ResizeObserver(layout).observe(root);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  });
+</script>

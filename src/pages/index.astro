@@ -4,7 +4,8 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import Quote from '../components/Quote.astro';
+import QuoteReel from '../components/islands/QuoteReel';
+import { stoicQuotes } from '../lib/stoic';
 import ClarityBoard from '../components/ClarityBoard.astro';
 import NodeMap from '../components/NodeMap.astro';
 import Stages from '../components/Stages.astro';
@@ -109,11 +110,7 @@ const title = 'Atomixia — Vos systèmes méritent de devenir intelligents';
 
     <section class="px-5 pb-6 sm:px-8" aria-label="Repère stoïcien">
       <div class="mx-auto max-w-6xl">
-        <Quote
-          text="Ce n’est pas que nous ayons peu de temps : c’est que nous en perdons beaucoup."
-          author="Sénèque"
-          work="De la brièveté de la vie"
-        />
+        <QuoteReel client:visible quotes={stoicQuotes} />
       </div>
     </section>
 

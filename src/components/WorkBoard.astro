@@ -1,0 +1,356 @@
+---
+import { workFamilies, works } from '../lib/works';
+
+const first = works[0];
+---
+
+<div class="works" data-works>
+  <div class="works-bar">
+    <div class="mode-switch" role="group" aria-label="Filtrer les exemples">
+      {
+        workFamilies.map((family) => (
+          <button
+            type="button"
+            class="mode-btn"
+            data-filter={family.id}
+            aria-pressed={family.id === 'all' ? 'true' : 'false'}
+          >
+            {family.label}
+          </button>
+        ))
+      }
+    </div>
+    <button type="button" class="mode-btn works-play" data-works-play hidden>
+      Pause
+    </button>
+  </div>
+
+  <ol class="works-grid">
+    {
+      works.map((work) => (
+        <li>
+          <button
+            type="button"
+            class:list={['work-card', `tone-${work.tone}`, { 'is-wide': work.wide, 'is-public': work.status === 'public', 'is-on': work.id === first.id }]}
+            data-work={work.id}
+            data-family={work.family}
+            aria-pressed={work.id === first.id ? 'true' : 'false'}
+          >
+            <span class="work-top">
+              <span class="work-ico" aria-hidden="true">
+                {work.id === 'artemisia' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 20h16" />
+                    <path d="M6 20V9.2L12 5l6 4.2V20" />
+                    <path d="M10 20v-4h4v4" />
+                    <path d="M9.5 11.5h.01M14.5 11.5h.01" />
+                  </svg>
+                )}
+                {work.id === 'suivi' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3.5" y="4" width="6.2" height="16" rx="1.3" />
+                    <rect x="14.3" y="4" width="6.2" height="10" rx="1.3" />
+                  </svg>
+                )}
+                {work.id === 'portail' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <circle cx="12" cy="11" r="2.1" />
+                    <path d="M8.2 17c.7-1.6 2-2.4 3.8-2.4s3.1.8 3.8 2.4" />
+                  </svg>
+                )}
+                {work.id === 'tri' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="m4 7 8 6 8-6" />
+                  </svg>
+                )}
+                {work.id === 'relances' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 13.5 20 5l-5.2 15-2.6-6.2L4 13.5Z" />
+                  </svg>
+                )}
+                {work.id === 'pieces' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
+                    <path d="M14 3.5V8h4M9 13h6M9 16.5h4" />
+                  </svg>
+                )}
+                {work.id === 'rapport' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                    <path d="M5 19V5M5 19h14" />
+                    <path d="M9 15v-4M13 15V8M17 15v-6" />
+                  </svg>
+                )}
+                {work.id === 'veille' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2.5 12S6.2 6.5 12 6.5 21.5 12 21.5 12 17.8 17.5 12 17.5 2.5 12 2.5 12" />
+                    <circle cx="12" cy="12" r="2.4" />
+                  </svg>
+                )}
+                {work.id === 'liaison' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                    <circle cx="7" cy="12" r="2.3" />
+                    <circle cx="17" cy="7" r="2.3" />
+                    <circle cx="17" cy="17" r="2.3" />
+                    <path d="M9.1 11.2 14.8 8M9.1 12.8l5.7 3.2" />
+                  </svg>
+                )}
+                {work.id === 'carte' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <circle cx="8" cy="12" r="1.3" />
+                    <circle cx="15" cy="9" r="1.3" />
+                    <circle cx="14.2" cy="15" r="1.3" />
+                    <path d="M9.2 11.5 13.8 9.4M9.1 13.1l4.2 1.6" />
+                  </svg>
+                )}
+                {work.id === 'perimetre' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3.5 19 6.2v5.2c0 4.2-2.8 6.6-6.7 8.1-.2.1-.5.1-.7 0C7.8 18 5 15.6 5 11.4V6.2L12 3.5Z" />
+                    <path d="M9 12.1 11 14l4-4.2" />
+                  </svg>
+                )}
+                {work.id === 'site' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <path d="M3 9h18" />
+                    <circle cx="6.2" cy="6.5" r="0.7" fill="currentColor" stroke="none" />
+                    <circle cx="8.6" cy="6.5" r="0.7" fill="currentColor" stroke="none" />
+                  </svg>
+                )}
+              </span>
+              <span class="work-kicker">
+                <span class="meta">{work.familyLabel}</span>
+                <span class="work-status">{work.statusLabel}</span>
+              </span>
+            </span>
+            <span class="work-body">
+              <span class="work-title">{work.title}</span>
+              <span class="work-line">{work.line}</span>
+              {work.stack && (
+                <span class="stack-list work-stack">
+                  {work.stack.map((item) => (
+                    <span class="tag">{item}</span>
+                  ))}
+                </span>
+              )}
+            </span>
+            <span class="work-dwell" aria-hidden="true"><span></span></span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class:list={['work-read', 'panel', `tone-${first.tone}`]} data-read>
+    <div>
+      <p class="meta tone-text" data-read-kicker>{first.familyLabel} · {first.statusLabel}</p>
+      <p class="work-read-title" data-read-title aria-live="polite">{first.title}</p>
+      <p class="work-read-text" data-read-text>{first.text}</p>
+      <p class="work-read-link">
+        <a class="text-link" data-read-link href={first.href}>{first.cta}</a>
+      </p>
+    </div>
+    <div>
+      <ul class="work-points" data-read-points>
+        {first.points.map((point) => <li>{point}</li>)}
+      </ul>
+      <ul class="stack-list work-read-stack" data-read-stack aria-label="Pile technique">
+        {first.stack?.map((item) => <li class="tag">{item}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <script type="application/json" data-works-copy set:html={JSON.stringify(works)} />
+</div>
+
+<script>
+  const DWELL = 5200;
+  const tones = ['tone-cyan', 'tone-gold', 'tone-silver', 'tone-amber'];
+
+  document.querySelectorAll('[data-works]').forEach((root) => {
+    const node = root instanceof HTMLElement ? root : null;
+    if (!node) return;
+    const copy = node.querySelector('[data-works-copy]');
+    if (!(copy instanceof HTMLScriptElement) || !copy.textContent) return;
+    const catalog = JSON.parse(copy.textContent);
+    const cards = [...node.querySelectorAll('[data-work]')].filter((card) => card instanceof HTMLButtonElement);
+    const filters = [...node.querySelectorAll('[data-filter]')].filter((button) => button instanceof HTMLButtonElement);
+    const play = node.querySelector('[data-works-play]');
+    const bar = node.querySelector('.works-bar');
+    const read = node.querySelector('[data-read]');
+    const kicker = node.querySelector('[data-read-kicker]');
+    const title = node.querySelector('[data-read-title]');
+    const text = node.querySelector('[data-read-text]');
+    const points = node.querySelector('[data-read-points]');
+    const stack = node.querySelector('[data-read-stack]');
+    const link = node.querySelector('[data-read-link]');
+    if (!(play instanceof HTMLButtonElement) || !(bar instanceof HTMLElement) || !(read instanceof HTMLElement)) return;
+    if (!kicker || !title || !text || !points || !stack || !(link instanceof HTMLAnchorElement)) return;
+
+    let family = 'all';
+    let paused = false;
+    let held = false;
+    let hidden = document.hidden;
+    let offscreen = true;
+    let timer = 0;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)').matches === false;
+
+    const visible = () =>
+      cards.filter((card) => {
+        const item = card.closest('li');
+        return item instanceof HTMLElement && !item.hidden;
+      });
+
+    const playing = () => motion && !paused && !held && !hidden && !offscreen;
+
+    const render = (id) => {
+      const work = catalog.find((item) => item.id === id);
+      if (!work) return;
+      kicker.textContent = `${work.familyLabel} · ${work.statusLabel}`;
+      title.textContent = work.title;
+      text.textContent = work.text;
+      points.replaceChildren(
+        ...work.points.map((point) => {
+          const item = document.createElement('li');
+          item.textContent = point;
+          return item;
+        }),
+      );
+      stack.replaceChildren(
+        ...(work.stack ?? []).map((item) => {
+          const chip = document.createElement('li');
+          chip.className = 'tag';
+          chip.textContent = item;
+          return chip;
+        }),
+      );
+      stack.hidden = !(work.stack && work.stack.length);
+      link.href = work.href;
+      link.textContent = work.cta;
+      tones.forEach((tone) => read.classList.remove(tone));
+      read.classList.add(`tone-${work.tone}`);
+    };
+
+    const activate = (card) => {
+      cards.forEach((item) => {
+        if (!(item instanceof HTMLButtonElement)) return;
+        const on = item === card;
+        item.classList.toggle('is-on', on);
+        item.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      render(card.dataset.work);
+      if (!playing()) {
+        node.classList.remove('is-playing');
+        return;
+      }
+      node.classList.remove('is-playing');
+      void node.offsetWidth;
+      node.classList.add('is-playing');
+    };
+
+    const tick = () => {
+      const list = visible();
+      if (!list.length) return;
+      const index = list.findIndex((card) => card.classList.contains('is-on'));
+      const next = list[(index + 1) % list.length];
+      if (next instanceof HTMLButtonElement) activate(next);
+    };
+
+    const arm = () => {
+      window.clearInterval(timer);
+      timer = 0;
+      play.hidden = !motion;
+      play.textContent = paused ? 'Reprendre' : 'Pause';
+      play.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      if (!playing()) {
+        node.classList.remove('is-playing');
+        return;
+      }
+      node.classList.add('is-playing');
+      timer = window.setInterval(tick, DWELL);
+    };
+
+    filters.forEach((button) => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      button.addEventListener('click', () => {
+        family = button.dataset.filter || 'all';
+        filters.forEach((item) => {
+          if (item instanceof HTMLButtonElement) item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+        });
+        cards.forEach((card) => {
+          if (!(card instanceof HTMLButtonElement)) return;
+          const item = card.closest('li');
+          if (item instanceof HTMLElement) item.hidden = family !== 'all' && card.dataset.family !== family;
+        });
+        const firstVisible = visible()[0];
+        if (firstVisible instanceof HTMLButtonElement) activate(firstVisible);
+        arm();
+      });
+    });
+
+    cards.forEach((card) => {
+      if (!(card instanceof HTMLButtonElement)) return;
+      card.addEventListener('click', () => {
+        activate(card);
+        arm();
+      });
+    });
+
+    play.addEventListener('click', () => {
+      paused = !paused;
+      const current = cards.find((card) => card.classList.contains('is-on'));
+      if (current instanceof HTMLButtonElement) activate(current);
+      arm();
+    });
+
+    node.addEventListener('pointerenter', (event) => {
+      if (!(event instanceof PointerEvent) || event.pointerType !== 'mouse') return;
+      held = true;
+      window.clearInterval(timer);
+      timer = 0;
+      node.classList.remove('is-playing');
+    });
+
+    node.addEventListener('pointerleave', (event) => {
+      if (!(event instanceof PointerEvent) || event.pointerType !== 'mouse') return;
+      held = false;
+      const current = cards.find((card) => card.classList.contains('is-on'));
+      if (current instanceof HTMLButtonElement) activate(current);
+      arm();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      hidden = document.hidden;
+      if (hidden) {
+        window.clearInterval(timer);
+        timer = 0;
+        node.classList.remove('is-playing');
+        return;
+      }
+      const current = cards.find((card) => card.classList.contains('is-on'));
+      if (current instanceof HTMLButtonElement) activate(current);
+      arm();
+    });
+
+    if (motion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          offscreen = !entry?.isIntersecting;
+          if (offscreen) {
+            window.clearInterval(timer);
+            timer = 0;
+            node.classList.remove('is-playing');
+            return;
+          }
+          const current = cards.find((card) => card.classList.contains('is-on'));
+          if (current instanceof HTMLButtonElement) activate(current);
+          arm();
+        },
+        { threshold: 0.6 },
+      );
+      observer.observe(bar);
+    }
+  });
+</script>

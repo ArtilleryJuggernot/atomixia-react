@@ -2577,8 +2577,36 @@ html.has-cursor select {
   background: rgba(9, 12, 18, 0.8);
 }
 
+.stage-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .stage .meta {
   color: #d5dde6;
+}
+
+.stage-ico {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.65rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 0.45rem;
+  color: var(--tone, #d5dde6);
+  background: rgba(213, 221, 230, 0.08);
+  border: 1px solid rgba(213, 221, 230, 0.32);
+}
+
+.stage-ico:empty {
+  display: none;
+}
+
+.stage-ico svg {
+  width: 0.95rem;
+  height: 0.95rem;
 }
 
 .stage strong {

@@ -3324,7 +3324,7 @@ html.has-cursor select {
 }
 
 .task-dwell-track {
-  height: 2px;
+  height: 3px;
   margin-top: 1.15rem;
   overflow: hidden;
   border-radius: 999px;
@@ -3361,7 +3361,8 @@ html.has-cursor select {
     overflow-x: hidden;
     overflow-y: auto;
     scroll-snap-type: y proximity;
-    padding: 0.1rem 0.35rem 0.1rem 0.1rem;
+    padding: 0.1rem 0.35rem 2.6rem 0.1rem;
+    mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 2.4rem), transparent 100%);
   }
 
   .task-picks > li {
@@ -3379,6 +3380,7 @@ html.has-cursor select {
 @media (prefers-reduced-motion: no-preference) {
   .task-board.is-playing .task-dwell {
     animation: task-fill 5.6s linear forwards;
+    box-shadow: 0 0 12px rgba(0, 221, 245, 0.75);
   }
 
   .task-board .task-stage {
@@ -3425,10 +3427,12 @@ html.has-cursor select {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .task-dwell,
+  .task-dwell-track {
+    display: none;
+  }
+
   .task-stage,
   .task-step-mark {
     animation: none;
-    transform: none;
   }
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { createPadlock } from './padlock';
 
 export type PlanetId = 'automation' | 'software' | 'systems' | 'cyber';
 
@@ -319,36 +320,16 @@ export default function StellarScene({ planets, caption }: Props) {
         spinners.push({ object: shell, speed: 0.05, axis: 'x' });
       } else {
         linkColor = AMBER;
-        baseEmissive = 0.12;
-        body = new THREE.Mesh(
-          track(new THREE.SphereGeometry(0.54, 48, 48)),
-          track(new THREE.MeshStandardMaterial({ color: 0x151a22, emissive: 0x3c2e20, emissiveIntensity: baseEmissive, roughness: 0.22, metalness: 0.98 })),
-        );
-        group.add(body);
-        const shield = new THREE.Mesh(
-          track(new THREE.TorusGeometry(0.8, 0.018, 10, 140, Math.PI * 1.45)),
-          track(new THREE.MeshBasicMaterial({ color: SILVER })),
-        );
-        shield.rotation.z = Math.PI * 0.78;
-        group.add(shield);
-        spinners.push({ object: shield, speed: 0.09, axis: 'z' });
-        const alert = new THREE.Mesh(
-          track(new THREE.TorusGeometry(0.98, 0.012, 8, 100, Math.PI * 0.42)),
-          track(new THREE.MeshBasicMaterial({ color: AMBER })),
-        );
-        alert.rotation.z = -Math.PI * 0.2;
-        alert.rotation.x = 0.4;
-        group.add(alert);
-        spinners.push({ object: alert, speed: -0.14, axis: 'z' });
-        pulse = new THREE.Mesh(
-          track(new THREE.SphereGeometry(0.05, 12, 12)),
-          track(new THREE.MeshBasicMaterial({ color: AMBER, transparent: true, opacity: 0.9 })),
-        );
-        pulse.position.set(0.62, 0.55, 0.45);
-        group.add(pulse);
+        baseEmissive = 0.22;
+        const lock = createPadlock(track);
+        body = lock.body;
+        pulse = lock.pulse;
+        group.add(lock.group);
+        spinners.push({ object: lock.group, speed: 0.1, axis: 'y' });
+        spinners.push({ object: lock.ring, speed: 0.16, axis: 'z' });
       }
 
-      spinners.push({ object: body, speed: id === 'automation' ? 0.2 : 0.07, axis: 'y' });
+      if (id !== 'cyber') spinners.push({ object: body, speed: id === 'automation' ? 0.2 : 0.07, axis: 'y' });
 
       const anchor = anchors[id];
       const position = worldAt(anchor.x, anchor.y);

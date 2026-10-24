@@ -3807,7 +3807,8 @@ html.has-cursor select {
   .pb-ring,
   .pb-sat,
   .pb-pulse,
-  .footer-orbit::before {
+  .footer-orbit::before,
+  .work-dwell > span {
     animation: none;
   }
 }
@@ -4159,5 +4160,331 @@ html.has-cursor select {
   .task-stage,
   .task-step-mark {
     animation: none;
+  }
+}
+
+/* Réalisations : produit public et exemples */
+
+.works-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.works-grid > li {
+  min-width: 0;
+  display: flex;
+}
+
+.works-grid > li[hidden] {
+  display: none;
+}
+
+.work-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  width: 100%;
+  min-width: 0;
+  padding: 1.05rem 1.1rem 1.2rem;
+  border: 1px solid rgba(40, 51, 67, 0.95);
+  border-radius: 1.15rem;
+  background: linear-gradient(180deg, rgba(21, 29, 43, 0.72), rgba(9, 12, 18, 0.92));
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.work-card.is-public {
+  border-color: rgba(217, 193, 138, 0.45);
+}
+
+.work-card.is-on {
+  border-color: var(--tone, #f2d9a0);
+  box-shadow: 0 0 0 1px var(--tone-soft, rgba(217, 193, 138, 0.16)), 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+.work-card:focus-visible,
+.works .mode-btn:focus-visible {
+  outline: 2px solid var(--tone, #f2d9a0);
+  outline-offset: 3px;
+}
+
+.work-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.work-ico {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2.35rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.7rem;
+  color: var(--tone, #f2d9a0);
+  background: var(--tone-soft, rgba(217, 193, 138, 0.16));
+  border: 1px solid color-mix(in srgb, var(--tone, #f2d9a0) 42%, transparent);
+}
+
+.work-ico svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.work-kicker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.work-status {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tone, #d9c18a);
+}
+
+.work-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.work-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.work-line {
+  color: #a7b0bf;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.work-stack {
+  margin-top: 0.35rem;
+}
+
+.work-dwell {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.work-dwell > span {
+  display: block;
+  height: 100%;
+  background: var(--tone, #f2d9a0);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.works.is-playing .work-card.is-on .work-dwell > span {
+  animation: work-fill 5.2s linear;
+}
+
+@keyframes work-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.work-read {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 0.85rem;
+  padding: 1.25rem 1.3rem 1.35rem;
+}
+
+.work-read-title {
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  letter-spacing: -0.03em;
+}
+
+.work-read-text {
+  margin-top: 0.55rem;
+  max-width: 40rem;
+  color: #a7b0bf;
+}
+
+.work-read-link {
+  margin-top: 0.9rem;
+}
+
+.work-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-points li {
+  position: relative;
+  padding: 0.38rem 0 0.38rem 1rem;
+  color: #a7b0bf;
+}
+
+.work-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.78rem;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: var(--tone, #f2d9a0);
+}
+
+.work-read-stack {
+  margin-top: 0.35rem;
+}
+
+.work-read-stack[hidden] {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .works-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .works-grid > li.is-wide {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1040px) {
+  .works-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .work-read {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
+    align-items: start;
+  }
+
+  .work-read-stack {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-dwell {
+    display: none;
+  }
+}
+
+.work-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.75rem;
+}
+
+.work-jump a {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(40, 51, 67, 0.95);
+  border-radius: 999px;
+  background: rgba(9, 12, 18, 0.8);
+  color: #d7d2c6;
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.work-jump a:hover,
+.work-jump a:focus-visible {
+  border-color: rgba(217, 193, 138, 0.7);
+  color: #f4f5f8;
+}
+
+.work-chapter {
+  margin-top: 4.5rem;
+  scroll-margin-top: 6.5rem;
+}
+
+.work-public {
+  display: grid;
+  gap: 1.75rem;
+  padding: 1.5rem;
+  scroll-margin-top: 6.5rem;
+}
+
+.work-public .work-ico {
+  color: #f2d9a0;
+  background: rgba(242, 217, 160, 0.1);
+  border-color: rgba(217, 193, 138, 0.45);
+}
+
+.work-entries {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-entry {
+  display: grid;
+  gap: 1rem;
+  padding: 1.6rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  scroll-margin-top: 6.5rem;
+}
+
+.work-entry-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.work-entry .work-points li {
+  color: #a7b0bf;
+}
+
+@media (min-width: 900px) {
+  .work-public {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    gap: 2.5rem;
+    padding: 2rem;
+    align-items: start;
+  }
+
+  .work-entry {
+    grid-template-columns: 5.5rem minmax(0, 0.9fr) minmax(0, 1.15fr);
+    gap: 1.25rem 2rem;
+    align-items: start;
+  }
+
+  .work-entry-mark {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
   }
 }

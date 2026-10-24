@@ -1,0 +1,275 @@
+---
+import WorkIcon from './WorkIcon.astro';
+import { workFamilies, works } from '../lib/works';
+
+const first = works[0];
+---
+
+<div class="works" data-works>
+  <div class="works-bar">
+    <div class="mode-switch" role="group" aria-label="Filtrer les exemples">
+      {
+        workFamilies.map((family) => (
+          <button
+            type="button"
+            class="mode-btn"
+            data-filter={family.id}
+            aria-pressed={family.id === 'all' ? 'true' : 'false'}
+          >
+            {family.label}
+          </button>
+        ))
+      }
+    </div>
+    <button type="button" class="mode-btn works-play" data-works-play hidden>
+      Pause
+    </button>
+  </div>
+
+  <ol class="works-grid">
+    {
+      works.map((work) => (
+        <li class:list={{ 'is-wide': work.wide }}>
+          <button
+            type="button"
+            class:list={['work-card', `tone-${work.tone}`, { 'is-wide': work.wide, 'is-public': work.status === 'public', 'is-on': work.id === first.id }]}
+            data-work={work.id}
+            data-family={work.family}
+            aria-pressed={work.id === first.id ? 'true' : 'false'}
+          >
+            <span class="work-top">
+              <span class="work-ico" aria-hidden="true">
+                <WorkIcon id={work.id} />
+              </span>
+              <span class="work-kicker">
+                <span class="meta">{work.familyLabel}</span>
+                <span class="work-status">{work.statusLabel}</span>
+              </span>
+            </span>
+            <span class="work-body">
+              <span class="work-title">{work.title}</span>
+              <span class="work-line">{work.line}</span>
+              {work.stack && (
+                <span class="stack-list work-stack">
+                  {work.stack.map((item) => (
+                    <span class="tag">{item}</span>
+                  ))}
+                </span>
+              )}
+            </span>
+            <span class="work-dwell" aria-hidden="true"><span></span></span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class:list={['work-read', 'panel', `tone-${first.tone}`]} data-read>
+    <div>
+      <p class="meta tone-text" data-read-kicker>{first.familyLabel} · {first.statusLabel}</p>
+      <p class="work-read-title" data-read-title aria-live="polite">{first.title}</p>
+      <p class="work-read-text" data-read-text>{first.text}</p>
+      <p class="work-read-link">
+        <a class="text-link" data-read-link href={first.href}>{first.cta}</a>
+      </p>
+    </div>
+    <ul class="work-points" data-read-points>
+      {first.points.map((point) => <li>{point}</li>)}
+    </ul>
+    <ul class="stack-list work-read-stack" data-read-stack aria-label="Pile technique">
+      {first.stack?.map((item) => <li class="tag">{item}</li>)}
+    </ul>
+  </div>
+
+  <script type="application/json" data-works-copy set:html={JSON.stringify(works)} />
+</div>
+
+<script>
+  const DWELL = 5200;
+  const tones = ['tone-cyan', 'tone-gold', 'tone-silver', 'tone-amber'];
+
+  document.querySelectorAll('[data-works]').forEach((root) => {
+    const node = root instanceof HTMLElement ? root : null;
+    if (!node) return;
+    const copy = node.querySelector('[data-works-copy]');
+    if (!(copy instanceof HTMLScriptElement) || !copy.textContent) return;
+    const catalog = JSON.parse(copy.textContent);
+    const cards = [...node.querySelectorAll('[data-work]')].filter((card) => card instanceof HTMLButtonElement);
+    const filters = [...node.querySelectorAll('[data-filter]')].filter((button) => button instanceof HTMLButtonElement);
+    const play = node.querySelector('[data-works-play]');
+    const bar = node.querySelector('.works-bar');
+    const read = node.querySelector('[data-read]');
+    const kicker = node.querySelector('[data-read-kicker]');
+    const title = node.querySelector('[data-read-title]');
+    const text = node.querySelector('[data-read-text]');
+    const points = node.querySelector('[data-read-points]');
+    const stack = node.querySelector('[data-read-stack]');
+    const link = node.querySelector('[data-read-link]');
+    if (!(play instanceof HTMLButtonElement) || !(bar instanceof HTMLElement) || !(read instanceof HTMLElement)) return;
+    if (!kicker || !title || !text || !points || !stack || !(link instanceof HTMLAnchorElement)) return;
+
+    let family = 'all';
+    let paused = false;
+    let held = false;
+    let hidden = document.hidden;
+    let offscreen = true;
+    let timer = 0;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)').matches === false;
+
+    const visible = () =>
+      cards.filter((card) => {
+        const item = card.closest('li');
+        return item instanceof HTMLElement && !item.hidden;
+      });
+
+    const playing = () => motion && !paused && !held && !hidden && !offscreen;
+
+    const render = (id) => {
+      const work = catalog.find((item) => item.id === id);
+      if (!work) return;
+      kicker.textContent = `${work.familyLabel} · ${work.statusLabel}`;
+      title.textContent = work.title;
+      text.textContent = work.text;
+      points.replaceChildren(
+        ...work.points.map((point) => {
+          const item = document.createElement('li');
+          item.textContent = point;
+          return item;
+        }),
+      );
+      stack.replaceChildren(
+        ...(work.stack ?? []).map((item) => {
+          const chip = document.createElement('li');
+          chip.className = 'tag';
+          chip.textContent = item;
+          return chip;
+        }),
+      );
+      stack.hidden = !(work.stack && work.stack.length);
+      link.href = work.href;
+      link.textContent = work.cta;
+      tones.forEach((tone) => read.classList.remove(tone));
+      read.classList.add(`tone-${work.tone}`);
+    };
+
+    const activate = (card) => {
+      cards.forEach((item) => {
+        if (!(item instanceof HTMLButtonElement)) return;
+        const on = item === card;
+        item.classList.toggle('is-on', on);
+        item.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      render(card.dataset.work);
+      if (!playing()) {
+        node.classList.remove('is-playing');
+        return;
+      }
+      node.classList.remove('is-playing');
+      void node.offsetWidth;
+      node.classList.add('is-playing');
+    };
+
+    const tick = () => {
+      const list = visible();
+      if (!list.length) return;
+      const index = list.findIndex((card) => card.classList.contains('is-on'));
+      const next = list[(index + 1) % list.length];
+      if (next instanceof HTMLButtonElement) activate(next);
+    };
+
+    const arm = () => {
+      window.clearInterval(timer);
+      timer = 0;
+      play.hidden = !motion;
+      play.textContent = paused ? 'Reprendre' : 'Pause';
+      play.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      if (!playing()) {
+        node.classList.remove('is-playing');
+        return;
+      }
+      node.classList.add('is-playing');
+      timer = window.setInterval(tick, DWELL);
+    };
+
+    filters.forEach((button) => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      button.addEventListener('click', () => {
+        family = button.dataset.filter || 'all';
+        filters.forEach((item) => {
+          if (item instanceof HTMLButtonElement) item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+        });
+        cards.forEach((card) => {
+          if (!(card instanceof HTMLButtonElement)) return;
+          const item = card.closest('li');
+          if (item instanceof HTMLElement) item.hidden = family !== 'all' && card.dataset.family !== family;
+        });
+        const firstVisible = visible()[0];
+        if (firstVisible instanceof HTMLButtonElement) activate(firstVisible);
+        arm();
+      });
+    });
+
+    cards.forEach((card) => {
+      if (!(card instanceof HTMLButtonElement)) return;
+      card.addEventListener('click', () => {
+        activate(card);
+        arm();
+      });
+    });
+
+    play.addEventListener('click', () => {
+      paused = !paused;
+      const current = cards.find((card) => card.classList.contains('is-on'));
+      if (current instanceof HTMLButtonElement) activate(current);
+      arm();
+    });
+
+    node.addEventListener('pointerenter', (event) => {
+      if (!(event instanceof PointerEvent) || event.pointerType !== 'mouse') return;
+      held = true;
+      window.clearInterval(timer);
+      timer = 0;
+      node.classList.remove('is-playing');
+    });
+
+    node.addEventListener('pointerleave', (event) => {
+      if (!(event instanceof PointerEvent) || event.pointerType !== 'mouse') return;
+      held = false;
+      const current = cards.find((card) => card.classList.contains('is-on'));
+      if (current instanceof HTMLButtonElement) activate(current);
+      arm();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      hidden = document.hidden;
+      if (hidden) {
+        window.clearInterval(timer);
+        timer = 0;
+        node.classList.remove('is-playing');
+        return;
+      }
+      const current = cards.find((card) => card.classList.contains('is-on'));
+      if (current instanceof HTMLButtonElement) activate(current);
+      arm();
+    });
+
+    if (motion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          offscreen = !entry?.isIntersecting;
+          if (offscreen) {
+            window.clearInterval(timer);
+            timer = 0;
+            node.classList.remove('is-playing');
+            return;
+          }
+          const current = cards.find((card) => card.classList.contains('is-on'));
+          if (current instanceof HTMLButtonElement) activate(current);
+          arm();
+        },
+        { threshold: 0.6 },
+      );
+      observer.observe(bar);
+    }
+  });
+</script>

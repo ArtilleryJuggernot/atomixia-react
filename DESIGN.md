@@ -1,30 +1,54 @@
-# Atomixia — système visuel
+# Atomixia — système stellaire
 
-Direction : intelligence connectée. Fond obsidienne, surfaces navy, signal cyan. Le logo officiel reste le A argent et son orbite cyan (`public/brand/mark.webp`).
+Direction : Stellar Ink, or champagne, cyan ionique. Le logo officiel reste le A argent (`public/brand/mark.webp`). Il n’est ni redessiné ni remplacé. L’or est la signature, le cyan signale la donnée et l’état actif.
 
 ## Jetons
 
 | Jeton | Valeur | Rôle |
 | --- | --- | --- |
-| Obsidian | `#05080D` | Fond |
-| Deep Navy | `#0B1422` | Surfaces |
-| Graphite Blue | `#14243A` | Surfaces élevées |
-| Ion Blue | `#176BFF` | Bleu de marque |
-| Electric Cyan | `#00E5FF` | Accent, lien actif, orbite |
-| Titanium | `#C9D4E2` | Texte secondaire |
-| Ice White | `#F5F8FC` | Texte principal |
-| Ligne | `#29394D` | Filets |
-| Succès | `#4ADE80` | État positif |
-| Erreur | `#FB7185` | État d’erreur |
+| Deep Ink | `#050609` | Fond |
+| Obsidian | `#090C12` | Panneaux |
+| Midnight | `#101725` | Navigation |
+| Surface | `#151D2B` | Surfaces élevées |
+| Filet | `#283343` | Bordures |
+| Or champagne | `#D9C18A` | Signature, filets, focus |
+| Or lumineux | `#F2D9A0` | Hautes lumières |
+| Bronze | `#8E7045` | Ombre métallique |
+| Cyan ionique | `#00DDF5` | Donnée, lien actif |
+| Bleu électrique | `#2583FF` | Profondeur |
+| Blanc | `#F4F5F8` | Texte |
+| Texte atténué | `#A7B0BF` | Secondaire |
+| Texte discret | `#737E90` | Annotations |
+| Succès | `#62D6A3` | Constat corrigé |
+| Alerte | `#E8B86D` | Signal de sécurité |
+| Erreur | `#F07885` | Constat élevé |
 
-Space Grotesk pour les titres, Inter pour le texte, JetBrains Mono pour les états techniques. Cormorant Garamond reste réservé aux citations.
+Space Grotesk pour l’interface, Cormorant Garamond pour les phrases éditoriales, JetBrains Mono pour les index. Inter pour le texte courant.
 
-## Scène
+## Mouvement
 
-Le hero est une démonstration. Sept états se succèdent : demande, analyse, fiche, brouillon, validation, sortie préparée, tâche prête. Les traits relient des nœuds réels. Aucun e-mail n’est envoyé, aucune facture n’est émise.
+| Famille | Outil | Ce qu’il anime |
+| --- | --- | --- |
+| Entrées, orbites, états | CSS | Hero, anneaux, cartes, menu |
+| Ligne de lumière | GSAP ScrollTrigger | La méthode, au défilement |
+| Scène planétaire | Three.js | Étoiles, anneaux, quatre planètes |
+| Champ de la démo agent | Three.js | Points derrière le flux simulé |
+| Curseur | CSSOM (`transform`) | Point et anneau, bureau uniquement |
 
-Three.js dessine le champ et les anneaux, sans style en ligne (`setSize(..., false)`), parce que la politique de sécurité ignore `unsafe-inline` dès qu’un hash de style est présent. Les panneaux, le logo et les libellés sont du HTML. GSAP n’anime pas cette scène. Le mouvement est en CSS, coupé si `prefers-reduced-motion`.
+Le curseur n’existe qu’avec une souris fine et sans `prefers-reduced-motion`. Le mouvement réduit fige les scènes sur leur état lisible. Sans WebGL, le canvas disparaît et les liens HTML restent.
+
+La politique de sécurité du site bloque les attributs `style` dans le HTML. Les animations passent par des classes ou par le CSSOM (`element.style.transform`), jamais par `setAttribute('style')`.
+
+## Pages
+
+- `/` — univers, clarté, automatisation, architecture, conseil, cyber, méthode, Artemisia, contact.
+- `/solutions/automatisation-ia`
+- `/solutions/saas-logiciels`
+- `/expertises/conseil-systeme-information`
+- `/expertises/cybersecurite-pentest` — `/securite` redirige ici.
+
+Les scènes sont des démonstrations. Aucun e-mail n’est envoyé, aucune facture n’est émise, aucun test d’intrusion n’est lancé depuis le site.
 
 ## Higgsfield
 
-La génération d’image a été demandée (fond orbital, sans texte ni logo). Le compte est sur le plan gratuit : `gpt_image_2_5`, `soul_location` et `recraft_v4_1` répondent « Requires basic plan or higher ». Aucun visuel généré n’a été intégré. La scène est procédurale.
+La génération d’images a été tentée sur les modèles `gpt_image_2_5`, `soul_location` et `recraft_v4_1`. Le compte est sur le plan gratuit : chaque appel répond « Requires basic plan or higher ». Aucun visuel généré n’a été intégré, et les appels n’ont pas été répétés. Les planètes, les étoiles et les anneaux sont procéduraux. Voir `docs/assets.md`.

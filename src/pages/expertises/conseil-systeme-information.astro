@@ -1,0 +1,37 @@
+---
+import ServiceShell from '../../components/ServiceShell.astro';
+import NodeMap from '../../components/NodeMap.astro';
+import Stages from '../../components/Stages.astro';
+import { services } from '../../lib/services';
+import { siLinks, siNodes } from '../../lib/maps';
+
+const service = services.systems;
+const description =
+  'Conseil en systèmes d’information : cartographie applicative, flux de données, architecture cible, dette technique, trajectoire de modernisation et préparation à l’IA. Audit, architecture, priorisation, implémentation, optimisation.';
+const stages = service.engagement.map((step, index) => ({ index: `0${index + 1}`, title: step.title.toUpperCase(), text: step.text }));
+---
+
+<ServiceShell
+  service={service}
+  parent={{ name: 'Expertises', href: '/#conseil' }}
+  description={description}
+  demoTitle="Une cartographie que l’on peut lire."
+  demoText="Sept applications d’une PME type et le centre relié que l’on propose. Sélectionnez un outil : ses dépendances s’allument, ses risques s’affichent. La carte réelle se construit en entretien."
+>
+  <div slot="demo" class="grid gap-10">
+    <NodeMap
+      id="si-map"
+      tone="silver"
+      nodes={siNodes}
+      links={siLinks}
+      label="Applications du système d’information"
+      intro="Exemple pédagogique. Les outils et les dettes sont ceux d’une PME type, pas d’un client nommé."
+    />
+    <div>
+      <p class="meta tone-text">Les cinq temps</p>
+      <div class="mt-4">
+        <Stages stages={stages} />
+      </div>
+    </div>
+  </div>
+</ServiceShell>

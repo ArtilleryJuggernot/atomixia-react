@@ -1,0 +1,60 @@
+---
+interface Step {
+  index: string;
+  title: string;
+  text: string;
+}
+interface Props {
+  steps: Step[];
+  headingLevel?: 'h3' | 'strong';
+}
+const { steps, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+---
+
+<ol class="light-line" data-light-line data-count={steps.length}>
+  <span class="light-line-fill" aria-hidden="true"></span>
+  {
+    steps.map((step) => (
+      <li class="light-step" data-light-step>
+        <span class="meta">{step.index}</span>
+        <Heading>{step.title}</Heading>
+        <p>{step.text}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lines = document.querySelectorAll<HTMLElement>('[data-light-line]');
+
+  if (reduce) {
+    lines.forEach((line) => line.querySelectorAll('[data-light-step]').forEach((step) => step.classList.add('is-lit')));
+  } else if (lines.length) {
+    gsap.registerPlugin(ScrollTrigger);
+    const horizontal = window.matchMedia('(min-width: 900px)').matches;
+    lines.forEach((line) => {
+      const fill = line.querySelector<HTMLElement>('.light-line-fill');
+      const steps = Array.from(line.querySelectorAll<HTMLElement>('[data-light-step]'));
+      if (!fill) return;
+      gsap.to(fill, {
+        [horizontal ? 'scaleX' : 'scaleY']: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: line,
+          start: 'top 78%',
+          end: horizontal ? 'center 60%' : 'center 70%',
+          scrub: 0.5,
+          onUpdate: (self) => {
+            const count = Math.round(self.progress * steps.length + 0.25);
+            steps.forEach((step, index) => step.classList.toggle('is-lit', index < count));
+          },
+        },
+      });
+    });
+  }
+</script>

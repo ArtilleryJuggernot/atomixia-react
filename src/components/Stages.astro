@@ -1,0 +1,34 @@
+---
+interface Stage {
+  index: string;
+  title: string;
+  text: string;
+}
+interface Props {
+  stages: Stage[];
+}
+const { stages } = Astro.props;
+---
+
+<ol class="stages" data-reveal data-stages>
+  {
+    stages.map((stage) => (
+      <li class="stage">
+        <span class="meta">{stage.index}</span>
+        <strong>{stage.title}</strong>
+        <p>{stage.text}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lists = document.querySelectorAll<HTMLElement>('[data-stages]');
+  if (!reduce && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-in', entry.isIntersecting));
+    });
+    lists.forEach((list) => observer.observe(list));
+  }
+</script>

@@ -7,6 +7,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://atomixia.fr',
   output: 'static',
+  redirects: {
+    '/securite': '/expertises/cybersecurite-pentest',
+  },
   security: {
     checkOrigin: false,
   },

@@ -1,0 +1,148 @@
+---
+/**
+ * Interactive node map: a 3-column grid of blocks, SVG links drawn between
+ * block centres at runtime, a detail panel for the active block.
+ * Positions are grid indices (col 0..2, row 0..n). `null` cells stay empty.
+ */
+export interface MapNode {
+  id: string;
+  kicker: string;
+  label: string;
+  text: string;
+  points: string[];
+  col: number;
+  row: number;
+}
+export interface MapLink {
+  from: string;
+  to: string;
+}
+interface Props {
+  id: string;
+  nodes: MapNode[];
+  links: MapLink[];
+  tone: 'cyan' | 'gold' | 'silver' | 'amber';
+  intro: string;
+  label: string;
+}
+const { id, nodes, links, tone, intro, label } = Astro.props;
+const rows = Math.max(...nodes.map((node) => node.row)) + 1;
+const cells: (MapNode | null)[] = [];
+for (let row = 0; row < rows; row += 1) {
+  for (let col = 0; col < 3; col += 1) {
+    cells.push(nodes.find((node) => node.row === row && node.col === col) ?? null);
+  }
+}
+const first = nodes[0];
+---
+
+<div class:list={['node-map', `tone-${tone}`]} data-node-map={id}>
+  <div class="node-board panel" data-board>
+    <svg aria-hidden="true">
+      {links.map((link) => <line data-from={link.from} data-to={link.to} x1="0" y1="0" x2="0" y2="0" />)}
+    </svg>
+    <div class="node-cells" role="group" aria-label={label}>
+      {
+        cells.map((cell) =>
+          cell ? (
+            <button
+              type="button"
+              class="node-cell"
+              data-node={cell.id}
+              aria-pressed={cell.id === first.id ? 'true' : 'false'}
+              aria-controls={`${id}-detail`}
+              data-cursor="Voir"
+            >
+              <span class="meta">{cell.kicker}</span>
+              <strong>{cell.label}</strong>
+            </button>
+          ) : (
+            <span class="node-cell is-empty" aria-hidden="true" />
+          ),
+        )
+      }
+    </div>
+  </div>
+  <aside class="node-detail panel" id={`${id}-detail`} aria-live="polite">
+    <p class="meta tone-text" data-detail-kicker>{first.kicker}</p>
+    <p class="mt-2 font-display text-2xl tracking-tight" data-detail-title>{first.label}</p>
+    <p class="mt-3 text-parchment-dim" data-detail-text>{first.text}</p>
+    <ul data-detail-points>{first.points.map((point) => <li>{point}</li>)}</ul>
+    <p class="mt-5 text-sm text-subtle">{intro}</p>
+    <script type="application/json" data-detail-data is:inline set:html={JSON.stringify(nodes)} />
+  </aside>
+</div>
+
+<script>
+  type Node = { id: string; kicker: string; label: string; text: string; points: string[] };
+
+  document.querySelectorAll<HTMLElement>('[data-node-map]').forEach((map) => {
+    const board = map.querySelector<HTMLElement>('[data-board]');
+    const svg = map.querySelector('svg');
+    const detail = map.querySelector<HTMLElement>('.node-detail');
+    const data = map.querySelector<HTMLScriptElement>('[data-detail-data]');
+    if (!board || !svg || !detail || !data) return;
+    const nodes: Node[] = JSON.parse(data.textContent || '[]');
+    const cells = Array.from(board.querySelectorAll<HTMLButtonElement>('.node-cell[data-node]'));
+    const lines = Array.from(svg.querySelectorAll<SVGLineElement>('line'));
+
+    function centre(element: HTMLElement) {
+      const base = board!.getBoundingClientRect();
+      const rect = element.getBoundingClientRect();
+      return { x: rect.left - base.left + rect.width / 2, y: rect.top - base.top + rect.height / 2 };
+    }
+
+    function layout() {
+      lines.forEach((line) => {
+        const from = cells.find((cell) => cell.dataset.node === line.dataset.from);
+        const to = cells.find((cell) => cell.dataset.node === line.dataset.to);
+        if (!from || !to) return;
+        const a = centre(from);
+        const b = centre(to);
+        line.setAttribute('x1', String(a.x));
+        line.setAttribute('y1', String(a.y));
+        line.setAttribute('x2', String(b.x));
+        line.setAttribute('y2', String(b.y));
+      });
+    }
+
+    function select(id: string) {
+      const node = nodes.find((item) => item.id === id);
+      if (!node) return;
+      board!.dataset.active = id;
+      const linked = new Set<string>();
+      lines.forEach((line) => {
+        const hot = line.dataset.from === id || line.dataset.to === id;
+        line.classList.toggle('is-hot', hot);
+        if (hot) linked.add(line.dataset.from === id ? line.dataset.to! : line.dataset.from!);
+      });
+      cells.forEach((cell) => {
+        cell.setAttribute('aria-pressed', String(cell.dataset.node === id));
+        cell.classList.toggle('is-linked', linked.has(cell.dataset.node!));
+      });
+      detail!.querySelector('[data-detail-kicker]')!.textContent = node.kicker;
+      detail!.querySelector('[data-detail-title]')!.textContent = node.label;
+      detail!.querySelector('[data-detail-text]')!.textContent = node.text;
+      const list = detail!.querySelector('[data-detail-points]')!;
+      list.replaceChildren(
+        ...node.points.map((point) => {
+          const item = document.createElement('li');
+          item.textContent = point;
+          return item;
+        }),
+      );
+    }
+
+    cells.forEach((cell) => {
+      cell.addEventListener('click', () => select(cell.dataset.node!));
+      cell.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'mouse') select(cell.dataset.node!);
+      });
+    });
+
+    layout();
+    if (cells[0]) select(cells[0].dataset.node!);
+    window.addEventListener('resize', layout);
+    if ('ResizeObserver' in window) new ResizeObserver(layout).observe(board);
+  });
+</script>

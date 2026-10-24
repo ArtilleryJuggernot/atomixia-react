@@ -1,0 +1,28 @@
+---
+import ServiceShell from '../../components/ServiceShell.astro';
+import NodeMap from '../../components/NodeMap.astro';
+import { services } from '../../lib/services';
+import { architectureLinks, architectureNodes } from '../../lib/maps';
+
+const service = services.software;
+const description =
+  'Applications web métier, plateformes SaaS, outils internes et API. Architecture, comptes et permissions, déploiement et évolution. Artemisia, logiciel BTP, est le produit commercialisé par Atomixia.';
+---
+
+<ServiceShell
+  service={service}
+  parent={{ name: 'Solutions', href: '/#univers' }}
+  description={description}
+  demoTitle="Sept blocs, une application lisible."
+  demoText="Interface, authentification, API, intégrations, logique métier, base de données, supervision. Sélectionnez un bloc : ses liens s’allument et son rôle s’affiche. Le découpage réel se décide avec le métier."
+>
+  <NodeMap
+    slot="demo"
+    id="archi-page"
+    tone="gold"
+    nodes={architectureNodes}
+    links={architectureLinks}
+    label="Blocs de l’architecture"
+    intro="Les blocs sont ceux d’une application web type. Rien ici n’est un extrait d’un projet client."
+  />
+</ServiceShell>

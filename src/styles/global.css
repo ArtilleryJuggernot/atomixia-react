@@ -1019,6 +1019,82 @@ footer .grid > * {
   margin-top: 0.85rem;
 }
 
+.quote-stack {
+  display: grid;
+}
+
+.quote-stack .quote-band {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(0.55rem);
+  pointer-events: none;
+}
+
+.quote-stack .quote-band blockquote {
+  margin: 0;
+}
+
+.quote-stack .quote-band.is-on {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.quote-reel-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  margin-top: 1.15rem;
+  padding-left: 1.4rem;
+}
+
+.quote-play {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #737e90;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.quote-play:hover,
+.quote-play[aria-pressed='true'] {
+  color: #d9c18a;
+}
+
+.quote-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.quote-dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(0, 221, 245, 0.55);
+  background: transparent;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+
+.quote-dot[aria-pressed='true'] {
+  border-color: #00ddf5;
+  background: #00ddf5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .quote-stack .quote-band {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+}
+
 .geo-diamond,
 .geo-diamond-lg {
   display: inline-block;

@@ -10,8 +10,33 @@ export type TaskMatch = {
   hold: string;
 };
 
-const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
+export type AutomationIcon =
+  | 'mail'
+  | 'watch'
+  | 'meet'
+  | 'search'
+  | 'send'
+  | 'chart'
+  | 'file'
+  | 'route'
+  | 'people'
+  | 'ticket';
+
+export type Automation = {
+  id: string;
+  label: string;
+  blurb: string;
+  icon: AutomationIcon;
+  test: RegExp;
+  match: TaskMatch;
+};
+
+export const automations: Automation[] = [
   {
+    id: 'mail',
+    label: 'Tri des e-mails',
+    blurb: 'Classer la boîte et préparer les réponses.',
+    icon: 'mail',
     test: /mail|e-mail|courriel|bo[iî]te|inbox/i,
     match: {
       title: 'Tri et préparation des messages',
@@ -26,6 +51,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'watch',
+    label: 'Veille',
+    blurb: 'Les changements sur les sources que vous indiquez.',
+    icon: 'watch',
     test: /veille|surveill|réglement|reglement|site|actualité|actualite|mot-cl/i,
     match: {
       title: 'Veille sur des sources choisies',
@@ -40,6 +69,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'meet',
+    label: 'Briefing',
+    blurb: 'Le contexte avant un échange, les actions après.',
+    icon: 'meet',
     test: /réunion|reunion|briefing|rendez-vous|rdv/i,
     match: {
       title: 'Briefing avant ou après un échange',
@@ -54,6 +87,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'search',
+    label: 'Documents',
+    blurb: 'Une réponse qui cite la pièce.',
+    icon: 'search',
     test: /document|contrat|pdf|chercher|base|connaissance|dossier/i,
     match: {
       title: 'Recherche dans vos documents',
@@ -68,6 +105,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'send',
+    label: 'Relances',
+    blurb: 'Les dossiers silencieux, au bon moment.',
+    icon: 'send',
     test: /relance|prospect|devis|client/i,
     match: {
       title: 'Relances et suivi commercial',
@@ -82,6 +123,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'chart',
+    label: 'Rapport',
+    blurb: 'La synthèse de la période, à relire.',
+    icon: 'chart',
     test: /rapport|lundi|compil|hebdo|chiffre|tableur|excel/i,
     match: {
       title: 'Rapport récurrent',
@@ -96,6 +141,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'file',
+    label: 'Classement',
+    blurb: 'Nommer et ranger, sans transmettre.',
+    icon: 'file',
     test: /facture|administratif|classement|archiv/i,
     match: {
       title: 'Classement de documents',
@@ -110,6 +159,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'route',
+    label: 'Déplacement',
+    blurb: 'Une trame de voyage, sans réservation.',
+    icon: 'route',
     test: /voyage|vacance|itinéraire|itineraire/i,
     match: {
       title: 'Préparation d’un déplacement',
@@ -124,6 +177,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'people',
+    label: 'Équipes',
+    blurb: 'Une pile ordonnée, sans envoi.',
+    icon: 'people',
     test: /candidat|recrut|cv|rh|onboarding|entretien/i,
     match: {
       title: 'Préparation côté équipes',
@@ -138,6 +195,10 @@ const SPECIFIC: { test: RegExp; match: TaskMatch }[] = [
     },
   },
   {
+    id: 'ticket',
+    label: 'Support',
+    blurb: 'Une file claire, sans modifier le système.',
+    icon: 'ticket',
     test: /ticket|support|incident|log|panne/i,
     match: {
       title: 'File de support ou d’incident',
@@ -168,6 +229,6 @@ const GENERIC: TaskMatch = {
 export function matchTask(input: string): TaskMatch | null {
   const text = input.trim();
   if (text.length < 10) return null;
-  const found = SPECIFIC.find((item) => item.test.test(text));
+  const found = automations.find((item) => item.test.test(text));
   return found?.match ?? GENERIC;
 }

@@ -3515,3 +3515,342 @@ html.has-cursor select {
     scroll-margin-top: 9rem;
   }
 }
+
+.task-board {
+  display: grid;
+  gap: 1rem;
+}
+
+.task-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.task-index {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: #a7b0bf;
+}
+
+.task-index span {
+  color: #737e90;
+}
+
+.task-play {
+  margin-left: auto;
+  border: 1px solid rgba(236, 231, 218, 0.22);
+  background: transparent;
+  color: #f4f5f8;
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.task-play:focus-visible,
+.task-pick:focus-visible {
+  outline: 2px solid #00ddf5;
+  outline-offset: 3px;
+}
+
+.task-picks {
+  position: relative;
+  display: flex;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.1rem 0.1rem 0.45rem;
+  list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 221, 245, 0.4) transparent;
+}
+
+.task-picks > li {
+  flex: 0 0 16.25rem;
+  scroll-snap-align: start;
+}
+
+.task-picks::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.task-picks::-webkit-scrollbar-thumb {
+  background: rgba(0, 221, 245, 0.35);
+  border-radius: 999px;
+}
+
+.task-pick {
+  display: grid;
+  grid-template-columns: 2.15rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+  min-height: 4.6rem;
+  text-align: left;
+  border: 1px solid rgba(236, 231, 218, 0.14);
+  background: rgba(6, 4, 15, 0.4);
+  color: #f4f5f8;
+  border-radius: 0.95rem;
+  padding: 0.7rem 0.8rem;
+  cursor: pointer;
+}
+
+.task-pick[aria-pressed='true'] {
+  border-color: rgba(0, 221, 245, 0.75);
+  background: rgba(0, 221, 245, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 221, 245, 0.16), 0 10px 28px rgba(0, 221, 245, 0.08);
+}
+
+.task-pick-ico {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.6rem;
+  color: #00ddf5;
+  background: rgba(0, 221, 245, 0.1);
+  border: 1px solid rgba(0, 221, 245, 0.32);
+}
+
+.task-pick-ico svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.task-pick-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.task-pick-blurb {
+  display: block;
+  margin-top: 0.2rem;
+  color: #a7b0bf;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.task-board .stage-panel {
+  min-height: 0;
+}
+
+.task-stage-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.task-stage-title {
+  margin: 0.3rem 0 0;
+  font-size: 1.55rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.task-board .task-flow {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-step {
+  display: grid;
+  grid-template-columns: 1.7rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  border: 1px solid rgba(236, 231, 218, 0.12);
+  border-radius: 0.8rem;
+  background: rgba(6, 4, 15, 0.45);
+  padding: 0.7rem 0.85rem;
+}
+
+.task-step-mark {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-top: 0.1rem;
+  border-radius: 50%;
+  color: #041016;
+  background: #62d6a3;
+}
+
+.task-step-mark svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.task-step-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.task-step-detail {
+  display: block;
+  margin-top: 0.15rem;
+  color: #a7b0bf;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.task-board .stage-result {
+  margin-top: 1rem;
+}
+
+.task-hold {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0.7rem 0 0;
+  color: #e8b86d;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.task-hold-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.35rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.05rem;
+}
+
+.task-hold-mark svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.task-cta {
+  margin-top: 1.15rem;
+}
+
+.task-dwell-track {
+  height: 3px;
+  margin-top: 1.15rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(236, 231, 218, 0.12);
+}
+
+.task-dwell {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #00ddf5, #e8b86d);
+}
+
+@media (min-width: 1024px) {
+  .task-board {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: 1.5rem;
+    align-items: start;
+  }
+
+  .task-toolbar {
+    grid-column: 1 / -1;
+  }
+
+  .task-picks,
+  .task-stage {
+    min-width: 0;
+  }
+
+  .task-picks {
+    flex-direction: column;
+    max-height: 34rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y proximity;
+    padding: 0.1rem 0.35rem 2.6rem 0.1rem;
+    mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 2.4rem), transparent 100%);
+  }
+
+  .task-picks > li {
+    flex: none;
+    scroll-snap-align: center;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .task-pick:hover {
+    border-color: rgba(0, 221, 245, 0.45);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .task-board.is-playing .task-dwell {
+    animation: task-fill 5.6s linear forwards;
+    box-shadow: 0 0 12px rgba(0, 221, 245, 0.75);
+  }
+
+  .task-board .task-stage {
+    animation: stage-block 0.45s ease both;
+  }
+
+  .task-board .task-flow .task-step {
+    animation-duration: 0.5s;
+  }
+
+  .task-board .task-flow .task-step:nth-child(1) { animation-delay: 0.05s; }
+  .task-board .task-flow .task-step:nth-child(2) { animation-delay: 0.42s; }
+  .task-board .task-flow .task-step:nth-child(3) { animation-delay: 0.8s; }
+  .task-board .task-flow .task-step:nth-child(4) { animation-delay: 1.18s; }
+
+  .task-board .task-step-mark {
+    animation: task-mark 0.35s ease both;
+  }
+
+  .task-board .task-step:nth-child(1) .task-step-mark { animation-delay: 0.22s; }
+  .task-board .task-step:nth-child(2) .task-step-mark { animation-delay: 0.58s; }
+  .task-board .task-step:nth-child(3) .task-step-mark { animation-delay: 0.96s; }
+  .task-board .task-step:nth-child(4) .task-step-mark { animation-delay: 1.34s; }
+
+  .task-board .stage-result,
+  .task-board .task-hold,
+  .task-board .task-cta {
+    animation: stage-rise 0.45s ease both;
+  }
+
+  .task-board .stage-result { animation-delay: 1.55s; }
+  .task-board .task-hold { animation-delay: 1.8s; }
+  .task-board .task-cta { animation-delay: 2s; }
+}
+
+@keyframes task-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes task-mark {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .task-dwell-track {
+    display: none;
+  }
+
+  .task-stage,
+  .task-step-mark {
+    animation: none;
+  }
+}

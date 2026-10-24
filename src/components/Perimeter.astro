@@ -1,95 +1,125 @@
 ---
-/** Authorized-scope visual for the cybersecurity pages: three reading modes. */
+/** Authorized-scope visual: three readings, traces that change color. */
 const modes = [
   {
     id: 'audit',
     label: 'Audit',
     title: 'Audit de sécurité',
+    status: 'Lecture des flux',
     text: 'On décrit l’organisation, les accès, les règles et les flux. Rien n’est attaqué. Le livrable est une lecture de la posture.',
   },
   {
     id: 'vuln',
     label: 'Analyse de vulnérabilités',
     title: 'Analyse de vulnérabilités',
+    status: 'Faiblesses connues',
     text: 'On liste les faiblesses connues sur les éléments du périmètre : versions, configurations, services exposés. Les constats sont classés.',
   },
   {
     id: 'pentest',
     label: 'Test d’intrusion',
     title: 'Test d’intrusion autorisé',
+    status: 'Tentative dans le cadre',
     text: 'On tente d’exploiter les faiblesses, dans le périmètre écrit et pendant la fenêtre convenue. Ce qui est hors périmètre n’est pas touché.',
   },
 ];
 ---
 
-<div class="perimeter tone-amber" data-perimeter>
-  <div class="perimeter-board panel" data-mode="audit">
-    <svg viewBox="0 0 320 220" role="img" aria-labelledby="perimeter-title perimeter-desc">
-      <title id="perimeter-title">Périmètre autorisé</title>
-      <desc id="perimeter-desc">
-        Un cadre en pointillés délimite le périmètre autorisé : portail client, API, authentification, base de données. À l’extérieur, un
-        poste comptable et un prestataire tiers ne sont pas testés.
-      </desc>
-      <defs>
-        <linearGradient id="scan-gradient" x1="0" x2="1">
-          <stop offset="0" stop-color="#e8b86d" stop-opacity="0" />
-          <stop offset="0.5" stop-color="#e8b86d" stop-opacity="0.18" />
-          <stop offset="1" stop-color="#e8b86d" stop-opacity="0" />
-        </linearGradient>
-        <clipPath id="scope-clip"><rect x="18" y="26" width="206" height="176" rx="12" /></clipPath>
-      </defs>
-
-      <rect class="scope-rect" x="18" y="26" width="206" height="176" rx="12" />
-      <text class="scope-label" x="26" y="20">Périmètre autorisé · écrit · daté</text>
-
-      <g clip-path="url(#scope-clip)">
-        <rect class="scan" x="18" y="26" width="90" height="176" />
-      </g>
-
-      <line class="flow" x1="80" y1="86" x2="150" y2="86" />
-      <line class="flow" x1="150" y1="86" x2="150" y2="140" />
-      <line class="flow" x1="80" y1="86" x2="80" y2="150" />
-      <line class="flow" x1="150" y1="150" x2="80" y2="150" />
-
-      <rect class="asset a-portal" x="40" y="62" width="80" height="44" rx="8" />
-      <text class="asset-label" x="50" y="80">Portail client</text>
-      <text class="asset-label" x="50" y="94">HTTPS · public</text>
-
-      <rect class="asset a-api" x="130" y="62" width="76" height="44" rx="8" />
-      <text class="asset-label" x="140" y="80">API</text>
-      <text class="asset-label" x="140" y="94">REST · jetons</text>
-
-      <rect class="asset a-auth" x="40" y="128" width="80" height="44" rx="8" />
-      <text class="asset-label" x="50" y="146">Authentification</text>
-      <text class="asset-label" x="50" y="160">Comptes · rôles</text>
-
-      <rect class="asset a-db" x="130" y="128" width="76" height="44" rx="8" />
-      <text class="asset-label" x="140" y="146">Base de données</text>
-      <text class="asset-label" x="140" y="160">Interne</text>
-
-      <g class="finding f-high">
-        <circle cx="120" cy="62" r="9" />
-        <text x="134" y="56">Élevé</text>
-      </g>
-      <g class="finding f-mid">
-        <circle cx="206" cy="128" r="9" />
-        <text x="196" y="188">Moyen</text>
-      </g>
-      <g class="finding f-ok">
-        <circle cx="40" cy="172" r="9" />
-        <text x="28" y="194">Corrigé</text>
-      </g>
-
-      <rect class="asset asset-out" x="246" y="62" width="60" height="44" rx="8" />
-      <text class="asset-label asset-out-label" x="254" y="80">Poste compta</text>
-      <text class="asset-label asset-out-label" x="254" y="94">Hors périmètre</text>
-
-      <rect class="asset asset-out" x="246" y="128" width="60" height="44" rx="8" />
-      <text class="asset-label asset-out-label" x="254" y="146">Prestataire</text>
-      <text class="asset-label asset-out-label" x="254" y="160">Non testé</text>
-    </svg>
+<div class="scope tone-amber" data-perimeter data-mode="audit">
+  <div class="scope-stage panel">
+    <div class="scope-toolbar">
+      <p class="meta tone-text">Scène d’exemple</p>
+      <p class="scope-status" data-status>Lecture des flux</p>
+      <button type="button" class="scope-play" data-play hidden>Pause</button>
+    </div>
+    <div class="scope-map" data-map>
+      <svg class="scope-wires" data-wires viewBox="0 0 100 100" aria-hidden="true">
+        <path class="scope-wire is-read" data-link="portal-api" />
+        <path class="scope-wire is-read" data-link="portal-auth" />
+        <path class="scope-wire is-read" data-link="api-db" />
+        <path class="scope-wire is-read" data-link="auth-db" />
+        <path class="scope-wire is-hot" data-link="portal-api-hot" />
+        <path class="scope-wire is-hot" data-link="api-db-hot" />
+        <path class="scope-wire is-stop" data-link="desk-stop" />
+        <path class="scope-wire is-stop" data-link="vendor-stop" />
+        <circle class="scope-stop" data-stop="desk" r="5" cx="0" cy="0" />
+        <circle class="scope-stop" data-stop="vendor" r="5" cx="0" cy="0" />
+      </svg>
+      <div class="scope-frame">
+        <p class="scope-frame-label">Périmètre autorisé · écrit · daté</p>
+        <div class="scope-grid">
+          <article class="scope-node" data-node="portal">
+            <span class="scope-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M3.5 9h17" /></svg>
+            </span>
+            <span>
+              <strong>Portail client</strong>
+              <em>HTTPS · public</em>
+              <span class="scope-find find-high" data-show="vuln pentest">Élevé</span>
+            </span>
+          </article>
+          <article class="scope-node" data-node="api">
+            <span class="scope-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 5 12l4 5" /><path d="m15 7 4 5-4 5" /></svg>
+            </span>
+            <span>
+              <strong>API</strong>
+              <em>REST · jetons</em>
+              <span class="scope-find find-mid" data-show="vuln pentest">Moyen</span>
+            </span>
+          </article>
+          <article class="scope-node" data-node="auth">
+            <span class="scope-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="3" /><path d="M11 12h9" /><path d="M17 12v2.4M20 12v2.4" /></svg>
+            </span>
+            <span>
+              <strong>Authentification</strong>
+              <em>Comptes · rôles</em>
+              <span class="scope-find find-ok" data-show="pentest">Corrigé</span>
+            </span>
+          </article>
+          <article class="scope-node" data-node="db">
+            <span class="scope-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><ellipse cx="12" cy="7" rx="7" ry="2.5" /><path d="M5 7v10c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V7" /><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" /></svg>
+            </span>
+            <span>
+              <strong>Base de données</strong>
+              <em>Interne</em>
+            </span>
+          </article>
+        </div>
+      </div>
+      <div class="scope-out">
+        <p class="scope-out-label">Hors cadre</p>
+        <article class="scope-node" data-node="desk">
+          <span class="scope-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.6" /><path d="M9 20h6M12 16v4" /></svg>
+          </span>
+          <span>
+            <strong>Poste comptable</strong>
+            <em>Non touché</em>
+          </span>
+        </article>
+        <article class="scope-node" data-node="vendor">
+          <span class="scope-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="2.4" /><path d="M6.4 19.2c.8-3.1 2.9-4.6 5.6-4.6s4.8 1.5 5.6 4.6" /></svg>
+          </span>
+          <span>
+            <strong>Prestataire</strong>
+            <em>Non testé</em>
+          </span>
+        </article>
+      </div>
+    </div>
+    <p class="scope-caption">Les constats sont des exemples de lecture. Le tracé s’arrête à la frontière : le poste et le prestataire ne sont pas testés.</p>
+    <ul class="scope-legend" aria-hidden="true">
+      <li data-legend="read">Flux lu</li>
+      <li data-legend="find">Constat</li>
+      <li data-legend="try">Tentative</li>
+      <li data-legend="stop">Arrêt</li>
+    </ul>
   </div>
-  <aside class="panel node-detail" aria-live="polite">
+  <aside class="panel node-detail">
     <div class="mode-switch" role="group" aria-label="Type de prestation">
       {
         modes.map((mode, index) => (
@@ -99,37 +129,200 @@ const modes = [
         ))
       }
     </div>
-    {
-      modes.map((mode, index) => (
-        <div data-mode-panel={mode.id} hidden={index !== 0}>
-          <p class="mt-6 font-display text-2xl tracking-tight">{mode.title}</p>
-          <p class="mt-3 text-parchment-dim">{mode.text}</p>
-        </div>
-      ))
-    }
+    <div aria-live="polite">
+      {
+        modes.map((mode, index) => (
+          <div data-mode-panel={mode.id} hidden={index !== 0}>
+            <p class="mt-6 font-display text-2xl tracking-tight">{mode.title}</p>
+            <p class="mt-3 text-parchment-dim">{mode.text}</p>
+          </div>
+        ))
+      }
+    </div>
     <ul class="mt-6">
       <li>Autorisation écrite du responsable du système avant tout test.</li>
       <li>Les éléments hors périmètre restent intouchés.</li>
       <li>Le rapport classe les constats par risque. Il n’est pas une garantie.</li>
     </ul>
+    <div class="scope-dwell-track" aria-hidden="true"><span class="scope-dwell" data-dwell></span></div>
   </aside>
+  <p class="sr-only">
+    Quatre éléments sont dans le périmètre écrit : portail, API, authentification, base. Le poste comptable et le prestataire restent dehors. Le schéma passe de la lecture à l’analyse, puis à la tentative.
+  </p>
 </div>
 
 <script>
+  const DWELL = 6200;
+  const order = ['audit', 'vuln', 'pentest'];
+
   document.querySelectorAll<HTMLElement>('[data-perimeter]').forEach((root) => {
-    const board = root.querySelector<HTMLElement>('.perimeter-board');
+    const map = root.querySelector<HTMLElement>('[data-map]');
+    const svg = root.querySelector<SVGSVGElement>('[data-wires]');
+    const status = root.querySelector<HTMLElement>('[data-status]');
+    const play = root.querySelector<HTMLButtonElement>('[data-play]');
     const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-mode-btn]'));
     const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-mode-panel]'));
-    if (!board) return;
-    buttons.forEach((button) => {
+    if (!map || !svg) return;
+
+    const motion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    let paused = false;
+    let held = false;
+    let hidden = false;
+    let timer = 0;
+
+    const statuses: Record<string, string> = {
+      audit: 'Lecture des flux',
+      vuln: 'Faiblesses connues',
+      pentest: 'Tentative dans le cadre',
+    };
+
+    function box(name: string) {
+      const node = map.querySelector<HTMLElement>(`[data-node="${name}"]`);
+      const mapBox = map.getBoundingClientRect();
+      const rect = node?.getBoundingClientRect();
+      if (!rect) return null;
+      return {
+        x: rect.left - mapBox.left + rect.width / 2,
+        y: rect.top - mapBox.top + rect.height / 2,
+        left: rect.left - mapBox.left,
+        right: rect.right - mapBox.left,
+        top: rect.top - mapBox.top,
+        bottom: rect.bottom - mapBox.top,
+      };
+    }
+
+    function rim(node: NonNullable<ReturnType<typeof box>>, ux: number, uy: number) {
+      const hw = (node.right - node.left) / 2;
+      const hh = (node.bottom - node.top) / 2;
+      const tx = Math.abs(ux) < 0.001 ? Infinity : hw / Math.abs(ux);
+      const ty = Math.abs(uy) < 0.001 ? Infinity : hh / Math.abs(uy);
+      const travel = Math.min(tx, ty);
+      return { x: node.x + ux * travel, y: node.y + uy * travel };
+    }
+
+    function join(from: string, to: string, name: string) {
+      const a = box(from);
+      const b = box(to);
+      const path = svg.querySelector<SVGPathElement>(`[data-link="${name}"]`);
+      if (!a || !b || !path) return;
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const length = Math.hypot(dx, dy) || 1;
+      const start = rim(a, dx / length, dy / length);
+      const end = rim(b, -dx / length, -dy / length);
+      path.setAttribute('d', `M ${start.x.toFixed(1)} ${start.y.toFixed(1)} L ${end.x.toFixed(1)} ${end.y.toFixed(1)}`);
+    }
+
+    function stop(name: string) {
+      const node = box(name);
+      const frame = map.querySelector('.scope-frame')?.getBoundingClientRect();
+      const mapBox = map.getBoundingClientRect();
+      const path = svg.querySelector<SVGPathElement>(`[data-link="${name}-stop"]`);
+      const mark = svg.querySelector<SVGCircleElement>(`[data-stop="${name}"]`);
+      if (!node || !frame || !path || !mark) return;
+      const frameRight = frame.right - mapBox.left;
+      const frameBottom = frame.bottom - mapBox.top;
+      const frameTop = frame.top - mapBox.top;
+      const frameLeft = frame.left - mapBox.left;
+      let x1 = frameRight;
+      let y1 = Math.min(Math.max(node.y, frameTop + 16), frameBottom - 16);
+      let x2 = node.left - 6;
+      let y2 = node.y;
+      if (node.left < frameRight - 4) {
+        x1 = Math.min(Math.max(node.x, frameLeft + 16), frameRight - 16);
+        y1 = frameBottom;
+        x2 = node.x;
+        y2 = node.top - 6;
+      }
+      path.setAttribute('d', `M ${x1.toFixed(1)} ${y1.toFixed(1)} L ${x2.toFixed(1)} ${y2.toFixed(1)}`);
+      mark.setAttribute('cx', x1.toFixed(1));
+      mark.setAttribute('cy', y1.toFixed(1));
+    }
+
+    function draw() {
+      const width = map.clientWidth;
+      const height = map.clientHeight;
+      if (width < 20 || height < 20) return;
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      join('portal', 'api', 'portal-api');
+      join('portal', 'api', 'portal-api-hot');
+      join('portal', 'auth', 'portal-auth');
+      join('api', 'db', 'api-db');
+      join('api', 'db', 'api-db-hot');
+      join('auth', 'db', 'auth-db');
+      stop('desk');
+      stop('vendor');
+    }
+
+    function playing() {
+      return motion && !paused && !held && !hidden;
+    }
+
+    function restartBar() {
+      const dwell = root.querySelector<HTMLElement>('[data-dwell]');
+      if (!dwell) return;
+      dwell.classList.remove('is-on');
+      void dwell.offsetWidth;
+      if (playing()) dwell.classList.add('is-on');
+    }
+
+    function show(next: number) {
+      index = next;
+      const mode = order[index];
+      root.dataset.mode = mode;
+      if (status) status.textContent = statuses[mode];
+      buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.modeBtn === mode)));
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.modePanel !== mode;
+      });
+      restartBar();
+    }
+
+    function arm() {
+      window.clearInterval(timer);
+      root.classList.toggle('is-playing', playing());
+      restartBar();
+      if (!playing()) return;
+      timer = window.setInterval(() => show((index + 1) % order.length), DWELL);
+    }
+
+    buttons.forEach((button, buttonIndex) => {
       button.addEventListener('click', () => {
-        const mode = button.dataset.modeBtn!;
-        board.dataset.mode = mode;
-        buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-        panels.forEach((panel) => {
-          panel.hidden = panel.dataset.modePanel !== mode;
-        });
+        show(buttonIndex);
+        arm();
       });
     });
+
+    root.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') {
+        held = true;
+        arm();
+      }
+    });
+    root.addEventListener('pointerleave', () => {
+      held = false;
+      arm();
+    });
+    document.addEventListener('visibilitychange', () => {
+      hidden = document.hidden;
+      arm();
+    });
+
+    if (play && motion) {
+      play.hidden = false;
+      play.addEventListener('click', () => {
+        paused = !paused;
+        play.textContent = paused ? 'Reprendre' : 'Pause';
+        play.setAttribute('aria-pressed', String(paused));
+        arm();
+      });
+    }
+
+    const observer = new ResizeObserver(() => draw());
+    observer.observe(map);
+    draw();
+    show(0);
+    arm();
   });
 </script>

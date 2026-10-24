@@ -4,14 +4,17 @@ import { nav } from '../lib/site';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 function active(href: string) {
-  return path === href || path.startsWith(`${href}/`);
+  const clean = href.split('#')[0] || '/';
+  if (href.includes('#')) return false;
+  if (clean === '/') return path === '/';
+  return path === clean || path.startsWith(`${clean}/`);
 }
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-40 border-b border-cyan-flux/25 bg-ink-900/95 backdrop-blur-md">
   <input id="nav-toggle" class="peer" type="checkbox" />
   <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
-    <a href="/" class="flex items-center gap-3 text-parchment" aria-label="Atomixia, accueil">
+    <a href="/" class="brand-lockup text-parchment" aria-label="Atomixia, accueil">
       <Mark />
       <span class="chrome font-display text-sm tracking-[0.22em] sm:text-base">ATOMIXIA</span>
     </a>

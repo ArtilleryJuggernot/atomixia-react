@@ -2483,8 +2483,36 @@ html.has-cursor select {
   box-shadow: 0 0 18px rgba(217, 193, 138, 0.7);
 }
 
+.light-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+}
+
 .light-step .meta {
   color: #d9c18a;
+}
+
+.light-ico {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.7rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 0.45rem;
+  color: #f2d9a0;
+  background: rgba(242, 217, 160, 0.08);
+  border: 1px solid rgba(217, 193, 138, 0.4);
+}
+
+.light-ico:empty {
+  display: none;
+}
+
+.light-ico svg {
+  width: 0.95rem;
+  height: 0.95rem;
 }
 
 .light-step h3,

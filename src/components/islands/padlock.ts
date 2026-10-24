@@ -64,10 +64,15 @@ export function createPadlock(track: <T extends Disposable>(item: T) => T): Padl
   group.add(pulse, stem);
 
   const ring = new THREE.Mesh(
-    track(new THREE.TorusGeometry(0.74, 0.008, 8, 96)),
-    track(new THREE.MeshBasicMaterial({ color: LOCK_AMBER, transparent: true, opacity: 0.5 })),
+    track(new THREE.TorusGeometry(0.92, 0.007, 8, 128)),
+    track(new THREE.MeshBasicMaterial({ color: LOCK_AMBER, transparent: true, opacity: 0.55 })),
   );
-  ring.rotation.x = Math.PI / 2.5;
+  const halo = new THREE.Mesh(
+    track(new THREE.TorusGeometry(1.05, 0.004, 8, 128)),
+    track(new THREE.MeshBasicMaterial({ color: LOCK_AMBER, transparent: true, opacity: 0.28 })),
+  );
+  halo.rotation.x = 0.42;
+  ring.add(halo);
   group.add(ring);
 
   return { group, body, ring, pulse };

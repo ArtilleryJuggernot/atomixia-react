@@ -1389,14 +1389,20 @@ footer .grid > * {
   gap: 0.75rem;
 }
 
-.brand-lockup::before {
+.brand-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.brand-mark::before {
   content: "";
   position: absolute;
   top: 50%;
-  left: -0.2rem;
-  width: 2.55rem;
-  height: 2.55rem;
-  margin-top: -1.28rem;
+  left: 50%;
+  width: calc(100% + 0.45rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
   border: 1px solid rgba(0, 221, 245, 0.45);
   border-right-color: transparent;
   border-radius: 50%;
@@ -1733,14 +1739,15 @@ footer .grid > * {
     border-color: rgba(0, 221, 245, 0.55);
   }
 
-  .brand-lockup:hover::before {
+  .brand-mark:hover::before,
+  .brand-lockup:hover .brand-mark::before {
     border-color: #00ddf5;
     border-right-color: transparent;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .brand-lockup::before,
+  .brand-mark::before,
   .orbit {
     animation: orbit-spin 16s linear infinite;
   }
@@ -1773,7 +1780,7 @@ footer .grid > * {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .brand-lockup::before,
+  .brand-mark::before,
   .orbit,
   .system-links path,
   .solution-card,

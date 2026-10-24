@@ -1409,6 +1409,13 @@ footer .grid > * {
   pointer-events: none;
 }
 
+/* The compact header is only as tall as the mark. Keep the ring inside the viewport. */
+@media (max-width: 79.99rem) {
+  .brand-mark::before {
+    width: calc(100% + 0.12rem);
+  }
+}
+
 .system-stage {
   position: relative;
   min-height: 40rem;

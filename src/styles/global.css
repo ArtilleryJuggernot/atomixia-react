@@ -3301,7 +3301,11 @@ html.has-cursor select {
 }
 
 .work-read-stack {
-  margin-top: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+.work-read-stack[hidden] {
+  display: none;
 }
 
 @media (min-width: 720px) {
@@ -3309,22 +3313,8 @@ html.has-cursor select {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .work-card.is-wide {
+  .works-grid > li.is-wide {
     grid-column: span 2;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.3rem 1.4rem 1.45rem;
-  }
-
-  .work-card.is-wide .work-top {
-    width: auto;
-    flex: 0 0 auto;
-  }
-
-  .work-card.is-wide .work-body {
-    width: auto;
-    flex: 1;
   }
 }
 
@@ -3336,6 +3326,10 @@ html.has-cursor select {
   .work-read {
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
     align-items: start;
+  }
+
+  .work-read-stack {
+    grid-column: 1 / -1;
   }
 }
 

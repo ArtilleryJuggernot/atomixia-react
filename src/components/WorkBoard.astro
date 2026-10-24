@@ -28,7 +28,7 @@ const first = works[0];
   <ol class="works-grid">
     {
       works.map((work) => (
-        <li>
+        <li class:list={{ 'is-wide': work.wide }}>
           <button
             type="button"
             class:list={['work-card', `tone-${work.tone}`, { 'is-wide': work.wide, 'is-public': work.status === 'public', 'is-on': work.id === first.id }]}
@@ -152,14 +152,12 @@ const first = works[0];
         <a class="text-link" data-read-link href={first.href}>{first.cta}</a>
       </p>
     </div>
-    <div>
-      <ul class="work-points" data-read-points>
-        {first.points.map((point) => <li>{point}</li>)}
-      </ul>
-      <ul class="stack-list work-read-stack" data-read-stack aria-label="Pile technique">
-        {first.stack?.map((item) => <li class="tag">{item}</li>)}
-      </ul>
-    </div>
+    <ul class="work-points" data-read-points>
+      {first.points.map((point) => <li>{point}</li>)}
+    </ul>
+    <ul class="stack-list work-read-stack" data-read-stack aria-label="Pile technique">
+      {first.stack?.map((item) => <li class="tag">{item}</li>)}
+    </ul>
   </div>
 
   <script type="application/json" data-works-copy set:html={JSON.stringify(works)} />

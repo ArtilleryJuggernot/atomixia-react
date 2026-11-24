@@ -10,7 +10,8 @@
     "dev": "astro dev --host 0.0.0.0",
     "build": "astro build && node scripts/write-headers.mjs",
     "preview": "astro preview --host 0.0.0.0",
-    "test": "node --experimental-strip-types --test test/**/*.test.ts"
+    "test": "node --experimental-strip-types --test test/**/*.test.ts",
+    "stop:lien": "node --experimental-strip-types scripts/lien-desinscription.ts"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.1",

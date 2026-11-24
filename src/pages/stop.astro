@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import StopForm from '../components/islands/StopForm';
+import { site } from '../lib/site';
+
+const description = 'Opposez-vous à la prospection d’Atomixia. L’adresse indiquée ne sera plus contactée.';
+---
+
+<Base title="Dire stop — Atomixia" description={description} path="/stop">
+  <Header />
+  <main id="contenu" class="px-5 pt-28 pb-24 sm:px-8">
+    <div class="mx-auto grid max-w-6xl gap-14 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Dire stop', href: '/stop' }]} />
+        <h1 class="display mt-10 text-5xl sm:text-6xl">Dire stop</h1>
+        <hr class="gold-rule" />
+        <p class="editorial mt-8">La prospection s’arrête à cette adresse.</p>
+        <p class="mt-6 text-parchment-dim">
+          Indiquez l’e-mail qui a reçu un message d’Atomixia. Il est retiré des envois. Il reste inscrit ici uniquement pour ne plus vous écrire.
+        </p>
+        <p class="mt-4 text-parchment-dim">
+          Aucun motif n’est demandé. Pour toute autre question : <a class="text-link" href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+        <p class="mt-6 text-sm">
+          <a class="text-link" href="/confidentialite">Politique de confidentialité</a>
+        </p>
+      </div>
+      <div class="lg:col-span-7">
+        <StopForm client:load />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>

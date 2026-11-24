@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /desinscriptions
 
 Sitemap: https://atomixia.fr/sitemap-index.xml

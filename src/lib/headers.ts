@@ -8,7 +8,7 @@ export function applySecurityHeaders(headers: Headers, pathname: string): void {
 
   if (pathname.startsWith('/_astro/')) {
     headers.set('Cache-Control', 'public, max-age=31536000, immutable');
-  } else if (pathname.startsWith('/api/')) {
+  } else if (pathname.startsWith('/api/') || pathname === '/desinscription') {
     headers.set('Cache-Control', 'no-store');
   } else if (/\.(?:svg|png|jpe?g|webp|ico|woff2)$/.test(pathname)) {
     headers.set('Cache-Control', 'public, max-age=604800');

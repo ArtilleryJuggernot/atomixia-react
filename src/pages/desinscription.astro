@@ -1,0 +1,181 @@
+---
+export const prerender = false;
+
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { emailFromSearch, recordOpposition } from '../lib/opposition';
+import { site } from '../lib/site';
+
+const WINDOW_MS = 60 * 60 * 1000;
+const MAX_HITS = 30;
+const hits = new Map<string, number[]>();
+
+function limited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((stamp) => now - stamp < WINDOW_MS);
+  if (recent.length >= MAX_HITS) {
+    hits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  hits.set(ip, recent);
+  return false;
+}
+
+function clientIp(): string {
+  const forwarded = Astro.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+  if (forwarded) return forwarded;
+  try {
+    return Astro.clientAddress;
+  } catch {
+    return 'inconnu';
+  }
+}
+
+function wantsJson(): boolean {
+  return (Astro.request.headers.get('accept') ?? '').includes('application/json');
+}
+
+function json(body: unknown, status: number): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+      'cache-control': 'no-store',
+      'x-robots-tag': 'noindex',
+    },
+  });
+}
+
+type View =
+  | { kind: 'explain' }
+  | { kind: 'invalid' }
+  | { kind: 'limited' }
+  | { kind: 'failed' }
+  | { kind: 'done'; email: string; created: boolean };
+
+let view: View = { kind: 'explain' };
+let status = 200;
+
+if (limited(clientIp())) {
+  view = { kind: 'limited' };
+  status = 429;
+} else {
+  const query = emailFromSearch(Astro.url.search);
+  if (!query.present) {
+    view = { kind: 'explain' };
+    status = 200;
+  } else if (!query.email) {
+    view = { kind: 'invalid' };
+    status = 400;
+  } else {
+    try {
+      const result = await recordOpposition(query.email);
+      view = { kind: 'done', email: result.email, created: result.created };
+      status = 200;
+      console.info(JSON.stringify({ level: 'info', event: 'opposition_stored', created: result.created }));
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          level: 'error',
+          event: 'opposition_persist_failed',
+          message: error instanceof Error ? error.message : 'erreur inconnue',
+        }),
+      );
+      view = { kind: 'failed' };
+      status = 503;
+    }
+  }
+}
+
+if (wantsJson()) {
+  if (view.kind === 'done') return json({ ok: true, email: view.email, created: view.created }, 200);
+  const message =
+    view.kind === 'limited'
+      ? 'Trop de demandes depuis ce réseau. Réessayez dans une heure.'
+      : view.kind === 'failed'
+        ? `L’opposition n’a pas pu être enregistrée. Écrivez à ${site.email}.`
+        : 'Indiquez une adresse e-mail valide dans le paramètre email.';
+  const jsonStatus = view.kind === 'explain' ? 400 : status;
+  return json({ ok: false, message }, jsonStatus);
+}
+
+Astro.response.status = status;
+Astro.response.headers.set('X-Robots-Tag', 'noindex');
+Astro.response.headers.set('Cache-Control', 'no-store');
+
+const title =
+  view.kind === 'done'
+    ? 'Désinscription enregistrée — Atomixia'
+    : view.kind === 'limited'
+      ? 'Trop de demandes — Atomixia'
+      : view.kind === 'failed'
+        ? 'Désinscription impossible — Atomixia'
+        : view.kind === 'invalid'
+          ? 'Adresse illisible — Atomixia'
+          : 'Désinscription — Atomixia';
+const description = 'Désinscription des messages de prospection Atomixia.';
+---
+
+<Base title={title} description={description} path="/desinscription" robots="noindex">
+  <Header />
+  <main id="contenu" class="px-5 pt-32 pb-28 sm:px-8">
+    <div class="mx-auto max-w-3xl">
+      <p class="meta">Prospection</p>
+      {
+        view.kind === 'done' ? (
+          <>
+            <h1 class="display mt-4 text-5xl sm:text-6xl">C’est enregistré.</h1>
+            <hr class="gold-rule" />
+            <p class="mt-8 text-lg text-gold-300 [overflow-wrap:anywhere]">{view.email}</p>
+            <p class="mt-6 max-w-xl text-parchment-dim">
+              {view.created
+                ? 'Cette adresse ne recevra plus de message de prospection de la part d’Atomixia.'
+                : 'Cette adresse était déjà désinscrite. Aucun message de prospection ne lui sera envoyé.'}
+            </p>
+            <p class="mt-4 max-w-xl text-parchment-dim">
+              Elle reste dans la liste d’opposition, uniquement pour que ce choix soit respecté.
+            </p>
+          </>
+        ) : view.kind === 'limited' ? (
+          <>
+            <h1 class="display mt-4 text-5xl sm:text-6xl">Trop de demandes.</h1>
+            <hr class="gold-rule" />
+            <p class="mt-8 max-w-xl text-parchment-dim">
+              Réessayez dans une heure, ou écrivez à <a class="text-link" href={`mailto:${site.email}`}>{site.email}</a> pour confirmer votre opposition.
+            </p>
+          </>
+        ) : view.kind === 'failed' ? (
+          <>
+            <h1 class="display mt-4 text-5xl sm:text-6xl">L’enregistrement n’a pas abouti.</h1>
+            <hr class="gold-rule" />
+            <p class="mt-8 max-w-xl text-parchment-dim">
+              Écrivez à <a class="text-link" href={`mailto:${site.email}`}>{site.email}</a> pour confirmer que vous ne souhaitez plus recevoir de message de prospection.
+            </p>
+          </>
+        ) : view.kind === 'invalid' ? (
+          <>
+            <h1 class="display mt-4 text-5xl sm:text-6xl">Cette adresse n’est pas lisible.</h1>
+            <hr class="gold-rule" />
+            <p class="mt-8 max-w-xl text-parchment-dim">
+              Ouvrez le lien indiqué dans le message, ou écrivez à <a class="text-link" href={`mailto:${site.email}`}>{site.email}</a>.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 class="display mt-4 text-5xl sm:text-6xl">Se désinscrire</h1>
+            <hr class="gold-rule" />
+            <p class="mt-8 max-w-xl text-parchment-dim">
+              Chaque message de prospection contient un lien avec l’adresse du destinataire. Ouvrez ce lien pour enregistrer l’opposition. Vous pouvez aussi écrire à <a class="text-link" href={`mailto:${site.email}`}>{site.email}</a>.
+            </p>
+          </>
+        )
+      }
+      <div class="mt-10">
+        <a class="btn btn-gold" href="/">Retour à l’accueil</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>

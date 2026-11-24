@@ -8,9 +8,10 @@ interface Props {
   description: string;
   path: string;
   jsonLd?: Record<string, unknown>[];
+  robots?: string;
 }
 
-const { title, description, path, jsonLd = [] } = Astro.props;
+const { title, description, path, jsonLd = [], robots } = Astro.props;
 const canonical = new URL(path, Astro.site).toString();
 const image = new URL('/og.png', Astro.site).toString();
 const organization = {
@@ -50,6 +51,7 @@ const graphs = [organization, ...jsonLd];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <meta name="theme-color" content="#050609" />

@@ -7,3 +7,5 @@ dist/
 .DS_Store
 data/leads/*
 !data/leads/.gitkeep
+data/prospection/*
+!data/prospection/.gitkeep

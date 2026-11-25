@@ -2,12 +2,22 @@ import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import {
   emptyContact,
   hasErrors,
+  projectTypes,
   validateContact,
   type ContactErrors,
   type ContactFields,
 } from '../../lib/contact';
+import { site } from '../../lib/site';
 
 const inputClass = 'field';
+const projectTypeLabels: Record<(typeof projectTypes)[number], string> = {
+  site: 'Site web',
+  automation: 'Automatisation IA',
+  software: 'Logiciel',
+  systems: 'Conseil SI',
+  cyber: 'Cybersécurité',
+  other: 'Autre',
+};
 
 export default function ContactForm() {
   const [fields, setFields] = useState<ContactFields>(emptyContact);
@@ -20,8 +30,8 @@ export default function ContactForm() {
 
   useEffect(() => {
     const task = new URLSearchParams(window.location.search).get('tache');
-    if (!task) return;
-    setFields((current) => ({ ...current, process: task.slice(0, 500) }));
+    if (task === null) return;
+    setFields((current) => ({ ...current, projectType: 'automation', project: task.slice(0, 2000) }));
   }, []);
 
   useEffect(() => {
@@ -90,10 +100,14 @@ export default function ContactForm() {
       <div className="glass px-6 py-10 sm:px-8" role="status">
         <p className="meta text-cyan-flux">Demande enregistrée</p>
         <h2 id="confirmation" ref={successRef} tabIndex={-1} className="display mt-4 text-4xl outline-none">
-          Votre message est bien reçu.
+          Merci.
         </h2>
         <p className="mt-4 max-w-xl text-parchment-dim">
-          Atomixia vous répond sous 24 à 48 h, à l’adresse indiquée. Le message reste sur cette page.
+          Hugo vous répond sous {site.response}. Pour aller plus vite :{' '}
+          <a className="text-gold-300 underline underline-offset-4" href={`tel:${site.phoneTel}`}>
+            {site.phoneDisplay}
+          </a>
+          .
         </p>
       </div>
     );
@@ -120,6 +134,40 @@ export default function ContactForm() {
           onChange={(event) => update('website', event.target.value)}
         />
       </div>
+
+      <fieldset>
+        <legend className="mb-2 text-sm text-parchment">Type de projet</legend>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {projectTypes.map((projectType, index) => {
+            const id = index === 0 ? `${baseId}-projectType` : `${baseId}-projectType-${projectType}`;
+            return (
+              <label
+                key={projectType}
+                htmlFor={id}
+                className="flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-gold-300/30 px-4 py-2 text-sm hover:border-gold-300"
+              >
+                <input
+                  id={id}
+                  name="projectType"
+                  type="radio"
+                  value={projectType}
+                  checked={fields.projectType === projectType}
+                  required
+                  aria-invalid={errors.projectType ? 'true' : undefined}
+                  aria-describedby={errors.projectType ? `${baseId}-projectType-error` : undefined}
+                  onChange={() => update('projectType', projectType)}
+                />
+                <span>{projectTypeLabels[projectType]}</span>
+              </label>
+            );
+          })}
+        </div>
+        {errors.projectType && (
+          <p id={`${baseId}-projectType-error`} className="field-error">
+            {errors.projectType}
+          </p>
+        )}
+      </fieldset>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
@@ -157,46 +205,18 @@ export default function ContactForm() {
           autoComplete="tel"
           onChange={(value) => update('phone', value)}
         />
-        <Field
-          id={`${baseId}-company`}
-          name="company"
-          label="Entreprise"
-          value={fields.company}
-          error={errors.company}
-          autoComplete="organization"
-          required
-          onChange={(value) => update('company', value)}
-        />
       </div>
 
       <Field
-        id={`${baseId}-process`}
-        name="process"
-        label="Processus à automatiser"
-        value={fields.process}
-        error={errors.process}
+        id={`${baseId}-project`}
+        name="project"
+        label="Votre projet"
+        value={fields.project}
+        error={errors.project}
         required
         multiline
-        onChange={(value) => update('process', value)}
-      />
-      <Field
-        id={`${baseId}-tools`}
-        name="tools"
-        label="Outils déjà utilisés"
-        hint="Facultatif"
-        value={fields.tools}
-        error={errors.tools}
-        onChange={(value) => update('tools', value)}
-      />
-      <Field
-        id={`${baseId}-message`}
-        name="message"
-        label="Message"
-        value={fields.message}
-        error={errors.message}
-        required
-        multiline
-        onChange={(value) => update('message', value)}
+        placeholder="Ce que vous voulez faire, vos délais, vos outils actuels."
+        onChange={(value) => update('project', value)}
       />
 
       <div>
@@ -210,7 +230,7 @@ export default function ContactForm() {
             required
             aria-invalid={errors.consent ? 'true' : undefined}
             aria-describedby={errors.consent ? `${baseId}-consent-error` : undefined}
-            className="mt-1 size-4 accent-gold-400"
+            className="mt-1 size-6 shrink-0 accent-gold-400"
             onChange={(event) => update('consent', event.target.checked)}
           />
           <span>J’accepte qu’Atomixia utilise ces informations pour répondre à ma demande.</span>
@@ -228,7 +248,7 @@ export default function ContactForm() {
       </div>
 
       <button className="btn btn-gold" type="submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Envoi…' : 'Envoyer la demande'}
+        {status === 'sending' ? 'Envoi…' : 'Envoyer ma demande de devis'}
       </button>
     </form>
   );
@@ -246,6 +266,7 @@ function Field({
   required,
   autoComplete,
   multiline = false,
+  placeholder,
 }: {
   id: string;
   name: string;
@@ -258,6 +279,7 @@ function Field({
   required?: boolean;
   autoComplete?: string;
   multiline?: boolean;
+  placeholder?: string;
 }) {
   const errorId = `${id}-error`;
   const shared = {
@@ -266,6 +288,7 @@ function Field({
     value,
     required,
     autoComplete,
+    placeholder,
     'aria-invalid': error ? ('true' as const) : undefined,
     'aria-describedby': error ? errorId : undefined,
     className: inputClass,

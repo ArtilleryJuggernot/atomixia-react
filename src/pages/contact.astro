@@ -6,7 +6,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import ContactForm from '../components/islands/ContactForm';
 import { site } from '../lib/site';
 
-const description = 'Décrivez le processus à automatiser. Atomixia répond sous 24 à 48 h, depuis Lyon.';
+const description = `Demandez un devis gratuit. Atomixia répond sous ${site.response}, depuis Lyon.`;
 ---
 
 <Base title="Contact — Atomixia" description={description} path="/contact">
@@ -15,24 +15,29 @@ const description = 'Décrivez le processus à automatiser. Atomixia répond sou
     <div class="mx-auto grid max-w-6xl gap-14 lg:grid-cols-12">
       <div class="lg:col-span-5">
         <Breadcrumb items={[{ name: 'Accueil', href: '/' }, { name: 'Contact', href: '/contact' }]} />
-        <h1 class="display mt-10 text-5xl sm:text-6xl">Décrire le processus</h1>
+        <h1 class="display mt-10 text-5xl sm:text-6xl">Demandez votre <em>devis gratuit.</em></h1>
         <hr class="gold-rule" />
-        <p class="editorial mt-8">Une réponse sous 24 à 48 h.</p>
-        <p class="mt-6 text-parchment-dim">
-          Nommez le geste qui se répète, l’entreprise, et les outils déjà là. Pas de lettre d’information.
+        <p class="mt-8 text-parchment-dim">
+          Décrivez votre projet en quelques lignes. Réponse sous {site.response}, sans engagement.
         </p>
-        <ul class="mt-10 space-y-5">
+        <ul class="mt-10 space-y-3">
           <li>
-            <p class="meta">E-mail</p>
-            <a class="mt-1 inline-flex hover:text-gold-300" href={`mailto:${site.email}`}>{site.email}</a>
+            <a class="flex min-h-14 flex-col justify-center border border-gold-300/20 px-5 py-3 hover:border-gold-300/40" href={`tel:${site.phoneTel}`}>
+              <span class="meta">Appeler</span>
+              <span>{site.phoneDisplay}</span>
+            </a>
           </li>
           <li>
-            <p class="meta">Téléphone</p>
-            <a class="mt-1 inline-flex hover:text-gold-300" href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>
+            <a class="flex min-h-14 flex-col justify-center border border-gold-300/20 px-5 py-3 hover:border-gold-300/40" href={site.quoteMailto}>
+              <span class="meta">Écrire</span>
+              <span>{site.email}</span>
+            </a>
           </li>
           <li>
-            <p class="meta">Zone</p>
-            <p class="mt-1">{site.city} · {site.region}</p>
+            <div class="flex min-h-14 flex-col justify-center border border-gold-300/20 px-5 py-3">
+              <span class="meta">Zone</span>
+              <span>{site.city} · {site.region}</span>
+            </div>
           </li>
         </ul>
       </div>

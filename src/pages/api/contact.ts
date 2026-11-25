@@ -95,10 +95,10 @@ function htmlPage(title: string, body: string, status: number): Response {
   <meta name="robots" content="noindex" />
   <title>${escapeHtml(title)}</title>
 </head>
-<body style="margin:0;background:#06040f;color:#ece7da;font-family:Georgia,serif;line-height:1.6">
-  <main style="max-width:40rem;margin:0 auto;padding:4rem 1.5rem">
+<body>
+  <main>
     ${body}
-    <p style="margin-top:2rem"><a style="color:#ffe49a" href="/contact">Retour au contact</a></p>
+    <p><a href="/contact">Retour au contact</a></p>
   </main>
 </body>
 </html>`;
@@ -107,7 +107,7 @@ function htmlPage(title: string, body: string, status: number): Response {
     headers: {
       'content-type': 'text/html; charset=utf-8',
       'cache-control': 'no-store',
-      'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      'content-security-policy': "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
     },
   });
 }
@@ -119,13 +119,11 @@ async function persist(record: ReturnType<typeof fieldsFromRecord>): Promise<str
   const line = JSON.stringify({
     id,
     at: new Date().toISOString(),
+    projectType: record.projectType,
     name: record.name,
     email: record.email,
     phone: record.phone,
-    company: record.company,
-    process: record.process,
-    tools: record.tools,
-    message: record.message,
+    project: record.project,
     consent: record.consent,
   });
   await appendFile(file, `${line}\n`, { encoding: 'utf8', mode: 0o600 });
@@ -147,17 +145,15 @@ async function notify(record: ReturnType<typeof fieldsFromRecord>, id: string): 
       from,
       to: [to],
       reply_to: record.email,
-      subject: `Demande Atomixia — ${record.company}`,
+      subject: `Demande de devis Atomixia — ${record.projectType}`,
       text: [
         `Identifiant : ${id}`,
+        `Type de projet : ${record.projectType}`,
         `Nom : ${record.name}`,
         `E-mail : ${record.email}`,
         `Téléphone : ${record.phone || '—'}`,
-        `Entreprise : ${record.company}`,
-        `Processus : ${record.process}`,
-        `Outils : ${record.tools || '—'}`,
         '',
-        record.message,
+        record.project,
       ].join('\n'),
     }),
   });
@@ -182,7 +178,7 @@ export const POST: APIRoute = async (context) => {
 
   const ip = clientIp(request, address);
   if (limited(ip)) {
-    const message = 'Trop d’envois depuis ce réseau. Réessayez dans une heure, ou appelez le 07 81 22 31 71.';
+    const message = `Trop d’envois depuis ce réseau. Réessayez dans une heure, ou appelez le ${site.phoneDisplay}.`;
     return asJson ? json({ ok: false, message }, 429) : htmlPage('Trop d’envois', `<h1>Trop d’envois</h1><p>${escapeHtml(message)}</p>`, 429);
   }
 
@@ -203,9 +199,10 @@ export const POST: APIRoute = async (context) => {
 
   const fields = fieldsFromRecord(record);
   if (isHoneypotTripped(fields)) {
+    const confirmation = `<h1>Merci.</h1><p>Hugo vous répond sous ${site.response}. Pour aller plus vite : ${site.phoneDisplay}.</p>`;
     return asJson
       ? json({ ok: true }, 200)
-      : htmlPage('Message reçu', '<h1>Votre message est bien reçu.</h1><p>Atomixia vous répond sous 24 à 48 h.</p>', 200);
+      : htmlPage('Message reçu', confirmation, 200);
   }
 
   const errors = validateContact(fields);
@@ -236,7 +233,7 @@ export const POST: APIRoute = async (context) => {
   if (asJson) return json({ ok: true }, 200);
   return htmlPage(
     'Message reçu',
-    '<h1>Votre message est bien reçu.</h1><p>Atomixia vous répond sous 24 à 48 h, à l’adresse indiquée.</p>',
+    `<h1>Merci.</h1><p>Hugo vous répond sous ${site.response}. Pour aller plus vite : ${site.phoneDisplay}.</p>`,
     200,
   );
 };

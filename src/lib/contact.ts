@@ -1,11 +1,12 @@
+export const projectTypes = ['site', 'automation', 'software', 'systems', 'cyber', 'other'] as const;
+export type ProjectType = (typeof projectTypes)[number];
+
 export type ContactFields = {
+  projectType: ProjectType | '';
   name: string;
   email: string;
   phone: string;
-  company: string;
-  process: string;
-  tools: string;
-  message: string;
+  project: string;
   consent: boolean;
   website: string;
 };
@@ -16,13 +17,11 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function emptyContact(): ContactFields {
   return {
+    projectType: '',
     name: '',
     email: '',
     phone: '',
-    company: '',
-    process: '',
-    tools: '',
-    message: '',
+    project: '',
     consent: false,
     website: '',
   };
@@ -31,14 +30,13 @@ export function emptyContact(): ContactFields {
 export function fieldsFromRecord(record: Record<string, string>): ContactFields {
   const read = (key: string) => (record[key] ?? '').trim();
   const consent = read('consent');
+  const projectType = read('projectType');
   return {
+    projectType: projectTypes.includes(projectType as ProjectType) ? (projectType as ProjectType) : '',
     name: read('name'),
     email: read('email'),
     phone: read('phone'),
-    company: read('company'),
-    process: read('process'),
-    tools: read('tools'),
-    message: read('message'),
+    project: read('project'),
     consent: consent === 'oui' || consent === 'on' || consent === 'true',
     website: read('website'),
   };
@@ -50,6 +48,10 @@ export function isHoneypotTripped(fields: ContactFields): boolean {
 
 export function validateContact(fields: ContactFields): ContactErrors {
   const errors: ContactErrors = {};
+
+  if (!projectTypes.includes(fields.projectType as ProjectType)) {
+    errors.projectType = 'Choisissez un type de projet.';
+  }
 
   if (fields.name.length < 2 || fields.name.length > 80) {
     errors.name = 'Indiquez votre nom.';
@@ -66,20 +68,10 @@ export function validateContact(fields: ContactFields): ContactErrors {
     }
   }
 
-  if (fields.company.length < 2 || fields.company.length > 120) {
-    errors.company = 'Indiquez l’entreprise ou la structure.';
-  }
-
-  if (fields.process.length < 10 || fields.process.length > 600) {
-    errors.process = 'Décrivez le processus en une ou deux phrases.';
-  }
-
-  if (fields.tools.length > 300) {
-    errors.tools = 'Raccourcissez la liste des outils.';
-  }
-
-  if (fields.message.length < 20 || fields.message.length > 2000) {
-    errors.message = 'Écrivez quelques mots de contexte (20 caractères minimum).';
+  if (fields.project.length < 20) {
+    errors.project = 'Décrivez votre projet (20 caractères minimum).';
+  } else if (fields.project.length > 2000) {
+    errors.project = 'Raccourcissez votre projet (2 000 caractères maximum).';
   }
 
   if (!fields.consent) {

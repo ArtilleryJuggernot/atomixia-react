@@ -1,10 +1,16 @@
+const email = 'hugo.jacquel@atomixia.fr';
+const quoteSubject = encodeURIComponent('Demande de devis gratuit');
+const quoteBody = encodeURIComponent('Type de projet :\nDélai souhaité :\nTéléphone :');
+
 export const site = {
   name: 'Atomixia',
   url: 'https://atomixia.fr',
   locale: 'fr_FR',
-  email: 'hugo.jacquel@atomixia.fr',
+  email,
   phoneDisplay: '07 81 22 31 71',
   phoneTel: '+33781223171',
+  quoteMailto: `mailto:${email}?subject=${quoteSubject}&body=${quoteBody}`,
+  quoteCta: 'Demander un devis gratuit',
   founder: 'Hugo Jacquel',
   city: 'Lyon',
   region: 'Auvergne-Rhône-Alpes',

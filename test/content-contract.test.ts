@@ -1,86 +1,82 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { mainWordCount, publicHtmlFiles } from './site-output.test.ts';
+import { mainWordCount, normalizedText, publicHtmlFiles } from './site-output.ts';
 
 const h1Targets: Record<string, string> = {
-  '/': 'Des agents, des sites, des outils qui tiennent.',
-  '/a-propos/': 'Atomixia, à Lyon',
+  '/': 'Gagnez du temps. Gardez la main.',
+  '/a-propos/': 'Un studio à taille humaine.',
   '/agents/': 'Les agents',
-  '/contact/': 'Décrire le processus',
-  '/expertises/conseil-systeme-information/':
-    'Conseil en systèmes d’information Une architecture qui sert votre stratégie.',
-  '/expertises/cybersecurite-pentest/':
-    'Cybersécurité et pentest Identifiez les risques avant qu’ils ne deviennent des incidents.',
+  '/contact/': 'Demandez votre devis gratuit.',
+  '/expertises/conseil-systeme-information/': "Y voir clair avant d'investir.",
+  '/expertises/cybersecurite-pentest/': 'Trouvez vos failles avant les attaquants.',
   '/realisations/': 'Réalisations',
-  '/sites/': 'Sites métier et logiciels',
-  '/solutions/automatisation-ia/':
-    'Agents et automatisations Des processus plus intelligents.',
-  '/solutions/saas-logiciels/':
-    'Logiciels sur mesure et SaaS Vos idées deviennent des produits.',
-  '/usages/': 'Vous avez une tâche répétitive ?',
+  '/sites/': 'Un site qui vous ressemble et qui fait venir les demandes.',
+  '/solutions/automatisation-ia/': 'Vos tâches répétitives, préparées par un agent.',
+  '/solutions/saas-logiciels/': 'Le logiciel qui manque à votre métier.',
+  '/usages/': 'Une tâche répétitive ? Confiez-la à un agent.',
 };
 
 const wordBudgets: Record<string, number> = {
   '/': 450,
-  '/a-propos/': 200,
-  '/agents/': 180,
-  '/contact/': 170,
-  '/expertises/conseil-systeme-information/': 350,
-  '/expertises/cybersecurite-pentest/': 400,
-  '/realisations/': 250,
-  '/sites/': 350,
-  '/solutions/automatisation-ia/': 450,
-  '/solutions/saas-logiciels/': 400,
-  '/usages/': 200,
+  '/a-propos/': 170,
+  '/agents/': 120,
+  '/agents/commercial/': 130,
+  '/agents/connaissance/': 130,
+  '/agents/facturation/': 130,
+  '/agents/messagerie/': 130,
+  '/agents/quotidien/': 130,
+  '/agents/sur-mesure/': 130,
+  '/contact/': 60,
+  '/expertises/conseil-systeme-information/': 220,
+  '/expertises/cybersecurite-pentest/': 250,
+  '/realisations/': 300,
+  '/sites/': 220,
+  '/solutions/automatisation-ia/': 220,
+  '/solutions/saas-logiciels/': 220,
+  '/usages/': 180,
 };
 
-function normalizedText(html: string): string {
-  return html
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&(?:nbsp|#160);/gi, ' ')
-    .replace(/&(?:amp|#38);/gi, '&')
-    .replace(/&(?:apos|#39);/gi, "'")
-    .replace(/&(?:quot|#34);/gi, '"')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-test('les pages éditoriales utilisent les H1 cibles', () => {
+test('les pages éditoriales utilisent les H1 cibles', async (t) => {
   const pages = new Map(publicHtmlFiles().map((file) => [file.route, file.html]));
 
   for (const [route, expected] of Object.entries(h1Targets)) {
-    const html = pages.get(route);
-    assert.ok(html, `Le build doit produire ${route}.`);
-    const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
-    assert.ok(h1, `${route} doit contenir un H1.`);
-    assert.equal(normalizedText(h1[1]), expected, `H1 inattendu pour ${route}.`);
+    await t.test(route, () => {
+      const html = pages.get(route);
+      assert.ok(html, `Le build doit produire ${route}.`);
+      const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
+      assert.ok(h1, `${route} doit contenir un H1.`);
+      assert.equal(normalizedText(h1[1]), expected, `H1 inattendu pour ${route}.`);
+    });
   }
 });
 
-test('les contenus principaux respectent leurs budgets à ±10 %', () => {
+test('les contenus principaux respectent leurs budgets à ±10 %', async (t) => {
   const pages = new Map(publicHtmlFiles().map((file) => [file.route, file.html]));
 
   for (const [route, budget] of Object.entries(wordBudgets)) {
-    const html = pages.get(route);
-    assert.ok(html, `Le build doit produire ${route}.`);
-    const count = mainWordCount(html);
-    const tolerance = budget * 0.1;
-    assert.ok(
-      count >= budget - tolerance && count <= budget + tolerance,
-      `${route} contient ${count} mots dans <main> ; attendu ${budget} ±10 %.`,
-    );
+    await t.test(route, () => {
+      const html = pages.get(route);
+      assert.ok(html, `Le build doit produire ${route}.`);
+      const count = mainWordCount(html);
+      const tolerance = budget * 0.1;
+      assert.ok(
+        count >= budget - tolerance && count <= budget + tolerance,
+        `${route} contient ${count} mots dans <main> ; attendu ${budget} ±10 %.`,
+      );
+    });
   }
 });
 
-test('la page À propos expose une méthode en quatre étapes', () => {
-  const about = publicHtmlFiles().find(({ route }) => route === '/a-propos/');
-  assert.ok(about, 'Le build doit produire /a-propos/.');
+test('la méthode comporte quatre étapes partout', async (t) => {
+  const pages = new Map(publicHtmlFiles().map((file) => [file.route, file.html]));
 
-  const method = about.html.match(
-    /<(section|div)\b[^>]*\bid=["']methode["'][^>]*>([\s\S]*?)<\/\1>/i,
-  );
-  assert.ok(method, '/a-propos/ doit exposer la section #methode.');
-
-  const steps = method[2].match(/<li\b/g) ?? [];
-  assert.equal(steps.length, 4, 'La méthode doit comporter exactement quatre étapes.');
+  for (const route of ['/', '/a-propos/']) {
+    await t.test(route, () => {
+      const html = pages.get(route);
+      assert.ok(html, `Le build doit produire ${route}.`);
+      assert.match(html, /\bid=["']methode["']/i, `${route} doit exposer la section #methode.`);
+      const steps = html.match(/\bdata-method-step(?:\s|=|>)/gi) ?? [];
+      assert.equal(steps.length, 4, `${route} doit comporter exactement quatre étapes de méthode.`);
+    });
+  }
 });

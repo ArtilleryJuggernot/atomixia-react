@@ -1,6 +1,6 @@
 ---
 import Mark from './Mark.astro';
-import { nav, navGroups } from '../lib/site';
+import { site, navGroups } from '../lib/site';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 function active(href: string) {
@@ -10,32 +10,176 @@ function active(href: string) {
   return path === clean || path.startsWith(`${clean}/`);
 }
 
-const links = [
-  { href: navGroups[0].items[0].href, label: 'Automatisation' },
-  { href: navGroups[0].items[1].href, label: 'Logiciels' },
-  { href: navGroups[1].items[0].href, label: 'Conseil SI' },
-  { href: navGroups[1].items[1].href, label: 'Cybersécurité' },
-  ...nav,
+const serviceLinks = [
+  { href: '/sites', label: 'Sites web' },
+  ...navGroups.flatMap((group) => group.items),
+];
+const primaryLinks = [
+  { href: '/realisations', label: 'Réalisations' },
+  { href: '/a-propos', label: 'À propos' },
+  { href: '/contact', label: 'Contact' },
 ];
 ---
 
-<header id="site-header" class="z-40 border-b border-gold-400/20 bg-ink-950/95 backdrop-blur-md">
-  <div class="header-row mx-auto max-w-6xl px-5 py-3 sm:px-8">
+<header id="site-header" data-site-header class="z-40 border-b border-gold-400/20 bg-ink-950/95 backdrop-blur-md">
+  <div class="header-row mx-auto max-w-6xl px-5 sm:px-8">
     <a href="/" class="brand-lockup text-parchment" aria-label="Atomixia, accueil">
       <span class="brand-mark">
         <Mark />
       </span>
       <span class="chrome font-display text-sm tracking-[0.22em] sm:text-base">ATOMIXIA</span>
     </a>
-    <nav class="nav-bar" aria-label="Navigation principale">
+    <nav class="desktop-nav" aria-label="Navigation principale">
+      <details class="nav-services">
+        <summary class="nav-link" aria-label="Ouvrir le menu Services">Services</summary>
+        <div class="services-menu">
+          {
+            serviceLinks.map((item) => (
+              <a href={item.href} aria-current={active(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </div>
+      </details>
       {
-        links.map((item) => (
+        primaryLinks.map((item) => (
           <a href={item.href} aria-current={active(item.href) ? 'page' : undefined} class="nav-link">
             {item.label}
           </a>
         ))
       }
-      <a class="btn btn-gold nav-cta" href="/contact">Parler de mon projet</a>
+      <a class="header-phone" href={`tel:${site.phoneTel}`} aria-label={`Appeler Atomixia au ${site.phoneDisplay}`}>
+        {site.phoneDisplay}
+      </a>
+      <a class="btn btn-gold nav-cta" href="/contact">Devis gratuit</a>
     </nav>
+    <div class="mobile-header-actions">
+      <a class="mobile-header-action" href={`tel:${site.phoneTel}`} aria-label={`Appeler Atomixia au ${site.phoneDisplay}`}>
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M7.2 3.5 9.6 8 7.8 9.8a15 15 0 0 0 6.4 6.4l1.8-1.8 4.5 2.4v2.7a2 2 0 0 1-2 2A16 16 0 0 1 2.5 5.5a2 2 0 0 1 2-2Z"></path>
+        </svg>
+      </a>
+      <button
+        class="mobile-header-action mobile-menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Ouvrir le menu"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
   </div>
 </header>
+<div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu principal" hidden>
+  <div class="mobile-menu-top">
+    <span class="font-display tracking-[0.18em] text-parchment">ATOMIXIA</span>
+    <button class="mobile-header-action mobile-menu-close" type="button" aria-label="Fermer le menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+  <nav aria-label="Navigation mobile">
+    <p class="meta text-gold-400">Services</p>
+    <ul class="mobile-menu-links">
+      {
+        serviceLinks.map((item) => (
+          <li><a href={item.href} aria-current={active(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))
+      }
+    </ul>
+    <ul class="mobile-menu-links mobile-menu-primary">
+      {
+        primaryLinks.map((item) => (
+          <li><a href={item.href} aria-current={active(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))
+      }
+    </ul>
+    <div class="mobile-menu-actions">
+      <a class="btn btn-ghost" href={`tel:${site.phoneTel}`}>Appeler · {site.phoneDisplay}</a>
+      <a class="btn btn-gold" href="/contact">Devis gratuit</a>
+    </div>
+  </nav>
+</div>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+
+  if (header) {
+    const toggle = header.querySelector<HTMLButtonElement>('.mobile-menu-toggle');
+    const menu = document.querySelector<HTMLElement>('#mobile-menu');
+    const close = menu?.querySelector<HTMLButtonElement>('.mobile-menu-close');
+    const services = header.querySelector<HTMLDetailsElement>('.nav-services');
+    let returnFocus: HTMLElement | null = null;
+
+    const focusableSelector =
+      'a[href], button:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
+
+    const setMenuOpen = (open: boolean, restore = true) => {
+      if (!toggle || !menu) return;
+      if (open) {
+        returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : toggle;
+        menu.hidden = false;
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Fermer le menu');
+        document.body.classList.add('has-mobile-menu');
+        close?.focus();
+        return;
+      }
+
+      menu.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Ouvrir le menu');
+      document.body.classList.remove('has-mobile-menu');
+      if (restore) returnFocus?.focus();
+    };
+
+    toggle?.addEventListener('click', () => {
+      setMenuOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    close?.addEventListener('click', () => setMenuOpen(false));
+    menu?.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a')) setMenuOpen(false, false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        if (menu && !menu.hidden) {
+          event.preventDefault();
+          setMenuOpen(false);
+        }
+        if (services?.open) {
+          services.open = false;
+          services.querySelector<HTMLElement>('summary')?.focus();
+        }
+        return;
+      }
+
+      if (event.key !== 'Tab' || !menu || menu.hidden) return;
+      const focusable = [...menu.querySelectorAll<HTMLElement>(focusableSelector)];
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (services?.open && event.target instanceof Node && !services.contains(event.target)) {
+        services.open = false;
+      }
+    });
+
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
+      if (event.matches && menu && !menu.hidden) setMenuOpen(false, false);
+    });
+  }
+</script>

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { site } from '../lib/site';
 import Cursor from '../components/islands/Cursor';
+import MobileCta from '../components/MobileCta.astro';
 
 interface Props {
   title: string;
@@ -22,7 +23,15 @@ const organization = {
   logo: `${site.url}/favicon.svg`,
   image,
   email: site.email,
-  telephone: '+33-7-81-22-31-71',
+  telephone: site.phoneTel,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    telephone: site.phoneTel,
+    email: site.email,
+    areaServed: site.region,
+    availableLanguage: 'fr',
+  },
   founder: {
     '@type': 'Person',
     name: site.founder,
@@ -79,6 +88,7 @@ const graphs = [organization, ...jsonLd];
     <div class="atmosphere" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
     <slot />
+    {path.replace(/\/$/, '') !== '/contact' && <MobileCta />}
     <Cursor client:idle />
     <script>
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

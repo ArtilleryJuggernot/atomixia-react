@@ -1,4 +1,5 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 const source = 'dist/_experimentalHeaders.json';
 const target = 'dist/client/_headers';
@@ -40,3 +41,16 @@ const current = readFileSync(target, 'utf8');
 if (!current.includes('Content-Security-Policy')) {
   writeFileSync(target, `${current.trimEnd()}\n\n/*\n  Content-Security-Policy: ${policy.value}\n`);
 }
+
+const islandStyle = '<style>astro-island,astro-slot,astro-static-slot{display:contents}</style>';
+const stripInlineIslandStyle = (directory) => {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) stripInlineIslandStyle(path);
+    if (!entry.isFile() || !entry.name.endsWith('.html')) continue;
+    const html = readFileSync(path, 'utf8');
+    if (html.includes(islandStyle)) writeFileSync(path, html.replace(islandStyle, ''));
+  }
+};
+
+stripInlineIslandStyle('dist/client');

@@ -1,0 +1,51 @@
+---
+import { site } from '../lib/site';
+---
+
+<aside class="mobile-cta" data-mobile-cta aria-label="Contacter Atomixia" aria-hidden="true" inert>
+  <a class="mobile-cta-link mobile-cta-call" href={`tel:${site.phoneTel}`}>Appeler</a>
+  <a class="mobile-cta-link mobile-cta-quote" href="/contact">Devis gratuit</a>
+</aside>
+
+<script>
+  const mobileCta = document.querySelector<HTMLElement>('[data-mobile-cta]');
+
+  if (mobileCta) {
+    const mobile = window.matchMedia('(max-width: 767px)');
+    const hero = document.querySelector<HTMLElement>('[data-page-hero], main > section:first-child, main');
+    const finalCta = document.querySelector<HTMLElement>('[data-final-cta]');
+    const footer = document.querySelector<HTMLElement>('footer');
+    let heroPassed = !hero;
+    let finalCtaVisible = false;
+    let footerVisible = false;
+
+    const update = () => {
+      const visible = mobile.matches && heroPassed && !finalCtaVisible && !footerVisible;
+      mobileCta.classList.toggle('is-visible', visible);
+      mobileCta.setAttribute('aria-hidden', String(!visible));
+      mobileCta.inert = !visible;
+      document.body.classList.toggle('has-mobile-cta', visible);
+    };
+
+    if (hero) {
+      const heroObserver = new IntersectionObserver(([entry]) => {
+        heroPassed = !entry.isIntersecting && entry.boundingClientRect.bottom <= 0;
+        update();
+      });
+      heroObserver.observe(hero);
+    }
+
+    const blockerObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === finalCta) finalCtaVisible = entry.isIntersecting;
+        if (entry.target === footer) footerVisible = entry.isIntersecting;
+      }
+      update();
+    });
+
+    if (finalCta) blockerObserver.observe(finalCta);
+    if (footer) blockerObserver.observe(footer);
+    mobile.addEventListener('change', update);
+    update();
+  }
+</script>
